@@ -1,0 +1,58 @@
+package com.example.todoc.data;
+
+import android.app.Application;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+
+import com.example.todoc.data.dao.ProjectDao;
+import com.example.todoc.data.dao.ProjectWithTaskDao;
+import com.example.todoc.data.dao.TaskDao;
+import com.example.todoc.data.entities.ProjectEntity;
+import com.example.todoc.data.entities.ProjectWithTaskEntity;
+import com.example.todoc.data.entities.TaskEntity;
+
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+public class TaskRepository {
+    private final TaskDao taskDao;
+
+    private ProjectWithTaskDao projectWithTaskDao;
+
+    private ProjectDao projectDao;
+
+    private final Executor executor;
+    private final MediatorLiveData<List<TaskEntity>> allTasksMediator = new MediatorLiveData<>();
+
+    public TaskRepository(Application application) {
+        TaskManagementDatabase database = TaskManagementDatabase.getDatabase(application);
+        this.taskDao = database.taskDao();
+        this.executor = Executors.newSingleThreadExecutor();
+    }
+
+    public LiveData<List<TaskEntity>> getAllTasks() {
+        return taskDao.getAllTasks();
+    }
+
+    public LiveData<List<ProjectWithTaskEntity>> getAllProjectWithTask() {
+        return projectWithTaskDao.getProjectWithTasks();
+    }
+
+    public LiveData<List<TaskEntity>> getTasksByProjectId(long projectId) {
+        return taskDao.getTasksByProjectId(projectId);
+    }
+
+    public ProjectEntity getProjectByName(String projectName) {
+        return projectDao.getProjectByName(projectName);
+    }
+
+    public void insertTask(TaskEntity task) {
+        executor.execute(() -> taskDao.createTask(task));
+    }
+
+    public void deleteTask(long taskId) {
+        executor.execute(() -> taskDao.deleteTask(taskId));
+    }
+}

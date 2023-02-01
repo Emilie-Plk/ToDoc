@@ -1,4 +1,4 @@
-package com.example.todoc;
+package com.example.todoc.ui;
 
 public interface OnAddTaskListener {
 

@@ -1,4 +1,4 @@
-package com.example.todoc;
+package com.example.todoc.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.todoc.R;
 import com.example.todoc.databinding.FragmentAddNewTaskDialogBinding;
 
 public class AddNewTaskDialogFragment extends DialogFragment {
