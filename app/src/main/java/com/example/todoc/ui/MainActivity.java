@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
-import com.example.todoc.OnTaskClickedListener;
+import com.example.todoc.OnTaskDeleteClickListener;
 import com.example.todoc.R;
 import com.example.todoc.adapter.TaskListAdapter;
 import com.example.todoc.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnAddTaskListener {
 
     private MainActivityViewModel viewModel;
     private ActivityMainBinding binding;
@@ -32,13 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        TaskListAdapter adapter = new TaskListAdapter(new OnTaskClickedListener() {
-            @Override
-            public void onDeleteTask() {
-
-            }
-        });
-
+        TaskListAdapter adapter = new TaskListAdapter(taskID -> viewModel.onDeleteTask(taskID));
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         binding.listTasks.addItemDecoration(dividerItemDecoration);
@@ -47,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setViewModel() {
-        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        viewModel = new ViewModelProvider(this,
+                ViewModelFactory.getInstance(getApplication())).get(MainActivityViewModel.class);
     }
 
     @Override
@@ -56,4 +51,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    @Override
+    public void onAddingNewTask(String newTask, String projectName) {
+        viewModel.onAddingNewTask(newTask, projectName);
+    }
 }

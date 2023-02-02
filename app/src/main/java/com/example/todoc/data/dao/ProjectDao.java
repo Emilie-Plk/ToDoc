@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.todoc.data.entities.ProjectEntity;
@@ -15,7 +16,8 @@ import java.util.List;
 public interface ProjectDao {
 
     @Query("SELECT * FROM projects WHERE projectName = :projectName")
-    public ProjectEntity getProjectByName(String projectName);
+    @Transaction
+     LiveData<ProjectEntity> getProjectByName(String projectName);
 
     @Query("SELECT * FROM projects")
     LiveData<List<ProjectEntity>> getAllProjects();

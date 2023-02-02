@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todoc.OnTaskClickedListener;
+import com.example.todoc.OnTaskDeleteClickListener;
 import com.example.todoc.databinding.ItemTaskBinding;
 import com.example.todoc.ui.TaskViewStateItem;
 
     public class TaskListAdapter extends ListAdapter<TaskViewStateItem, TaskListAdapter.TaskViewHolder> {
 
-           private final OnTaskClickedListener listener;
+           private final OnTaskDeleteClickListener listener;
 
-      public TaskListAdapter(OnTaskClickedListener listener) {
+      public TaskListAdapter(OnTaskDeleteClickListener listener) {
             super(new ListTaskItemCallback());
             this.listener = listener;
         }
@@ -49,11 +49,10 @@ import com.example.todoc.ui.TaskViewStateItem;
                 deleteTask = binding.imgDelete;
             }
 
-            public void bind(TaskViewStateItem item, OnTaskClickedListener listener) {
-                itemView.setOnClickListener(v -> listener.onDeleteTask());
+            public void bind(TaskViewStateItem item, OnTaskDeleteClickListener listener) {
                 taskTitle.setText(item.getTaskName());
                 projectName.setText(item.getProjectName());
-                deleteTask.setOnClickListener(view -> listener.onDeleteTask());
+                deleteTask.setOnClickListener(view -> listener.onDeleteTask(item.getTaskId()));
             }
         }
 

@@ -6,10 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
-import androidx.lifecycle.ViewModel;
 
 import com.example.todoc.data.TaskRepository;
-import com.example.todoc.data.dao.ProjectDao;
 import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.ProjectWithTaskEntity;
 import com.example.todoc.data.entities.TaskEntity;
@@ -17,6 +15,7 @@ import com.example.todoc.data.entities.TaskEntity;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivityViewModel extends AndroidViewModel {
 
@@ -45,11 +44,17 @@ public class MainActivityViewModel extends AndroidViewModel {
         });
     }
 
+
     public void onAddingNewTask(String taskName, String projectName) {
-        ProjectEntity project = repository.getProjectByName(projectName);
+        LiveData<ProjectEntity> project = repository.getProjectByName(projectName);
         if (project != null) {
-            TaskEntity task = new TaskEntity(taskName, project.projectId, projectName, new Timestamp(System.currentTimeMillis()));
+            TaskEntity task = new TaskEntity(taskName, projectName, new Timestamp(System.currentTimeMillis()));
             repository.insertTask(task);
+            repository.getAllTasks();
         }
+    }
+
+    public void onDeleteTask(long taskId) {
+        repository.deleteTask(taskId);
     }
 }

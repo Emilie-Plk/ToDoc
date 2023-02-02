@@ -1,6 +1,8 @@
 package com.example.todoc.ui;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ public class AddNewTaskDialogFragment extends DialogFragment {
 
     private String chosenProject;
 
+    private OnAddTaskListener listener;
+
     @NonNull
     public static AddNewTaskDialogFragment newInstance() {
         return new AddNewTaskDialogFragment();
@@ -28,6 +32,16 @@ public class AddNewTaskDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof  OnAddTaskListener) {
+            listener = (OnAddTaskListener) context;
+        } else {
+            throw new ClassCastException(context + " must implement OnAddTaskListener");
+        }
     }
 
     @Override
@@ -47,6 +61,11 @@ public class AddNewTaskDialogFragment extends DialogFragment {
 
         binding.projectActv.setOnItemClickListener((adapterView, v, position, id) ->
                 chosenProject = adapterView.getItemAtPosition(position).toString());
+
+        binding.addBtnDialog.setOnClickListener(v -> {
+            listener.onAddingNewTask(binding.txtTaskName.getText().toString(), chosenProject);
+            dismiss();
+        });
     }
 
     private void setProjectACTVAdapter() {
