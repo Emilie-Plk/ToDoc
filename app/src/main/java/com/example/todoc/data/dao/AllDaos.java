@@ -14,13 +14,10 @@ import java.util.List;
 
 @Dao
 public interface AllDaos {
-    @Insert
-    void insertProject(ProjectEntity projectEntity);
 
-    @Insert
-    void insertTask(TaskEntity taskEntity);
 
-    @Query("DELETE FROM tasks WHERE taskId = :taskId")
+
+    @Query("DELETE FROM tasks WHERE id = :taskId")
     void deleteTask(long taskId);
 
 
@@ -30,33 +27,22 @@ public interface AllDaos {
     @Query("SELECT * FROM projects")
     List<ProjectEntity> getAllProjects();
 
-    @Query("SELECT projectId FROM projects WHERE projectName = :projectName")
-    long getProjectId(String projectName);
+
 
 
     @Query("SELECT * FROM projects WHERE projectName = :name")
     ProjectEntity getProjectByName(String name);
 
-    @Query("SELECT taskId FROM tasks WHERE taskName = :taskName")
+    @Query("SELECT id FROM tasks WHERE taskName = :taskName")
     long getTaskId(String taskName);
 
-    @Transaction
+  /*  @Transaction
     @Query("SELECT * FROM projects INNER JOIN tasks ON projects.projectId = tasks.projectId WHERE projects.projectId = :projectId")
     LiveData<List<ProjectWithTaskEntity>> getAllTasksbyProjectId(long projectId);
 
     @Transaction
     @Query("SELECT * FROM projects INNER JOIN tasks ON projects.projectId = tasks.projectId")
-    LiveData<List<ProjectWithTaskEntity>> getAllTasksbyProject();
+    LiveData<List<ProjectWithTaskEntity>> getAllTasksbyProject();*/
 
-    @Query("SELECT * FROM tasks ORDER BY timeStamp DESC")
-    List<TaskEntity> getTasksByTimeDesc();
 
-    @Query("SELECT * FROM tasks ORDER BY timeStamp ASC")
-    List<TaskEntity> getTasksByTimeAsc();
-
-    @Query("SELECT * FROM tasks ORDER BY taskName COLLATE NOCASE ASC")
-    List<TaskEntity> getAllTasksSortedByAtoZ();
-
-    @Query("SELECT * FROM tasks ORDER BY taskName COLLATE NOCASE DESC")
-    List<TaskEntity> getAllTasksSortedByZtoA();
 }

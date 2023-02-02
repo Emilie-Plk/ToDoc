@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "projects")
 public class ProjectEntity {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     public long projectId;
 
     @NonNull
@@ -23,6 +23,28 @@ public class ProjectEntity {
         this.projectId = projectId;
         this.projectName = projectName;
         this.projectColor = projectColor;
+    }
+
+    public long getProjectId() {
+        return projectId;
+    }
+
+    @NonNull
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public int getProjectColor() {
+        return projectColor;
+    }
+
+    @NonNull
+    public static ProjectEntity[] getProjects() {
+        return new ProjectEntity[]{
+                new ProjectEntity(1L, "Projet Tartampion", 0xFFEADAD1),
+                new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA),
+                new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2),
+        };
     }
 }
 

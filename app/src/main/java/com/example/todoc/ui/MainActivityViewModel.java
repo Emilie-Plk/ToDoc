@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
-import com.example.todoc.data.TaskRepository;
 import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.ProjectWithTaskEntity;
 import com.example.todoc.data.entities.TaskEntity;
@@ -15,7 +14,6 @@ import com.example.todoc.data.entities.TaskEntity;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivityViewModel extends AndroidViewModel {
 
@@ -30,7 +28,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     public LiveData<List<TaskViewStateItem>> getTaskViewStateItemLiveData() {
         return Transformations.map(repository.getTasksWithProject(), tasks -> {
             List<TaskViewStateItem> taskViewStateItems = new ArrayList<>();
-            for (ProjectWithTaskEntity projectWithTask : tasks) {
+            for (ProjectWithTasks projectWithTask : tasks) {
                 for (TaskEntity task : projectWithTask.taskEntities) {
                     taskViewStateItems.add(new TaskViewStateItem(
                             task.taskId,

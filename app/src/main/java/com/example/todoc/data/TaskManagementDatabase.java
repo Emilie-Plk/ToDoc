@@ -12,11 +12,9 @@ import com.example.todoc.data.dao.AllDaos;
 import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.ProjectWithTaskEntity;
 import com.example.todoc.data.entities.TaskEntity;
-import com.example.todoc.data.entities.TimeStampConverter;
 
 
-@Database(entities = {TaskEntity.class, ProjectEntity.class, ProjectWithTaskEntity.class}, version = 1, exportSchema = false)
-@TypeConverters({TimeStampConverter.class})
+@Database(entities = {TaskEntity.class, ProjectEntity.class}, version = 1, exportSchema = false)
 public abstract class TaskManagementDatabase extends RoomDatabase {
 
     public abstract AllDaos allDaos();
