@@ -28,7 +28,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<TaskViewStateItem>> getTaskViewStateItemLiveData() {
-        return Transformations.map(repository.getAllProjectWithTask(), tasks -> {
+        return Transformations.map(repository.getTasksWithProject(), tasks -> {
             List<TaskViewStateItem> taskViewStateItems = new ArrayList<>();
             for (ProjectWithTaskEntity projectWithTask : tasks) {
                 for (TaskEntity task : projectWithTask.taskEntities) {
@@ -46,10 +46,10 @@ public class MainActivityViewModel extends AndroidViewModel {
 
 
     public void onAddingNewTask(String taskName, String projectName) {
-        LiveData<ProjectEntity> project = repository.getProjectByName(projectName);
+        ProjectEntity project = repository.getProjectByName(projectName);
         if (project != null) {
-            TaskEntity task = new TaskEntity(taskName, projectName, new Timestamp(System.currentTimeMillis()));
-            repository.insertTask(task);
+            TaskEntity task = new TaskEntity(taskName, new Timestamp(System.currentTimeMillis()), project.projectId);
+            repository.insertNewTask(task);
             repository.getAllTasks();
         }
     }

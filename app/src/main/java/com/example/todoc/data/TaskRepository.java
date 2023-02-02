@@ -1,13 +1,12 @@
 package com.example.todoc.data;
 
 import android.app.Application;
+import android.graphics.Color;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 
-import com.example.todoc.data.dao.ProjectDao;
-import com.example.todoc.data.dao.ProjectWithTaskDao;
-import com.example.todoc.data.dao.TaskDao;
+import com.example.todoc.data.dao.AllDaos;
 import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.ProjectWithTaskEntity;
 import com.example.todoc.data.entities.TaskEntity;
@@ -17,54 +16,60 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class TaskRepository {
-    private final TaskDao taskDao;
-
-    private final ProjectWithTaskDao projectWithTaskDao;
-
-    private final ProjectDao projectDao;
-
+    private final AllDaos allDaos;
     private final Executor executor;
-    private final MediatorLiveData<List<TaskEntity>> allTasksMediator = new MediatorLiveData<>();
+    private final MutableLiveData<List<TaskEntity>> tasksMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<ProjectEntity>> projectsMutableLiveData = new MutableLiveData<>();
 
     public TaskRepository(Application application) {
         TaskManagementDatabase database = TaskManagementDatabase.getDatabase(application);
-        this.taskDao = database.taskDao();
-        this.projectWithTaskDao = database.projectWithTaskDao();
-        this.projectDao = database.projectDao();
+        this.allDaos = database.allDaos();
         this.executor = Executors.newSingleThreadExecutor();
-        /*allTasksMediator.postValue(taskDao.getAllTasks());*/
+        tasksMutableLiveData.setValue(allDaos.getAllTasks());
+        projectsMutableLiveData.setValue(allDaos.getAllProjects());
+        insertProjects();
     }
 
     public LiveData<List<TaskEntity>> getAllTasks() {
-        return allTasksMediator;
+       return tasksMutableLiveData;
     }
 
-    public LiveData<List<ProjectWithTaskEntity>> getAllProjectWithTask() {
-        return projectWithTaskDao.getProjectWithTasks();
-    }
-
-    public LiveData<List<TaskEntity>> getTasksByProjectId(long projectId) {
-        return taskDao.getTasksByProjectId(projectId);
-    }
-
-    public LiveData<ProjectEntity> getProjectByName(String projectName) {
-        return projectDao.getProjectByName(projectName);
-    }
-
-    public void insertTask(TaskEntity task) {
-        TaskManagementDatabase.databaseWriteExecutor.execute(() -> taskDao.createTask(task));
+    public void insertNewTask(TaskEntity task) {
+        executor.execute(() -> allDaos.insertTask(task));
     }
 
     public void deleteTask(long taskId) {
-        TaskManagementDatabase.databaseWriteExecutor.execute(() -> taskDao.deleteTask(taskId));
+        executor.execute(() ->allDaos.deleteTask(taskId));
     }
 
-    // TODO: insert my projects like :
- /*   ProjectEntity projectA = new ProjectEntity(1, "Project A", Color.RED);
-    ProjectEntity projectB = new ProjectEntity(2, "Project B", Color.BLUE);
-    ProjectEntity projectC = new ProjectEntity(3, "Project C", Color.GREEN);
 
-projectDao.insertProject(projectA);
-projectDao.insertProject(projectB);
-projectDao.insertProject(projectC);*/
+    public LiveData<List<ProjectWithTaskEntity>> getTasksByProjectId(long projectId) {
+        return allDaos.getAllTasksbyProjectId(projectId);
+    }
+
+    public LiveData<List<ProjectWithTaskEntity>> getTasksWithProject()  {
+        return allDaos.getAllTasksbyProject();
+    }
+
+   public LiveData<List<ProjectEntity>> getAllProjects() {
+        return projectsMutableLiveData;
+   }
+
+    public ProjectEntity getProjectByName(String name) {
+        return allDaos.getProjectByName(name);
+    }
+
+    public void insertProjects() {
+        allDaos.insertProject(projectA);
+        allDaos.insertProject(projectB);
+        allDaos.insertProject(projectC);
+    }
+
+
+    // TODO: insert my projects like :
+   ProjectEntity projectA = new ProjectEntity(1, "Project Tartampion", Color.RED);
+    ProjectEntity projectB = new ProjectEntity(2, "Project Lucidia", Color.BLUE);
+    ProjectEntity projectC = new ProjectEntity(3, "Project Circus", Color.GREEN);
+
+
 }

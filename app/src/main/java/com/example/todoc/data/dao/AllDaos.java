@@ -27,8 +27,15 @@ public interface AllDaos {
     @Query("SELECT * FROM tasks")
     List<TaskEntity> getAllTasks();
 
+    @Query("SELECT * FROM projects")
+    List<ProjectEntity> getAllProjects();
+
     @Query("SELECT projectId FROM projects WHERE projectName = :projectName")
     long getProjectId(String projectName);
+
+
+    @Query("SELECT * FROM projects WHERE projectName = :name")
+    ProjectEntity getProjectByName(String name);
 
     @Query("SELECT taskId FROM tasks WHERE taskName = :taskName")
     long getTaskId(String taskName);
@@ -36,6 +43,10 @@ public interface AllDaos {
     @Transaction
     @Query("SELECT * FROM projects INNER JOIN tasks ON projects.projectId = tasks.projectId WHERE projects.projectId = :projectId")
     LiveData<List<ProjectWithTaskEntity>> getAllTasksbyProjectId(long projectId);
+
+    @Transaction
+    @Query("SELECT * FROM projects INNER JOIN tasks ON projects.projectId = tasks.projectId")
+    LiveData<List<ProjectWithTaskEntity>> getAllTasksbyProject();
 
     @Query("SELECT * FROM tasks ORDER BY timeStamp DESC")
     List<TaskEntity> getTasksByTimeDesc();

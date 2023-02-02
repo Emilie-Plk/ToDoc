@@ -6,30 +6,20 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
-import com.example.todoc.data.dao.ProjectDao;
-import com.example.todoc.data.dao.ProjectWithTaskDao;
-import com.example.todoc.data.dao.TaskDao;
+import com.example.todoc.data.dao.AllDaos;
 import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.ProjectWithTaskEntity;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.entities.TimeStampConverter;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 @Database(entities = {TaskEntity.class, ProjectEntity.class, ProjectWithTaskEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({TimeStampConverter.class})
 public abstract class TaskManagementDatabase extends RoomDatabase {
 
-    public abstract TaskDao taskDao();
-
-    public abstract ProjectDao projectDao();
-
-    public abstract ProjectWithTaskDao projectWithTaskDao();
+    public abstract AllDaos allDaos();
 
     public static volatile TaskManagementDatabase INSTANCE;
 
