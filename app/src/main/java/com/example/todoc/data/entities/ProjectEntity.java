@@ -9,9 +9,8 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "projects")
 public class ProjectEntity {
     @PrimaryKey
-    public long projectId;
+    public long id;
 
-    @NonNull
     @ColumnInfo(name = "projectName")
     public String projectName;
 
@@ -19,14 +18,13 @@ public class ProjectEntity {
     @ColorInt
     public int projectColor;
 
-    public ProjectEntity(long projectId, @NonNull String projectName, @ColorInt int projectColor) {
-        this.projectId = projectId;
+    public ProjectEntity(String projectName, @ColorInt int projectColor) {
         this.projectName = projectName;
         this.projectColor = projectColor;
     }
 
-    public long getProjectId() {
-        return projectId;
+    public long getId() {
+        return id;
     }
 
     @NonNull
@@ -41,9 +39,9 @@ public class ProjectEntity {
     @NonNull
     public static ProjectEntity[] getProjects() {
         return new ProjectEntity[]{
-                new ProjectEntity(1L, "Projet Tartampion", 0xFFEADAD1),
-                new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA),
-                new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2),
+                new ProjectEntity("Projet Tartampion", 0xFFEADAD1),
+                new ProjectEntity("Projet Lucidia", 0xFFB4CDBA),
+                new ProjectEntity("Projet Circus", 0xFFA3CED2),
         };
     }
 }

@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginTop="1dp"
         android:hint="@string/project_dropdown_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +24,7 @@
             android:layout_height="wrap_content"
             android:inputType="none"
             android:labelFor="@+id/rooms_actv"
-            android:textColorHint="@color/gray"
-            tools:ignore="TextContrastCheck" />
+            android:textColorHint="@color/gray"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -18,6 +18,12 @@ public interface ProjectDao {
     @Query("SELECT * FROM projects")
     LiveData<List<ProjectEntity>> getProjects();
 
-    @Query("SELECT projectId FROM projects WHERE projectId = :id")
-    LiveData<ProjectEntity> getProjectId(long id);
+    @Query("SELECT * FROM projects WHERE id = :id")
+    ProjectEntity getProjectId(long id);
+
+    @Query("SELECT projectName FROM projects")
+    LiveData<List<String>> getAllProjectNames();
+
+    @Query("DELETE FROM projects")
+    void deleteAll();
 }

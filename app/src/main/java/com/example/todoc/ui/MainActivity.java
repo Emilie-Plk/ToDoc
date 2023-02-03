@@ -2,10 +2,12 @@ package com.example.todoc.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.todoc.OnTaskDeleteClickListener;
 import com.example.todoc.R;
@@ -37,7 +39,10 @@ public class MainActivity extends AppCompatActivity implements OnAddTaskListener
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         binding.listTasks.addItemDecoration(dividerItemDecoration);
         binding.listTasks.setAdapter(adapter);
+        binding.listTasks.setLayoutManager(new LinearLayoutManager(this));
+/*
         viewModel.getTaskViewStateItemLiveData().observe(this, adapter::submitList);
+*/
     }
 
     private void setViewModel() {
@@ -49,6 +54,22 @@ public class MainActivity extends AppCompatActivity implements OnAddTaskListener
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actions, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.filter_alphabetical) {
+          viewModel.sortTasksNamesByAtoZ();
+        } else if (id == R.id.filter_alphabetical_inverted) {
+            viewModel.sortTasksNamesByAtoZ();
+        } else if (id == R.id.filter_oldest_first) {
+            viewModel.sortTasksByTimeDesc();
+        } else if (id == R.id.filter_recent_first) {
+            viewModel.sortTasksByTimeAsc();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

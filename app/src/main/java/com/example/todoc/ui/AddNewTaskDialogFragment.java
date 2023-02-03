@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.todoc.R;
 import com.example.todoc.databinding.FragmentAddNewTaskDialogBinding;
@@ -24,6 +25,8 @@ public class AddNewTaskDialogFragment extends DialogFragment {
 
     private OnAddTaskListener listener;
 
+    private AddNewTaskDialogFragmentViewModel viewModel;
+
     @NonNull
     public static AddNewTaskDialogFragment newInstance() {
         return new AddNewTaskDialogFragment();
@@ -32,12 +35,14 @@ public class AddNewTaskDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this,
+                ViewModelFactory.getInstance(getContext())).get(AddNewTaskDialogFragmentViewModel.class);
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof  OnAddTaskListener) {
+        if (context instanceof OnAddTaskListener) {
             listener = (OnAddTaskListener) context;
         } else {
             throw new ClassCastException(context + " must implement OnAddTaskListener");
@@ -69,7 +74,9 @@ public class AddNewTaskDialogFragment extends DialogFragment {
     }
 
     private void setProjectACTVAdapter() {
-        binding.projectActv.setAdapter(new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.project_name_list)));
+        viewModel.getProjectsNames().observe(this, projectNames -> {
+            binding.projectActv.setAdapter(new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_dropdown_item, projectNames));
+        });
     }
 }

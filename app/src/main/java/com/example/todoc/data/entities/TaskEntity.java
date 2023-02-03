@@ -23,19 +23,17 @@ public class TaskEntity {
     public String taskName;
 
     @ColumnInfo(name = "timeStamp")
-    public long timeStamp;
+    public Timestamp timeStamp;
 
     @ColumnInfo(index = true)
     public long projectId;
 
     public TaskEntity(
             @NonNull String taskName,
-            long timeStamp,
-            long id
+            Timestamp timeStamp
     ) {
         this.taskName = taskName;
         this.timeStamp = timeStamp;
-        this.id = id;
     }
 
     public long getId() {
@@ -47,7 +45,7 @@ public class TaskEntity {
         return taskName;
     }
 
-    public long getTimeStamp() {
+    public Timestamp getTimeStamp() {
         return timeStamp;
     }
 
@@ -55,16 +53,16 @@ public class TaskEntity {
         return projectId;
     }
 
-    public static class TaskAZComparator implements Comparator<TaskEntity> {
+   /* public static class TaskAZComparator implements Comparator<TaskEntity> {
         @Override
         public int compare(TaskEntity left, TaskEntity right) {
             return left.taskName.compareTo(right.taskName);
         }
     }
 
-    /**
+    *//**
      * Comparator to sort task from Z to A
-     */
+     *//*
     public static class TaskZAComparator implements Comparator<TaskEntity> {
         @Override
         public int compare(TaskEntity left, TaskEntity right) {
@@ -72,23 +70,23 @@ public class TaskEntity {
         }
     }
 
-    /**
+    *//**
      * Comparator to sort task from last created to first created
-     */
+     *//*
     public static class TaskRecentComparator implements Comparator<TaskEntity> {
         @Override
         public int compare(TaskEntity left, TaskEntity right) {
-            return (int) (right.timeStamp - left.timeStamp);
+            return right.timeStamp.compareTo(left.timeStamp);
         }
     }
 
-    /**
+    *//**
      * Comparator to sort task from first created to last created
-     */
+     *//*
     public static class TaskOldComparator implements Comparator<TaskEntity> {
         @Override
         public int compare(TaskEntity left, TaskEntity right) {
-            return (int) (left.timeStamp - right.timeStamp);
+            return left.timeStamp.compareTo(right.timeStamp);
         }
-    }
+    }*/
 }
