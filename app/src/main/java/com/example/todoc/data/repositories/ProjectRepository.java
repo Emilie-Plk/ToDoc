@@ -39,9 +39,9 @@ public class ProjectRepository {
         return dao.getAllProjectNames();
     }
 
-
     @MainThread
     public  LiveData<List<ProjectWithTasks>> getProjectWithTasks() {
         return dao.getProjectWithTasks();
     }
+
 }

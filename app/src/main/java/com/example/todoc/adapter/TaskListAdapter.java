@@ -58,7 +58,6 @@ import com.example.todoc.ui.TaskViewStateItem;
             }
         }
 
-
         /**
          * Utility class that can calculate the difference between two lists
          * and update only the necessary items or its content

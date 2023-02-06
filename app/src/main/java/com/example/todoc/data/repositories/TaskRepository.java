@@ -1,10 +1,12 @@
 package com.example.todoc.data.repositories;
 
+import androidx.annotation.MainThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.TaskDao;
+import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
 
 import java.util.ArrayList;

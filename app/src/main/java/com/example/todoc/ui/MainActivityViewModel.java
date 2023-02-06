@@ -4,6 +4,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
@@ -25,6 +26,10 @@ public class MainActivityViewModel extends ViewModel {
     @NonNull
     private final ProjectRepository projectRepository;
 
+    private final MutableLiveData<SortMethod> sortingMethodMutableLiveData = new MutableLiveData<>();
+
+    private final MediatorLiveData<List<TaskViewStateItem>> meetingViewStateItemsMediatorLiveData = new MediatorLiveData<>();
+
     private long projectId;
 
     private final MutableLiveData<List<TaskEntity>> taskEntities = new MutableLiveData<>();
@@ -40,7 +45,30 @@ public class MainActivityViewModel extends ViewModel {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
         taskEntities.setValue(taskRepository.getAllTasksSync());
+
+
+       // meetingViewStateItemsMediatorLiveData.addSource(taskEntities, tasks -> combine(tasks, sortingMethodMutableLiveData));
+
     }
+
+ /*   private void combine(List<TaskEntity> tasks, MutableLiveData<SortMethod> sortingMethodMutableLiveData) {
+        if (tasks == null) {
+            return;
+        }
+
+        List<TaskViewStateItem> filteredTasks = new ArrayList<>();
+        for (ProjectWithTasks projectWithTasks : tasks) {
+            ProjectEntity project = projectWithTasks.project;
+            for (TaskEntity task : projectWithTasks.tasks) {
+                taskViewStateItems.add(new TaskViewStateItem(
+            }
+        }
+    }
+
+    public MediatorLiveData<List<TaskViewStateItem>> getMeetingViewStateItemsMediatorLiveData() {
+        return meetingViewStateItemsMediatorLiveData;
+    }*/
+
 
     public LiveData<List<TaskViewStateItem>> getTaskViewStateItemLiveData() { // MEDIATOR LIVE DATA
         return Transformations.map(projectRepository.getProjectWithTasks(), tasks -> {
@@ -57,7 +85,7 @@ public class MainActivityViewModel extends ViewModel {
                 }
             }
             if (taskViewStateItems.isEmpty()) {
-                noTaskVisibility.postValue(View.VISIBLE);
+                noTaskVisibility.postValue(View.VISIBLE); // is it UI related?
             } else {
                 noTaskVisibility.postValue(View.GONE);
             }
