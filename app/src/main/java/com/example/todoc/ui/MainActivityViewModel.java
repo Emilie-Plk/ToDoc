@@ -42,7 +42,7 @@ public class MainActivityViewModel extends ViewModel {
         taskEntities.setValue(taskRepository.getAllTasksSync());
     }
 
-    public LiveData<List<TaskViewStateItem>> getTaskViewStateItemLiveData() {
+    public LiveData<List<TaskViewStateItem>> getTaskViewStateItemLiveData() { // MEDIATOR LIVE DATA
         return Transformations.map(projectRepository.getProjectWithTasks(), tasks -> {
             List<TaskViewStateItem> taskViewStateItems = new ArrayList<>();
             for (ProjectWithTasks projectWithTasks : tasks) {

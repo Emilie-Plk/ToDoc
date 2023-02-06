@@ -25,10 +25,6 @@ public interface TaskDao {
     @Query("DELETE FROM tasks WHERE id = :taskId")
     void deleteTask(long taskId);
 
-/*    @Transaction
-    @Query("SELECT * FROM projects INNER JOIN tasks ON projects.id = tasks.projectId WHERE projects.id = :projectId")
-    LiveData<List<TaskEntity>> getAllTasksbyProjectId(long projectId);*/
-
 
     @Query("SELECT * FROM tasks ORDER BY timeStamp DESC")
     List<TaskEntity> getTasksByTimeDesc();

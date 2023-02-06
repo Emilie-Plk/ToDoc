@@ -72,10 +72,7 @@ import com.example.todoc.ui.TaskViewStateItem;
 
             @Override
             public boolean areContentsTheSame(@NonNull TaskViewStateItem oldItem, @NonNull TaskViewStateItem newItem) {
-                return oldItem.getTaskId() == newItem.getTaskId()
-                        && oldItem.getTaskName().equals(newItem.getTaskName())
-                        && oldItem.getProjectName().equals(newItem.getProjectName())
-                        && oldItem.getProjectColor() == newItem.getProjectColor();
+                return oldItem.equals(newItem);
             }
         }
     }
