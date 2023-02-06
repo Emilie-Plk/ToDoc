@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.todoc.R;
+import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.databinding.FragmentAddNewTaskDialogBinding;
 
 public class AddNewTaskDialogFragment extends DialogFragment {
@@ -78,5 +79,6 @@ public class AddNewTaskDialogFragment extends DialogFragment {
             binding.projectActv.setAdapter(new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_dropdown_item, projectNames));
         });
+
     }
 }

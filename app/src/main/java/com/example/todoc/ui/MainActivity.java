@@ -3,6 +3,7 @@ package com.example.todoc.ui;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -40,9 +41,10 @@ public class MainActivity extends AppCompatActivity implements OnAddTaskListener
         binding.listTasks.addItemDecoration(dividerItemDecoration);
         binding.listTasks.setAdapter(adapter);
         binding.listTasks.setLayoutManager(new LinearLayoutManager(this));
-/*
+
         viewModel.getTaskViewStateItemLiveData().observe(this, adapter::submitList);
-*/
+        viewModel.getNoTaskVisibility().observe(this, intVisibility -> binding.lblNoTask.setVisibility(intVisibility));
+
     }
 
     private void setViewModel() {
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements OnAddTaskListener
         if (id == R.id.filter_alphabetical) {
           viewModel.sortTasksNamesByAtoZ();
         } else if (id == R.id.filter_alphabetical_inverted) {
-            viewModel.sortTasksNamesByAtoZ();
+            viewModel.sortTasksNamesByZtoA();
         } else if (id == R.id.filter_oldest_first) {
             viewModel.sortTasksByTimeDesc();
         } else if (id == R.id.filter_recent_first) {

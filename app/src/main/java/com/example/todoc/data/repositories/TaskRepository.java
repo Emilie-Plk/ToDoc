@@ -3,50 +3,48 @@ package com.example.todoc.data.repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.todoc.data.dao.ProjectWithTasksDao;
+import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.TaskDao;
-import com.example.todoc.data.entities.ProjectEntity;
-import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class TaskRepository {
 
     private final TaskDao dao;
 
-    private final Executor executor = Executors.newSingleThreadExecutor();
+    private final Executor executor;
+    private final MutableLiveData<List<TaskEntity>> tasksMutableLiveData;
 
-    public TaskRepository(TaskDao dao) {
+    private final List<TaskEntity> tasks = new ArrayList<>();
+
+    public TaskRepository(TaskDao dao, Executor executor) {
         this.dao = dao;
+        this.executor = executor;
+        tasksMutableLiveData = new MutableLiveData<>();
     }
 
     public LiveData<List<TaskEntity>> getAllTasks() {
-        final MutableLiveData<List<TaskEntity>> tasks = new MutableLiveData<>();
-        executor.execute(() -> tasks.postValue(dao.getTasks().getValue()));
-        return tasks;
+        tasksMutableLiveData.postValue(dao.getTasks().getValue());
+        return tasksMutableLiveData;
     }
 
     public List<TaskEntity> getAllTasksSync() {
-        final List<TaskEntity> tasks = new ArrayList<>();
-        executor.execute(() -> tasks.addAll(dao.getTasksSync()));
+        AppDatabase.databaseWriteExecutor.execute(() -> tasks.addAll(dao.getTasksSync()));
         return tasks;
     }
 
     public void addNewTask(TaskEntity task) {
-        executor.execute(() -> dao.insertTask(task));
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            dao.insertTask(task);
+        });
     }
 
     public void deleteTask(long taskId) {
-        executor.execute(() -> dao.deleteTask(taskId));
+        AppDatabase.databaseWriteExecutor.execute(() -> dao.deleteTask(taskId));
     }
-
-  /*  public LiveData<List<TaskEntity>> getTasksByProjectId(long projectId) {
-        return dao.getAllTasksbyProjectId(projectId);
-    }*/
 
     public List<TaskEntity> getTasksByTimeDesc() {
         return dao.getTasksByTimeDesc();

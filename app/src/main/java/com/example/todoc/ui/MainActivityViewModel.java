@@ -1,12 +1,13 @@
 package com.example.todoc.ui;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.example.todoc.data.dao.ProjectWithTasksDao;
 import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
@@ -24,21 +25,29 @@ public class MainActivityViewModel extends ViewModel {
     @NonNull
     private final ProjectRepository projectRepository;
 
+    private long projectId;
+
     private final MutableLiveData<List<TaskEntity>> taskEntities = new MutableLiveData<>();
-    private final LiveData<List<ProjectEntity>> listProjectsLiveData;
+
+    public MutableLiveData<Integer> getNoTaskVisibility() {
+        return noTaskVisibility;
+    }
+
+    private final MutableLiveData<Integer> noTaskVisibility = new MutableLiveData<>();
+
 
     public MainActivityViewModel(@NonNull TaskRepository taskRepository, @NonNull ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
         taskEntities.setValue(taskRepository.getAllTasksSync());
-        listProjectsLiveData = projectRepository.getAllProjects();
     }
 
-/*    public LiveData<List<TaskViewStateItem>> getTaskViewStateItemLiveData() {
-        return Transformations.map(taskRepository.getAllTasks(), tasks -> {
+    public LiveData<List<TaskViewStateItem>> getTaskViewStateItemLiveData() {
+        return Transformations.map(projectRepository.getProjectWithTasks(), tasks -> {
             List<TaskViewStateItem> taskViewStateItems = new ArrayList<>();
-            for (ProjectEntity project : ProjectEntity.getProjects()) {
-                for (TaskEntity task : tasks) {
+            for (ProjectWithTasks projectWithTasks : tasks) {
+                ProjectEntity project = projectWithTasks.project;
+                for (TaskEntity task : projectWithTasks.tasks) {
                     taskViewStateItems.add(new TaskViewStateItem(
                             task.getId(),
                             task.getTaskName(),
@@ -47,24 +56,24 @@ public class MainActivityViewModel extends ViewModel {
                     ));
                 }
             }
+            if (taskViewStateItems.isEmpty()) {
+                noTaskVisibility.postValue(View.VISIBLE);
+            } else {
+                noTaskVisibility.postValue(View.GONE);
+            }
             return taskViewStateItems;
         });
-    }*/
+    }
 
 
     public void onAddingNewTask(String taskName, String projectName) {
-        long projectId = 0L;
         for (ProjectEntity project : ProjectEntity.getProjects()) {
             if (project.getProjectName().equals(projectName)) {
                 projectId = project.getId();
-
             }
         }
-        ProjectEntity project = projectRepository.getProjectById(projectId);
-        if (project != null) {
-            TaskEntity task = new TaskEntity(taskName, new Timestamp(System.currentTimeMillis()));
+            TaskEntity task = new TaskEntity(projectId, taskName, new Timestamp(System.currentTimeMillis()));
             taskRepository.addNewTask(task);
-        }
     }
 
     public void onDeleteTask(long taskId) {

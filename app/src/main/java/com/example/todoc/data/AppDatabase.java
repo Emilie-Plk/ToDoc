@@ -16,6 +16,7 @@ import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.entities.TimeStampConverter;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,9 +32,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static volatile AppDatabase INSTANCE;
 
-    private static final int NUMBER_OF_THREADS = 7;
-    static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private final static int threads = Runtime.getRuntime().availableProcessors();
+    public static final ExecutorService databaseWriteExecutor =
+            Executors.newFixedThreadPool(threads);
 
 
     public static AppDatabase getDatabase(@NonNull final Context context) {  // SINGLETON (getDatabase() returns it)
@@ -58,11 +59,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
             databaseWriteExecutor.execute(() -> {
                 ProjectDao dao = INSTANCE.projectDao();
-
-                dao.insertProject(new ProjectEntity("Projet Lucidia", 0xFFB4CDBA));
-                dao.insertProject(new ProjectEntity("Projet Tartampion", 0xFFEADAD1));
-                dao.insertProject(new ProjectEntity("Projet Circus", 0xFFA3CED2));
-
+                TaskDao taskDao = INSTANCE.taskDao();
+                dao.insertProject(new ProjectEntity(1L, "Projet Lucidia", 0xFFB4CDBA));
+                dao.insertProject(new ProjectEntity(2L, "Projet Tartampion", 0xFFEADAD1));
+                dao.insertProject(new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2));
+taskDao.insertTask(new TaskEntity(2L, "Nettoyer le sol", new Timestamp(System.currentTimeMillis())));
             });
         }
     };

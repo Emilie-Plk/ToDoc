@@ -18,7 +18,8 @@ public class ProjectEntity {
     @ColorInt
     public int projectColor;
 
-    public ProjectEntity(String projectName, @ColorInt int projectColor) {
+    public ProjectEntity(long id, String projectName, @ColorInt int projectColor) {
+        this.id = id;
         this.projectName = projectName;
         this.projectColor = projectColor;
     }
@@ -39,10 +40,11 @@ public class ProjectEntity {
     @NonNull
     public static ProjectEntity[] getProjects() {
         return new ProjectEntity[]{
-                new ProjectEntity("Projet Tartampion", 0xFFEADAD1),
-                new ProjectEntity("Projet Lucidia", 0xFFB4CDBA),
-                new ProjectEntity("Projet Circus", 0xFFA3CED2),
+                new ProjectEntity(1L, "Projet Tartampion", 0xFFEADAD1),
+                new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA),
+                new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2),
         };
     }
+
 }
 

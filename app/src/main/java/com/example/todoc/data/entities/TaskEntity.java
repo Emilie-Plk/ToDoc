@@ -29,9 +29,11 @@ public class TaskEntity {
     public long projectId;
 
     public TaskEntity(
+            long projectId,
             @NonNull String taskName,
             Timestamp timeStamp
     ) {
+        this.projectId = projectId;
         this.taskName = taskName;
         this.timeStamp = timeStamp;
     }
@@ -53,40 +55,4 @@ public class TaskEntity {
         return projectId;
     }
 
-   /* public static class TaskAZComparator implements Comparator<TaskEntity> {
-        @Override
-        public int compare(TaskEntity left, TaskEntity right) {
-            return left.taskName.compareTo(right.taskName);
-        }
-    }
-
-    *//**
-     * Comparator to sort task from Z to A
-     *//*
-    public static class TaskZAComparator implements Comparator<TaskEntity> {
-        @Override
-        public int compare(TaskEntity left, TaskEntity right) {
-            return right.taskName.compareTo(left.taskName);
-        }
-    }
-
-    *//**
-     * Comparator to sort task from last created to first created
-     *//*
-    public static class TaskRecentComparator implements Comparator<TaskEntity> {
-        @Override
-        public int compare(TaskEntity left, TaskEntity right) {
-            return right.timeStamp.compareTo(left.timeStamp);
-        }
-    }
-
-    *//**
-     * Comparator to sort task from first created to last created
-     *//*
-    public static class TaskOldComparator implements Comparator<TaskEntity> {
-        @Override
-        public int compare(TaskEntity left, TaskEntity right) {
-            return left.timeStamp.compareTo(right.timeStamp);
-        }
-    }*/
 }

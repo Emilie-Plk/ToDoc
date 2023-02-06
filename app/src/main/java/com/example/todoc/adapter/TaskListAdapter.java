@@ -39,12 +39,13 @@ import com.example.todoc.ui.TaskViewStateItem;
 
         public static class TaskViewHolder extends RecyclerView.ViewHolder {
 
-            private final ImageView deleteTask;
+            private final ImageView deleteTask, imgProject;
             private final TextView taskTitle, projectName;
 
             public TaskViewHolder(@NonNull ItemTaskBinding binding) {
                 super(binding.getRoot());
                 taskTitle = binding.lblTaskName;
+                imgProject = binding.imgProject;
                 projectName = binding.lblProjectName;
                 deleteTask = binding.imgDelete;
             }
@@ -52,6 +53,7 @@ import com.example.todoc.ui.TaskViewStateItem;
             public void bind(TaskViewStateItem item, OnTaskDeleteClickListener listener) {
                 taskTitle.setText(item.getTaskName());
                 projectName.setText(item.getProjectName());
+                imgProject.setColorFilter(item.getProjectColor());
                 deleteTask.setOnClickListener(view -> listener.onDeleteTask(item.getTaskId()));
             }
         }
@@ -70,7 +72,10 @@ import com.example.todoc.ui.TaskViewStateItem;
 
             @Override
             public boolean areContentsTheSame(@NonNull TaskViewStateItem oldItem, @NonNull TaskViewStateItem newItem) {
-                return oldItem.equals(newItem);
+                return oldItem.getTaskId() == newItem.getTaskId()
+                        && oldItem.getTaskName().equals(newItem.getTaskName())
+                        && oldItem.getProjectName().equals(newItem.getProjectName())
+                        && oldItem.getProjectColor() == newItem.getProjectColor();
             }
         }
     }
