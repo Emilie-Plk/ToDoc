@@ -55,23 +55,4 @@ public class TaskRepository {
         AppDatabase.databaseWriteExecutor.execute(() -> dao.deleteTask(taskId));
     }
 
-    public List<TaskEntity> getTasksByTimeDesc() {
-       return dao.getTasksByTimeDesc();
-    }
-
-    public List<TaskEntity> getTasksByTimeAsc() {
-        AppDatabase.databaseWriteExecutor.execute(() -> tasksByTimeAsc.addAll(dao.getTasksByTimeAsc()));
-        return tasksByTimeAsc;
-    }
-
-    public List<TaskEntity> getAllTasksSortedByAtoZ() {
-        AppDatabase.databaseWriteExecutor.execute(() -> tasksSortedByAtoZ.addAll(dao.getAllTasksSortedByAtoZ()));
-        return tasksSortedByAtoZ;
-    }
-
-    public List<TaskEntity> getAllTasksSortedByZtoA() {
-        AppDatabase.databaseWriteExecutor.execute(() -> tasksSortedByZtoA.addAll(dao.getAllTasksSortedByZtoA()));
-        return tasksSortedByZtoA;
-    }
-
 }

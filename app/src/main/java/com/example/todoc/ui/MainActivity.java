@@ -39,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         binding.listTasks.addItemDecoration(dividerItemDecoration);
+
         binding.listTasks.setAdapter(adapter);
         binding.listTasks.setLayoutManager(new LinearLayoutManager(this));
 
-        viewModel.getTaskViewStateItemLiveData().observe(this, adapter::submitList);
-        viewModel.getisNoTaskTextViewVisible().observe(this, isVisible -> binding.lblNoTask.setVisibility(isVisible ? View.VISIBLE : View.GONE));
-
+        viewModel.getMeetingViewStateItemsMediatorLiveData().observe(this, adapter::submitList);
+        viewModel.getIsNoTaskTextViewVisible().observe(this, isVisible ->
+                binding.lblNoTask.setVisibility(isVisible ? View.VISIBLE : View.GONE));
     }
 
     private void setViewModel() {
@@ -60,17 +61,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.filter_alphabetical) {
-          viewModel.sortTasksNamesByAtoZ();
-        } else if (id == R.id.filter_alphabetical_inverted) {
-            viewModel.sortTasksNamesByZtoA();
-        } else if (id == R.id.filter_oldest_first) {
-            viewModel.sortTasksByTimeDesc();
-        } else if (id == R.id.filter_recent_first) {
-            viewModel.sortTasksByTimeAsc();
+        switch (item.getItemId()) {
+            case (R.id.filter_alphabetical):
+                viewModel.sortTasks(SortMethod.ALPHABETICAL);
+                break;
+            case (R.id.filter_alphabetical_inverted):
+                viewModel.sortTasks(SortMethod.ALPHABETICAL_INVERTED);
+                break;
+            case (R.id.filter_oldest_first):
+                viewModel.sortTasks(SortMethod.OLD_FIRST);
+                break;
+            case (R.id.filter_recent_first):
+                viewModel.sortTasks(SortMethod.RECENT_FIRST);
+                break;
+            default:
+                break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

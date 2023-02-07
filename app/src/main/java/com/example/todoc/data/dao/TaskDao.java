@@ -25,16 +25,4 @@ public interface TaskDao {
     @Query("DELETE FROM tasks WHERE id = :taskId")
     void deleteTask(long taskId);
 
-
-    @Query("SELECT * FROM tasks ORDER BY timeStamp DESC")
-    List<TaskEntity> getTasksByTimeDesc(); // TODO: LiveData
-
-    @Query("SELECT * FROM tasks ORDER BY timeStamp ASC")
-    List<TaskEntity> getTasksByTimeAsc();
-
-    @Query("SELECT * FROM tasks ORDER BY taskName COLLATE NOCASE ASC")
-    List<TaskEntity> getAllTasksSortedByAtoZ();
-
-    @Query("SELECT * FROM tasks ORDER BY taskName COLLATE NOCASE DESC")
-    List<TaskEntity> getAllTasksSortedByZtoA();
 }
