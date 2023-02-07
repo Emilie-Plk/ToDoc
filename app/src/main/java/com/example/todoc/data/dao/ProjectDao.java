@@ -22,7 +22,7 @@ public interface ProjectDao {
     @Query("SELECT * FROM projects")
    List<ProjectEntity> getProjectsSync();
 
-    @Query("SELECT * FROM tasks")
+    @Query("SELECT * FROM projects")
     LiveData<List<ProjectWithTasks>> getProjectWithTasks();
 
     @Query("SELECT * FROM projects WHERE id = :id")
@@ -30,8 +30,6 @@ public interface ProjectDao {
 
     @Query("SELECT projectName FROM projects")
     LiveData<List<String>> getAllProjectNames();
-
-
 
     @Query("DELETE FROM projects")
     void deleteAll();

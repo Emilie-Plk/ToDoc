@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.todoc.OnTaskDeleteClickListener;
 import com.example.todoc.R;
 import com.example.todoc.adapter.TaskListAdapter;
 import com.example.todoc.databinding.ActivityMainBinding;
+import com.example.todoc.ui.addTask.AddNewTaskDialogFragment;
 
-public class MainActivity extends AppCompatActivity implements OnAddTaskListener {
+public class MainActivity extends AppCompatActivity {
 
     private MainActivityViewModel viewModel;
     private ActivityMainBinding binding;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements OnAddTaskListener
         binding.listTasks.setLayoutManager(new LinearLayoutManager(this));
 
         viewModel.getTaskViewStateItemLiveData().observe(this, adapter::submitList);
-        viewModel.getNoTaskVisibility().observe(this, intVisibility -> binding.lblNoTask.setVisibility(intVisibility));
+        viewModel.getisNoTaskTextViewVisible().observe(this, isVisible -> binding.lblNoTask.setVisibility(isVisible ? View.VISIBLE : View.GONE));
 
     }
 
@@ -74,9 +74,4 @@ public class MainActivity extends AppCompatActivity implements OnAddTaskListener
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    public void onAddingNewTask(String newTask, String projectName) {
-        viewModel.onAddingNewTask(newTask, projectName);
-    }
 }

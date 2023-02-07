@@ -34,6 +34,7 @@ public class ProjectEntity {
         return projectName;
     }
 
+    @ColorInt
     public int getProjectColor() {
         return projectColor;
     }

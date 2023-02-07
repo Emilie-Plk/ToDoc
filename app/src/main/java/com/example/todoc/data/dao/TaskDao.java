@@ -27,7 +27,7 @@ public interface TaskDao {
 
 
     @Query("SELECT * FROM tasks ORDER BY timeStamp DESC")
-    List<TaskEntity> getTasksByTimeDesc();
+    List<TaskEntity> getTasksByTimeDesc(); // TODO: LiveData
 
     @Query("SELECT * FROM tasks ORDER BY timeStamp ASC")
     List<TaskEntity> getTasksByTimeAsc();

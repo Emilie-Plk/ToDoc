@@ -21,6 +21,13 @@ public class TaskRepository {
     private final MutableLiveData<List<TaskEntity>> tasksMutableLiveData;
 
     private final List<TaskEntity> tasks = new ArrayList<>();
+    private final List<TaskEntity> tasksByTimeDesc = new ArrayList<>();
+
+    private final List<TaskEntity> tasksByTimeAsc = new ArrayList<>();
+
+    private final List<TaskEntity> tasksSortedByAtoZ = new ArrayList<>();
+
+    private final List<TaskEntity> tasksSortedByZtoA = new ArrayList<>();
 
     public TaskRepository(TaskDao dao, Executor executor) {
         this.dao = dao;
@@ -49,19 +56,22 @@ public class TaskRepository {
     }
 
     public List<TaskEntity> getTasksByTimeDesc() {
-        return dao.getTasksByTimeDesc();
+       return dao.getTasksByTimeDesc();
     }
 
     public List<TaskEntity> getTasksByTimeAsc() {
-        return dao.getTasksByTimeAsc();
+        AppDatabase.databaseWriteExecutor.execute(() -> tasksByTimeAsc.addAll(dao.getTasksByTimeAsc()));
+        return tasksByTimeAsc;
     }
 
     public List<TaskEntity> getAllTasksSortedByAtoZ() {
-        return dao.getAllTasksSortedByAtoZ();
+        AppDatabase.databaseWriteExecutor.execute(() -> tasksSortedByAtoZ.addAll(dao.getAllTasksSortedByAtoZ()));
+        return tasksSortedByAtoZ;
     }
 
     public List<TaskEntity> getAllTasksSortedByZtoA() {
-        return dao.getAllTasksSortedByZtoA();
+        AppDatabase.databaseWriteExecutor.execute(() -> tasksSortedByZtoA.addAll(dao.getAllTasksSortedByZtoA()));
+        return tasksSortedByZtoA;
     }
 
 }

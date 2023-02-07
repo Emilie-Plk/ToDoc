@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.repositories.ProjectRepository;
 import com.example.todoc.data.repositories.TaskRepository;
+import com.example.todoc.ui.addTask.AddNewTaskDialogFragmentViewModel;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -47,7 +48,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(MainActivityViewModel.class)) {
             return (T) new MainActivityViewModel(taskRepository, projectRepository);
         } else if (modelClass.isAssignableFrom(AddNewTaskDialogFragmentViewModel.class)) {
-            return (T) new AddNewTaskDialogFragmentViewModel(projectRepository);
+            return (T) new AddNewTaskDialogFragmentViewModel(taskRepository, projectRepository);
         } else
             throw new IllegalArgumentException("Unknown model class!");
     }
