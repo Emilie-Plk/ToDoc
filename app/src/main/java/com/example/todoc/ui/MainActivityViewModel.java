@@ -1,9 +1,14 @@
 package com.example.todoc.ui;
 
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingLong;
+import static java.util.stream.Collectors.toList;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todoc.data.entities.ProjectEntity;
@@ -19,46 +24,15 @@ public class MainActivityViewModel extends ViewModel {
 
     @NonNull
     private final TaskRepository taskRepository;
-    @NonNull
-    private final ProjectRepository projectRepository;
-
-
-    private final MutableLiveData<SortMethod> sortingMethodMutableLiveData = new MutableLiveData<>();
-
-    private final MutableLiveData<List<TaskViewStateItem>> taskViewStateItemsMutableLiveData = new MutableLiveData<>();
-
-    private final MutableLiveData<List<TaskEntity>> taskEntities = new MutableLiveData<>();
-
+    private final MediatorLiveData<List<TaskViewStateItem>> taskViewStateItemsMutableLiveData = new MediatorLiveData<>();
 
     private final MutableLiveData<Boolean> isNoTaskTextViewVisible = new MutableLiveData<>();
 
 
     public MainActivityViewModel(@NonNull TaskRepository taskRepository, @NonNull ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
-        this.projectRepository = projectRepository;
-        taskEntities.setValue(taskRepository.getAllTasksSync());
-    }
 
-
-    public LiveData<List<TaskViewStateItem>> getMeetingViewStateItemsMediatorLiveData() {
-        return taskViewStateItemsMutableLiveData;
-    }
-
-    public MutableLiveData<Boolean> getisNoTaskTextViewVisible() {
-        return isNoTaskTextViewVisible;
-    }
-
-    public void setSortMethodMutableLiveData(SortMethod sortMethod) {
-        sortingMethodMutableLiveData.setValue(sortMethod);
-    }
-
-    public MutableLiveData<SortMethod> getSortingMethodMutableLiveData() {
-        return sortingMethodMutableLiveData;
-    }
-
-
-    public LiveData<List<TaskViewStateItem>> getTaskViewStateItemLiveData() {
-        return Transformations.map(projectRepository.getProjectWithTasks(), projectsWithTasks -> {
+        taskViewStateItemsMutableLiveData.addSource(projectRepository.getProjectWithTasks(), projectsWithTasks -> {
             List<TaskViewStateItem> taskViewStateItems = new ArrayList<>();
             for (ProjectWithTasks projectWithTasks : projectsWithTasks) {
                 ProjectEntity project = projectWithTasks.project;
@@ -67,41 +41,82 @@ public class MainActivityViewModel extends ViewModel {
                             task.getId(),
                             task.getTaskName(),
                             project.getProjectName(),
-                            project.getProjectColor()
-                    ));
+                            project.getProjectColor(),
+                            task.getTimeStamp()));
                 }
-            }
-
-            if (taskViewStateItems.isEmpty()) {
-                isNoTaskTextViewVisible.setValue(true);
-            } else {
-                isNoTaskTextViewVisible.postValue(false);
             }
             taskViewStateItemsMutableLiveData.setValue(taskViewStateItems);
 
-            return taskViewStateItemsMutableLiveData.getValue();
+            if (taskViewStateItemsMutableLiveData.getValue().isEmpty()) {
+                isNoTaskTextViewVisible.setValue(true);
+            } else {
+                isNoTaskTextViewVisible.setValue(false);
+            }
         });
     }
 
+
+    public MutableLiveData<Boolean> getIsNoTaskTextViewVisible() {
+        return isNoTaskTextViewVisible;
+    }
+
+    public LiveData<List<TaskViewStateItem>> getMeetingViewStateItemsMediatorLiveData() {
+        return taskViewStateItemsMutableLiveData;
+    }
 
     public void onDeleteTask(long taskId) {
         taskRepository.deleteTask(taskId);
     }
 
-    public void sortTasksByTimeDesc() {
-        taskEntities.setValue(taskRepository.getTasksByTimeDesc());
+    public void sortTasks(SortMethod sortMethod) {
+        List<TaskViewStateItem> taskViewStateItems = taskViewStateItemsMutableLiveData.getValue();
+        assert taskViewStateItems != null;
+        switch (sortMethod) {
+            case ALPHABETICAL:
+                sortTasksAlphabetically(taskViewStateItems);
+                break;
+            case ALPHABETICAL_INVERTED:
+                sortTasksAlphabeticallyInverted(taskViewStateItems);
+                break;
+            case OLD_FIRST:
+                sortTasksChronologically(taskViewStateItems);
+                break;
+            case RECENT_FIRST:
+                sortTasksChronologicallyReverted(taskViewStateItems);
+                break;
+            case NONE:
+                break;
+        }
     }
 
-    public void sortTasksByTimeAsc() {
-        taskEntities.setValue(taskRepository.getTasksByTimeAsc());
+    private void sortTasksChronologicallyReverted(List<TaskViewStateItem> taskViewStateItems) {
+        taskViewStateItemsMutableLiveData.setValue(taskViewStateItemsMutableLiveData.getValue()
+                .stream()
+                .sorted(comparingLong((TaskViewStateItem o) -> o.getTimestamp().getTime()).reversed())
+                .collect(toList()));
     }
 
-    public void sortTasksNamesByAtoZ() {
-        taskEntities.setValue(taskRepository.getAllTasksSortedByAtoZ());
+    private void sortTasksChronologically(List<TaskViewStateItem> taskViewStateItems) {
+        taskViewStateItemsMutableLiveData.setValue(taskViewStateItemsMutableLiveData.getValue()
+                .stream()
+                .sorted(comparingLong((TaskViewStateItem o) -> o.getTimestamp().getTime()))
+                .collect(toList()));
     }
 
-    public void sortTasksNamesByZtoA() {
-        taskEntities.setValue(taskRepository.getAllTasksSortedByZtoA());
+    private void sortTasksAlphabeticallyInverted(List<TaskViewStateItem> taskViewStateItems) {
+        taskViewStateItemsMutableLiveData.setValue(
+                taskViewStateItemsMutableLiveData.getValue()
+                        .stream()
+                        .sorted(comparing(o -> o.getTaskName().toLowerCase(), reverseOrder()))
+                        .collect(toList()));
     }
 
+    private void sortTasksAlphabetically(List<TaskViewStateItem> taskViewStateItems) {
+        taskViewStateItemsMutableLiveData.setValue(
+                taskViewStateItemsMutableLiveData.getValue()
+                        .stream()
+                        .sorted(comparing(o -> o.getTaskName().toLowerCase()))
+                        .collect(toList()));
+    }
 }
+
