@@ -1,12 +1,8 @@
 
 r
 Bapp/src/main/java/com/example/todoc/OnTaskDeleteClickListener.java,e\d\edc0f9ca82b1ee91dc03f539e0f2328abef6d860
-…
-Uapp/src/main/java/com/example/todoc/ui/addTask/AddNewTaskDialogFragmentViewModel.java,5\8\58ab86e7c7bb84d66cc4b8fe6d9fa073b178fb57
 p
 @app/src/main/java/com/example/todoc/adapter/TaskListAdapter.java,d\6\d6d8e3dc78ea5dca1471b48dc4f8866aec2d3fe1
-|
-Lapp/src/main/java/com/example/todoc/ui/addTask/AddNewTaskDialogFragment.java,4\9\49930f3cd6756d99987249e1fc101178ce7d5b6f
 h
 8app/src/main/java/com/example/todoc/ui/MainActivity.java,8\0\802850a988ffd7abd2a99f001db295ccc8c123c1
 q
@@ -25,16 +21,12 @@ l
 <app/src/main/java/com/example/todoc/data/dao/ProjectDao.java,e\3\e3612245bbf01050a53269c9ab3ad8ff62eaade1
 i
 9app/src/main/java/com/example/todoc/data/dao/TaskDao.java,3\4\3466bd4d7d0c966555ddbe6f8d5d36f09c6d0ffb
-t
-Dapp/src/main/java/com/example/todoc/data/entities/ProjectEntity.java,7\8\78c8614ff62b1d6cbd76a60b5cf4f6f9d9aa8760
 w
 Gapp/src/main/java/com/example/todoc/data/entities/ProjectWithTasks.java,6\8\68624553bb3b7a0a021fc3adefa79b38b826b136
 q
 Aapp/src/main/java/com/example/todoc/data/entities/TaskEntity.java,5\c\5c96029f2fd008d50d8fe2ac2d5da8f32bde6e3b
 y
 Iapp/src/main/java/com/example/todoc/data/entities/TimeStampConverter.java,e\e\ee855c18665329a77b72e5de64bb37f29e69faaa
-|
-Lapp/src/main/java/com/example/todoc/data/repositories/ProjectRepository.java,4\7\47c2b21aedf54608092b6c521011c5e57a5639cd
 y
 Iapp/src/main/java/com/example/todoc/data/repositories/TaskRepository.java,8\f\8fcdc48051ae516614a4c0fa4ffe312551d53d46
 P

@@ -6,7 +6,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,9 +73,11 @@ public class AddNewTaskDialogFragment extends DialogFragment {
     }
 
     private void setProjectACTVAdapter() {
-        viewModel.getProjectsNames().observe(this,
-                projectNames -> binding.projectActv.setAdapter(new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, projectNames)));
+        viewModel.getAllProjects().observe(this,
+                projectEntities -> {
+                    ProjectArrayAdapter projectAdapter = new ProjectArrayAdapter(getActivity(), projectEntities);
+                    binding.projectActv.setAdapter(projectAdapter);
+                });
     }
 
     private void setupObservers() {
@@ -87,6 +88,7 @@ public class AddNewTaskDialogFragment extends DialogFragment {
                 isEnabled -> binding.addBtnDialog.setEnabled(isEnabled));
     }
 
+
     private void getChosenProject() {
         binding.projectActv.setOnItemClickListener((adapterView, v, position, id) -> {
             chosenProject = adapterView.getItemAtPosition(position).toString();
@@ -94,10 +96,14 @@ public class AddNewTaskDialogFragment extends DialogFragment {
         });
     }
 
+
     private void addNewTask() {
         binding.addBtnDialog.setOnClickListener(v -> {
             if (!binding.txtTaskName.getText().toString().isEmpty()) {
-                viewModel.onAddingNewTask(binding.txtTaskName.getText().toString(), chosenProject);
+                ProjectArrayAdapter projectAdapter = (ProjectArrayAdapter) binding.projectActv.getAdapter();
+                String taskDescription = binding.txtTaskName.getText().toString();
+                long projectId = projectAdapter.getProjectId(chosenProject);
+                viewModel.onAddingNewTask(taskDescription, projectId);
             }
         });
     }

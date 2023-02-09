@@ -15,6 +15,7 @@ import com.example.todoc.ui.utils.SingleLiveEvent;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddNewTaskDialogFragmentViewModel extends ViewModel {
 
@@ -25,21 +26,19 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
     private final TaskRepository taskRepository;
     private final SingleLiveEvent<Void> closeDialogFragment = new SingleLiveEvent<>();
 
-    private final MediatorLiveData<Long> projectIdMutableLiveData = new MediatorLiveData<>();
     private final MutableLiveData<Boolean> isEveryFieldComplete = new MutableLiveData<>(false);
     private boolean isProjectChosen;
 
     private boolean isTaskDescriptionCompleted;
-
-    private long projectId;
 
     public AddNewTaskDialogFragmentViewModel(@NonNull TaskRepository taskRepository, @NonNull ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
 
-    public LiveData<List<String>> getProjectsNames() {
-        return projectRepository.getAllProjectsNames();
+
+    public LiveData<List<ProjectEntity>> getAllProjects() {
+        return projectRepository.getAllProjects();
     }
 
     public SingleLiveEvent<Void> getCloseFragment() {
@@ -50,12 +49,7 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
         return isEveryFieldComplete;
     }
 
-    public void onAddingNewTask(String taskDescription, String projectName) {
-        for (ProjectEntity project : ProjectEntity.getProjects()) {
-            if (project.getProjectName().equals(projectName)) {
-                projectId = project.getId();
-            }
-        }
+    public void onAddingNewTask(String taskDescription, long projectId) {
         TaskEntity task = new TaskEntity(projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
         closeDialogFragment.call();
         taskRepository.addNewTask(task);
