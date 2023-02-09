@@ -1,16 +1,10 @@
 
 r
 Bapp/src/main/java/com/example/todoc/OnTaskDeleteClickListener.java,e\d\edc0f9ca82b1ee91dc03f539e0f2328abef6d860
-p
-@app/src/main/java/com/example/todoc/adapter/TaskListAdapter.java,d\6\d6d8e3dc78ea5dca1471b48dc4f8866aec2d3fe1
-h
-8app/src/main/java/com/example/todoc/ui/MainActivity.java,8\0\802850a988ffd7abd2a99f001db295ccc8c123c1
 f
 6app/src/main/java/com/example/todoc/ui/SortMethod.java,f\c\fcf82918908e4cfe0f937a95690bbc15ebd5dafa
 m
 =app/src/main/java/com/example/todoc/ui/TaskViewStateItem.java,8\6\8629117d25d7dd950cd598f370e10efa7cfbe8d4
-l
-<app/src/main/java/com/example/todoc/ui/ViewModelFactory.java,e\8\e88ad60561ee3c0b8c94e9aff324f728b419ae0b
 s
 Capp/src/main/java/com/example/todoc/ui/utils/NotificationState.java,7\a\7ad6a2b960275846828ddb13635eab733e5d1cec
 q

@@ -7,14 +7,6 @@ import java.util.List;
 
 public class ProjectWithTasks {
 
-    public ProjectEntity getProject() {
-        return project;
-    }
-
-    public List<TaskEntity> getTasks() {
-        return tasks;
-    }
-
     @Embedded
     public ProjectEntity project;
 
@@ -24,5 +16,13 @@ public class ProjectWithTasks {
    public ProjectWithTasks(ProjectEntity project, List<TaskEntity> tasks) {
         this.project = project;
         this.tasks = tasks;
+    }
+
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public List<TaskEntity> getTasks() {
+        return tasks;
     }
 }

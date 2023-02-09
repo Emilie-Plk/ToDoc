@@ -16,9 +16,9 @@ public class ProjectEntity {
 
     @ColumnInfo(name = "projectColor")
     @ColorInt
-    private final Integer projectColor;
+    private final int projectColor;
 
-    public ProjectEntity(long id, String projectName, @ColorInt Integer projectColor) {
+    public ProjectEntity(long id, String projectName, @ColorInt int projectColor) {
         this.id = id;
         this.projectName = projectName;
         this.projectColor = projectColor;
@@ -34,7 +34,7 @@ public class ProjectEntity {
     }
 
     @ColorInt
-    public Integer getProjectColor() {
+    public int getProjectColor() {
         return projectColor;
     }
 
