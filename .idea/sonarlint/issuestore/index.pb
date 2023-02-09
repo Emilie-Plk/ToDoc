@@ -19,8 +19,6 @@ l
 <app/src/main/java/com/example/todoc/data/dao/ProjectDao.java,e\3\e3612245bbf01050a53269c9ab3ad8ff62eaade1
 i
 9app/src/main/java/com/example/todoc/data/dao/TaskDao.java,3\4\3466bd4d7d0c966555ddbe6f8d5d36f09c6d0ffb
-w
-Gapp/src/main/java/com/example/todoc/data/entities/ProjectWithTasks.java,6\8\68624553bb3b7a0a021fc3adefa79b38b826b136
 q
 Aapp/src/main/java/com/example/todoc/data/entities/TaskEntity.java,5\c\5c96029f2fd008d50d8fe2ac2d5da8f32bde6e3b
 y

@@ -34,8 +34,8 @@ public class MainActivityViewModel extends ViewModel {
         taskViewStateItemsMediatorLiveData.addSource(projectRepository.getProjectWithTasks(), projectsWithTasks -> {
             List<TaskViewStateItem> taskViewStateItems = new ArrayList<>();
             for (ProjectWithTasks projectWithTasks : projectsWithTasks) {
-                ProjectEntity project = projectWithTasks.project;
-                for (TaskEntity task : projectWithTasks.tasks) {
+                ProjectEntity project = projectWithTasks.getProject();
+                for (TaskEntity task : projectWithTasks.getTasks()) {
                     taskViewStateItems.add(new TaskViewStateItem(
                             task.getId(),
                             task.getTaskDescription(),

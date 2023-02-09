@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class MainActivityInstrumentedTest {
 
     private static final String PROJECT_NAME = "Projet Circus";
 
@@ -96,8 +96,7 @@ public class ExampleInstrumentedTest {
         onAdding3Tasks_recyclerViewShouldContain3Tasks();
 
         onView(withId(R.id.action_filter)).check(matches(isDisplayed())).perform(click());
-
-       onView(withText(R.string.sort_alphabetical)).perform(click());
+        onView(withText(R.string.sort_alphabetical)).perform(click());
 
         onView(withRecyclerView(R.id.list_tasks)
                 .atPositionOnView(0, R.id.lbl_task_name))
@@ -111,6 +110,27 @@ public class ExampleInstrumentedTest {
                 .atPositionOnView(2, R.id.lbl_task_name))
                 .check(matches(withText(TASK_DESCRIPTION_Z)));
     }
+
+    @Test
+    public void onSortingTasksZtoA_shouldSortTasksNamesZtoA() {
+        onAdding3Tasks_recyclerViewShouldContain3Tasks();
+
+        onView(withId(R.id.action_filter)).check(matches(isDisplayed())).perform(click());
+        onView(withText(R.string.sort_alphabetical)).perform(click());
+
+        onView(withRecyclerView(R.id.list_tasks)
+                .atPositionOnView(2, R.id.lbl_task_name))
+                .check(matches(withText(TASK_DESCRIPTION_Z)));
+
+        onView(withRecyclerView(R.id.list_tasks)
+                .atPositionOnView(1, R.id.lbl_task_name))
+                .check(matches(withText(TASK_DESCRIPTION)));
+
+        onView(withRecyclerView(R.id.list_tasks)
+                .atPositionOnView(0, R.id.lbl_task_name))
+                .check(matches(withText(TASK_DESCRIPTION_A)));
+    }
+
 
     private void addOneTask(String taskDescription) {
         onView(withId(R.id.fab_add_task)).perform(click());
