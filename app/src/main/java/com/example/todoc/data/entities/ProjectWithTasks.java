@@ -4,7 +4,6 @@ import androidx.room.Embedded;
 import androidx.room.Relation;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ProjectWithTasks {
 

@@ -4,6 +4,7 @@ import androidx.annotation.MainThread;
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 
+import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.ProjectDao;
 import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.ProjectWithTasks;
@@ -16,12 +17,8 @@ public class ProjectRepository {
 
     private final ProjectDao dao;
 
-
-    private final Executor executor;
-
-    public ProjectRepository(ProjectDao dao, Executor executor) {
+    public ProjectRepository(ProjectDao dao) {
         this.dao = dao;
-        this.executor = executor;
     }
 
     @MainThread
@@ -31,7 +28,7 @@ public class ProjectRepository {
 
     @WorkerThread
     public List<ProjectEntity> getAllProjectsSync() {
-   return dao.getProjectsSync();
+        return dao.getProjectsSync();
     }
 
     @MainThread

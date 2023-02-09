@@ -20,7 +20,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private final ProjectRepository projectRepository;
 
-    private static ViewModelFactory factory;
+    private static volatile ViewModelFactory factory;
 
     public static ViewModelFactory getInstance(Context context) {
         if (factory == null) {
@@ -36,8 +36,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public ViewModelFactory(Context context) {
         Executor executor = Executors.newFixedThreadPool(4);
         AppDatabase db = AppDatabase.getDatabase(context);
-        this.taskRepository = new TaskRepository(db.taskDao(),executor);
-        this.projectRepository = new ProjectRepository(db.projectDao(), executor);
+        this.taskRepository = new TaskRepository(db.getTaskDao());
+        this.projectRepository = new ProjectRepository(db.getProjectDao());
     }
 
 

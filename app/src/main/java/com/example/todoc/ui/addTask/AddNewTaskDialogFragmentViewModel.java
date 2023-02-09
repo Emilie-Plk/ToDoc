@@ -2,7 +2,9 @@ package com.example.todoc.ui.addTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todoc.data.entities.ProjectEntity;
@@ -23,11 +25,11 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
     private final TaskRepository taskRepository;
     private final SingleLiveEvent<Void> closeDialogFragment = new SingleLiveEvent<>();
 
+    private final MediatorLiveData<Long> projectIdMutableLiveData = new MediatorLiveData<>();
     private final MutableLiveData<Boolean> isEveryFieldComplete = new MutableLiveData<>(false);
-
     private boolean isProjectChosen;
 
-    private boolean isTaskNameCompleted;
+    private boolean isTaskDescriptionCompleted;
 
     private long projectId;
 
@@ -48,19 +50,19 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
         return isEveryFieldComplete;
     }
 
-    public void onAddingNewTask(String taskName, String projectName) {
+    public void onAddingNewTask(String taskDescription, String projectName) {
         for (ProjectEntity project : ProjectEntity.getProjects()) {
             if (project.getProjectName().equals(projectName)) {
                 projectId = project.getId();
             }
         }
-        TaskEntity task = new TaskEntity(projectId, taskName, new Timestamp(System.currentTimeMillis()));
+        TaskEntity task = new TaskEntity(projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
         closeDialogFragment.call();
         taskRepository.addNewTask(task);
     }
 
-    public void updateForTaskNameCompletion(String taskName) {
-        isTaskNameCompleted = !taskName.isEmpty();
+    public void updateForTaskDescriptionCompletion(String taskDescription) {
+        isTaskDescriptionCompleted = !taskDescription.isEmpty();
         updateForFieldsCompletion();
     }
 
@@ -70,6 +72,6 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
     }
 
     public void updateForFieldsCompletion() {
-        isEveryFieldComplete.setValue(isTaskNameCompleted && isProjectChosen);
+        isEveryFieldComplete.setValue(isTaskDescriptionCompleted && isProjectChosen);
     }
 }

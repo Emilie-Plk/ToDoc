@@ -37,7 +37,6 @@ public class AddNewTaskDialogFragment extends DialogFragment {
                 ViewModelFactory.getInstance(getContext())).get(AddNewTaskDialogFragmentViewModel.class);
     }
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAddNewTaskDialogBinding.inflate(LayoutInflater.from(getContext()));
@@ -52,19 +51,9 @@ public class AddNewTaskDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.projectActv.setOnItemClickListener((adapterView, v, position, id) -> {
-                    chosenProject = adapterView.getItemAtPosition(position).toString();
-                    viewModel.updateForChosenProjectSelection(chosenProject);
-                });
-
-
-        binding.addBtnDialog.setOnClickListener(v -> {
-            if (!binding.txtTaskName.getText().toString().isEmpty()) {
-                viewModel.onAddingNewTask(binding.txtTaskName.getText().toString(), chosenProject);
-            }
-        });
-
         setupObservers();
+        getChosenProject();
+        addNewTask();
 
         binding.txtTaskName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,24 +66,39 @@ public class AddNewTaskDialogFragment extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                viewModel.updateForTaskNameCompletion(s.toString());
+                viewModel.updateForTaskDescriptionCompletion(s.toString());
             }
         });
 
         binding.returnBtnDialog.setOnClickListener(v -> dismiss());
     }
 
-    private void setupObservers() {
-        viewModel.getCloseFragment().observe(this, closeActivitySingleLiveEvent -> dismiss());
+    private void setProjectACTVAdapter() {
+        viewModel.getProjectsNames().observe(this,
+                projectNames -> binding.projectActv.setAdapter(new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, projectNames)));
+    }
 
-        viewModel.getIsEveryFieldComplete().observe(this, isEnabled -> {
-            binding.addBtnDialog.setEnabled(isEnabled);
+    private void setupObservers() {
+        viewModel.getCloseFragment().observe(this,
+                closeActivitySingleLiveEvent -> dismiss());
+
+        viewModel.getIsEveryFieldComplete().observe(this,
+                isEnabled -> binding.addBtnDialog.setEnabled(isEnabled));
+    }
+
+    private void getChosenProject() {
+        binding.projectActv.setOnItemClickListener((adapterView, v, position, id) -> {
+            chosenProject = adapterView.getItemAtPosition(position).toString();
+            viewModel.updateForChosenProjectSelection(chosenProject);
         });
     }
 
-
-    private void setProjectACTVAdapter() {
-        viewModel.getProjectsNames().observe(this, projectNames -> binding.projectActv.setAdapter(new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, projectNames)));
+    private void addNewTask() {
+        binding.addBtnDialog.setOnClickListener(v -> {
+            if (!binding.txtTaskName.getText().toString().isEmpty()) {
+                viewModel.onAddingNewTask(binding.txtTaskName.getText().toString(), chosenProject);
+            }
+        });
     }
 }

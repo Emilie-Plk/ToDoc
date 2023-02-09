@@ -15,7 +15,6 @@ import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.entities.TimeStampConverter;
 
-import java.sql.Timestamp;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,9 +23,9 @@ import java.util.concurrent.Executors;
 @TypeConverters({TimeStampConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
-    public abstract TaskDao taskDao();
+    public abstract TaskDao getTaskDao();
 
-    public abstract ProjectDao projectDao();
+    public abstract ProjectDao getProjectDao();
 
     public static volatile AppDatabase INSTANCE;
 
@@ -56,12 +55,10 @@ public abstract class AppDatabase extends RoomDatabase {
             super.onCreate(db);
 
             databaseWriteExecutor.execute(() -> {
-                ProjectDao dao = INSTANCE.projectDao();
-                TaskDao taskDao = INSTANCE.taskDao();
+                ProjectDao dao = INSTANCE.getProjectDao();
                 dao.insertProject(new ProjectEntity(1L, "Projet Tartampion", 0xFFEADAD1));
                 dao.insertProject(new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA));
                 dao.insertProject(new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2));
-                taskDao.insertTask(new TaskEntity(2L, "Nettoyer le sol", new Timestamp(System.currentTimeMillis())));
             });
         }
     };

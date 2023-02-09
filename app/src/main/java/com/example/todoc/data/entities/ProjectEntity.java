@@ -2,7 +2,6 @@ package com.example.todoc.data.entities;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,14 +9,14 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "projects")
 public class ProjectEntity {
     @PrimaryKey
-    public long id;
+    private final long id;
 
     @ColumnInfo(name = "projectName")
-    public String projectName;
+    private final String projectName;
 
     @ColumnInfo(name = "projectColor")
     @ColorInt
-    public int projectColor;
+    private final int projectColor;
 
     public ProjectEntity(long id, String projectName, @ColorInt int projectColor) {
         this.id = id;

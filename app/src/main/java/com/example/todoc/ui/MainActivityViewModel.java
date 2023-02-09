@@ -39,10 +39,10 @@ public class MainActivityViewModel extends ViewModel {
                 for (TaskEntity task : projectWithTasks.tasks) {
                     taskViewStateItems.add(new TaskViewStateItem(
                             task.getId(),
-                            task.getTaskName(),
+                            task.getTaskDescription(),
                             project.getProjectName(),
                             project.getProjectColor(),
-                            task.getTimeStamp()));
+                            task.getTaskTimeStamp()));
                 }
             }
             taskViewStateItemsMutableLiveData.setValue(taskViewStateItems);
@@ -89,33 +89,35 @@ public class MainActivityViewModel extends ViewModel {
         }
     }
 
-    private void sortTasksChronologicallyReverted(List<TaskViewStateItem> taskViewStateItems) {
-        taskViewStateItemsMutableLiveData.setValue(taskViewStateItemsMutableLiveData.getValue()
+    private void sortTasksChronologicallyReverted(@NonNull List<TaskViewStateItem> taskViewStateItems) {
+        taskViewStateItemsMutableLiveData.setValue(
+                taskViewStateItems
                 .stream()
                 .sorted(comparingLong((TaskViewStateItem o) -> o.getTimestamp().getTime()).reversed())
                 .collect(toList()));
     }
 
-    private void sortTasksChronologically(List<TaskViewStateItem> taskViewStateItems) {
-        taskViewStateItemsMutableLiveData.setValue(taskViewStateItemsMutableLiveData.getValue()
+    private void sortTasksChronologically(@NonNull List<TaskViewStateItem> taskViewStateItems) {
+        taskViewStateItemsMutableLiveData.setValue(
+                taskViewStateItems
                 .stream()
                 .sorted(comparingLong((TaskViewStateItem o) -> o.getTimestamp().getTime()))
                 .collect(toList()));
     }
 
-    private void sortTasksAlphabeticallyInverted(List<TaskViewStateItem> taskViewStateItems) {
+    private void sortTasksAlphabeticallyInverted(@NonNull List<TaskViewStateItem> taskViewStateItems) {
         taskViewStateItemsMutableLiveData.setValue(
-                taskViewStateItemsMutableLiveData.getValue()
+                taskViewStateItems
                         .stream()
-                        .sorted(comparing(o -> o.getTaskName().toLowerCase(), reverseOrder()))
+                        .sorted(comparing(o -> o.getTaskDescription().toLowerCase(), reverseOrder()))
                         .collect(toList()));
     }
 
-    private void sortTasksAlphabetically(List<TaskViewStateItem> taskViewStateItems) {
+    private void sortTasksAlphabetically(@NonNull List<TaskViewStateItem> taskViewStateItems) {
         taskViewStateItemsMutableLiveData.setValue(
-                taskViewStateItemsMutableLiveData.getValue()
+                taskViewStateItems
                         .stream()
-                        .sorted(comparing(o -> o.getTaskName().toLowerCase()))
+                        .sorted(comparing(o -> o.getTaskDescription().toLowerCase()))
                         .collect(toList()));
     }
 }

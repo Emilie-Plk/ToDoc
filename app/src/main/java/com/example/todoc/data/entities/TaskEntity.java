@@ -7,7 +7,6 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.sql.Timestamp;
-import java.util.Comparator;
 
 @Entity(tableName = "tasks",
         foreignKeys = @ForeignKey(
@@ -19,23 +18,23 @@ public class TaskEntity {
     public long id;
 
     @NonNull
-    @ColumnInfo(name = "taskName")
-    public String taskName;
+    @ColumnInfo(name = "taskDescription")
+    private final String taskDescription;
 
-    @ColumnInfo(name = "timeStamp")
-    public Timestamp timeStamp;
+    @ColumnInfo(name = "taskTimeStamp")
+    private final Timestamp taskTimeStamp;
 
     @ColumnInfo(index = true)
-    public long projectId;
+    private final long projectId;
 
     public TaskEntity(
             long projectId,
-            @NonNull String taskName,
-            Timestamp timeStamp
+            @NonNull String taskDescription,
+            Timestamp taskTimeStamp
     ) {
         this.projectId = projectId;
-        this.taskName = taskName;
-        this.timeStamp = timeStamp;
+        this.taskDescription = taskDescription;
+        this.taskTimeStamp = taskTimeStamp;
     }
 
     public long getId() {
@@ -43,12 +42,12 @@ public class TaskEntity {
     }
 
     @NonNull
-    public String getTaskName() {
-        return taskName;
+    public String getTaskDescription() {
+        return taskDescription;
     }
 
-    public Timestamp getTimeStamp() {
-        return timeStamp;
+    public Timestamp getTaskTimeStamp() {
+        return taskTimeStamp;
     }
 
     public long getProjectId() {

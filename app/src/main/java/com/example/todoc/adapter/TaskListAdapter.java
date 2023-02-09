@@ -40,18 +40,18 @@ import com.example.todoc.ui.TaskViewStateItem;
         public static class TaskViewHolder extends RecyclerView.ViewHolder {
 
             private final ImageView deleteTask, imgProject;
-            private final TextView taskTitle, projectName;
+            private final TextView taskDescription, projectName;
 
             public TaskViewHolder(@NonNull ItemTaskBinding binding) {
                 super(binding.getRoot());
-                taskTitle = binding.lblTaskName;
+                taskDescription = binding.lblTaskName;
                 imgProject = binding.imgProject;
                 projectName = binding.lblProjectName;
                 deleteTask = binding.imgDelete;
             }
 
             public void bind(TaskViewStateItem item, OnTaskDeleteClickListener listener) {
-                taskTitle.setText(item.getTaskName());
+                taskDescription.setText(item.getTaskDescription());
                 projectName.setText(item.getProjectName());
                 imgProject.setColorFilter(item.getProjectColor());
                 deleteTask.setOnClickListener(view -> listener.onDeleteTask(item.getTaskId()));

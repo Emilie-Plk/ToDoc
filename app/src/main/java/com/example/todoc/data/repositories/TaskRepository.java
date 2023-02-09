@@ -1,37 +1,26 @@
 package com.example.todoc.data.repositories;
 
-import androidx.annotation.MainThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.TaskDao;
-import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 public class TaskRepository {
 
     private final TaskDao dao;
 
-    private final Executor executor;
     private final MutableLiveData<List<TaskEntity>> tasksMutableLiveData;
 
     private final List<TaskEntity> tasks = new ArrayList<>();
-    private final List<TaskEntity> tasksByTimeDesc = new ArrayList<>();
 
-    private final List<TaskEntity> tasksByTimeAsc = new ArrayList<>();
 
-    private final List<TaskEntity> tasksSortedByAtoZ = new ArrayList<>();
-
-    private final List<TaskEntity> tasksSortedByZtoA = new ArrayList<>();
-
-    public TaskRepository(TaskDao dao, Executor executor) {
+    public TaskRepository(TaskDao dao) {
         this.dao = dao;
-        this.executor = executor;
         tasksMutableLiveData = new MutableLiveData<>();
     }
 
@@ -46,9 +35,8 @@ public class TaskRepository {
     }
 
     public void addNewTask(TaskEntity task) {
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            dao.insertTask(task);
-        });
+        AppDatabase.databaseWriteExecutor.execute(() ->
+            dao.insertTask(task));
     }
 
     public void deleteTask(long taskId) {
