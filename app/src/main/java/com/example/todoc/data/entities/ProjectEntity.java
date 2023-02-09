@@ -16,9 +16,9 @@ public class ProjectEntity {
 
     @ColumnInfo(name = "projectColor")
     @ColorInt
-    private final int projectColor;
+    private final Integer projectColor;
 
-    public ProjectEntity(long id, String projectName, @ColorInt int projectColor) {
+    public ProjectEntity(long id, String projectName, @ColorInt Integer projectColor) {
         this.id = id;
         this.projectName = projectName;
         this.projectColor = projectColor;
@@ -34,18 +34,10 @@ public class ProjectEntity {
     }
 
     @ColorInt
-    public int getProjectColor() {
+    public Integer getProjectColor() {
         return projectColor;
     }
 
-    @NonNull
-    public static ProjectEntity[] getProjects() {
-        return new ProjectEntity[]{
-                new ProjectEntity(1L, "Projet Tartampion", 0xFFEADAD1),
-                new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA),
-                new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2),
-        };
     }
 
-}
 

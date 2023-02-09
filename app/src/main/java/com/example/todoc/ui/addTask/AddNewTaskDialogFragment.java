@@ -49,13 +49,11 @@ public class AddNewTaskDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setupObservers();
         getChosenProject();
         addNewTask();
 
-        binding.txtTaskName.addTextChangedListener(new TextWatcher() {
-            @Override
+        binding.txtTaskName.addTextChangedListener(new TextWatcher() {@Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
@@ -69,6 +67,7 @@ public class AddNewTaskDialogFragment extends DialogFragment {
             }
         });
 
+        // When clicking on return btn
         binding.returnBtnDialog.setOnClickListener(v -> dismiss());
     }
 
@@ -88,14 +87,12 @@ public class AddNewTaskDialogFragment extends DialogFragment {
                 isEnabled -> binding.addBtnDialog.setEnabled(isEnabled));
     }
 
-
     private void getChosenProject() {
         binding.projectActv.setOnItemClickListener((adapterView, v, position, id) -> {
             chosenProject = adapterView.getItemAtPosition(position).toString();
             viewModel.updateForChosenProjectSelection(chosenProject);
         });
     }
-
 
     private void addNewTask() {
         binding.addBtnDialog.setOnClickListener(v -> {

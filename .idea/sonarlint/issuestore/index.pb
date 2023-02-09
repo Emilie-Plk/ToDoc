@@ -5,8 +5,6 @@ p
 @app/src/main/java/com/example/todoc/adapter/TaskListAdapter.java,d\6\d6d8e3dc78ea5dca1471b48dc4f8866aec2d3fe1
 h
 8app/src/main/java/com/example/todoc/ui/MainActivity.java,8\0\802850a988ffd7abd2a99f001db295ccc8c123c1
-q
-Aapp/src/main/java/com/example/todoc/ui/MainActivityViewModel.java,e\b\ebfcac3b68f347e387c5b1a8d8c51622d7d0ef71
 f
 6app/src/main/java/com/example/todoc/ui/SortMethod.java,f\c\fcf82918908e4cfe0f937a95690bbc15ebd5dafa
 m
