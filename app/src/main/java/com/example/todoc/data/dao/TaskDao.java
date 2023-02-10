@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.todoc.data.entities.TaskEntity;
+import com.example.todoc.ui.TaskViewStateItem;
 
 import java.util.List;
 
@@ -18,10 +19,13 @@ public interface TaskDao {
     @Query("SELECT * FROM tasks")
     LiveData<List<TaskEntity>> getTasks();
 
-    @Query("SELECT * FROM tasks")
-    List<TaskEntity> getTasksSync();
-
     @Query("DELETE FROM tasks WHERE id = :taskId")
     void deleteTask(long taskId);
+
+    @Query("SELECT tasks.id AS taskId, tasks.taskDescription, projects.projectName, projects.projectColor, tasks.taskTimeStamp "
+            + "FROM tasks "
+            + "INNER JOIN projects "
+            + "ON tasks.projectId = projects.id ")
+    LiveData<List<TaskViewStateItem>> getTaskViewStateItems();
 
 }

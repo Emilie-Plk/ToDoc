@@ -21,6 +21,7 @@ public class TaskEntity {
     @ColumnInfo(name = "taskDescription")
     private final String taskDescription;
 
+    @NonNull
     @ColumnInfo(name = "taskTimeStamp")
     private final Timestamp taskTimeStamp;
 
@@ -30,7 +31,7 @@ public class TaskEntity {
     public TaskEntity(
             long projectId,
             @NonNull String taskDescription,
-            Timestamp taskTimeStamp
+            @NonNull Timestamp taskTimeStamp
     ) {
         this.projectId = projectId;
         this.taskDescription = taskDescription;
@@ -46,6 +47,7 @@ public class TaskEntity {
         return taskDescription;
     }
 
+    @NonNull
     public Timestamp getTaskTimeStamp() {
         return taskTimeStamp;
     }

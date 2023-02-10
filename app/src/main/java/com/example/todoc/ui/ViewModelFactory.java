@@ -46,7 +46,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MainActivityViewModel.class)) {
-            return (T) new MainActivityViewModel(taskRepository, projectRepository);
+            return (T) new MainActivityViewModel(taskRepository);
         } else if (modelClass.isAssignableFrom(AddNewTaskDialogFragmentViewModel.class)) {
             return (T) new AddNewTaskDialogFragmentViewModel(taskRepository, projectRepository);
         } else

@@ -17,19 +17,15 @@ public class TaskViewStateItem {
 
     @ColorInt
     private final int projectColor;
+    @NonNull
+    private final Timestamp taskTimeStamp;
 
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    private final Timestamp timestamp;
-
-    public TaskViewStateItem(long taskId, @NonNull String taskDescription, @NonNull String projectName, int projectColor, Timestamp timestamp) {
+    public TaskViewStateItem(long taskId, @NonNull String taskDescription, @NonNull String projectName, int projectColor, @NonNull Timestamp taskTimeStamp) {
         this.taskId = taskId;
         this.taskDescription = taskDescription;
         this.projectName = projectName;
         this.projectColor = projectColor;
-        this.timestamp = timestamp;
+        this.taskTimeStamp = taskTimeStamp;
     }
 
     public long getTaskId() {
@@ -50,6 +46,12 @@ public class TaskViewStateItem {
         return projectColor;
     }
 
+    @NonNull
+    public Timestamp getTaskTimeStamp() {
+        return taskTimeStamp;
+    }
+
+    @NonNull
     @Override
     public String toString() {
         return "TaskViewStateItem{" +
@@ -57,7 +59,7 @@ public class TaskViewStateItem {
                 ", taskDescription='" + taskDescription + '\'' +
                 ", projectName='" + projectName + '\'' +
                 ", projectColor=" + projectColor +
-                ", timestamp=" + timestamp +
+                ", taskTimeStamp=" + taskTimeStamp +
                 '}';
     }
 
@@ -66,11 +68,11 @@ public class TaskViewStateItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskViewStateItem that = (TaskViewStateItem) o;
-        return taskId == that.taskId && projectColor == that.projectColor && taskDescription.equals(that.taskDescription) && projectName.equals(that.projectName) && Objects.equals(timestamp, that.timestamp);
+        return taskId == that.taskId && projectColor == that.projectColor && taskDescription.equals(that.taskDescription) && projectName.equals(that.projectName) && Objects.equals(taskTimeStamp, that.taskTimeStamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId, taskDescription, projectName, projectColor, timestamp);
+        return Objects.hash(taskId, taskDescription, projectName, projectColor, taskTimeStamp);
     }
 }
