@@ -15,7 +15,7 @@ import java.sql.Timestamp;
                 childColumns = "projectId"))
 public class TaskEntity {
     @PrimaryKey(autoGenerate = true)
-    public long id;
+    private final long id;
 
     @NonNull
     @ColumnInfo(name = "taskDescription")
@@ -29,10 +29,11 @@ public class TaskEntity {
     private final long projectId;
 
     public TaskEntity(
-            long projectId,
+            long id, long projectId,
             @NonNull String taskDescription,
             @NonNull Timestamp taskTimeStamp
     ) {
+        this.id = id;
         this.projectId = projectId;
         this.taskDescription = taskDescription;
         this.taskTimeStamp = taskTimeStamp;
@@ -55,5 +56,4 @@ public class TaskEntity {
     public long getProjectId() {
         return projectId;
     }
-
 }

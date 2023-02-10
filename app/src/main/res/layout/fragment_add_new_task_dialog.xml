@@ -15,7 +15,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
         android:gravity="center_horizontal"
-        android:text="Ajouter une nouvelle tâche"
+        android:text="@string/add_new_task_title_dialog"
         android:textSize="18sp"
         android:textStyle="bold"
         app:drawableStartCompat="@drawable/baseline_task_alt_24"
@@ -30,7 +30,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/project_dropdown_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_new_task_tv_dialog">
@@ -40,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
+            android:hint="@string/project_dropdown_hint"
             android:labelFor="@+id/rooms_actv"
             android:textColorHint="@color/gray" />
 

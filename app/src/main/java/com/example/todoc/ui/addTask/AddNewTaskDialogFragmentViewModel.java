@@ -61,8 +61,9 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
     public MutableLiveData<String> getChosenProjectMutableLiveData() {
         return chosenProjectMutableLiveData;
     }
+
     public void onAddingNewTask(String taskDescription, long projectId) {
-        TaskEntity task = new TaskEntity(projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
+        TaskEntity task = new TaskEntity(0, projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
         closeDialogFragment.call();
         taskRepository.addNewTask(task);
     }

@@ -11,7 +11,6 @@ import java.util.List;
 
 @Dao
 public interface ProjectDao {
-
     @Insert
     void insertProject(ProjectEntity projectEntity);
 
@@ -20,8 +19,4 @@ public interface ProjectDao {
 
   /*  @Query("SELECT * FROM projects")
     LiveData<List<ProjectWithTasks>> getProjectWithTasks();*/
-
-    @Query("SELECT projectName FROM projects")
-    LiveData<List<String>> getAllProjectNames();
-
 }

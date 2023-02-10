@@ -39,12 +39,7 @@ public class MainActivityViewModel extends ViewModel {
             }
             taskViewStateItemsMediatorLiveData.setValue(taskViewStateItems);
 
-            if (taskViewStateItemsMediatorLiveData.getValue() == null ||
-                    taskViewStateItemsMediatorLiveData.getValue().isEmpty()) {
-                isNoTaskTextViewVisible.setValue(true);
-            } else {
-                isNoTaskTextViewVisible.setValue(false);
-            }
+            checkIfViewStateIsEmptyOrNot();
         });
     }
 
@@ -59,6 +54,15 @@ public class MainActivityViewModel extends ViewModel {
 
     public void onDeleteTask(long taskId) {
         taskRepository.deleteTask(taskId);
+    }
+
+    private void checkIfViewStateIsEmptyOrNot() {
+        if (taskViewStateItemsMediatorLiveData.getValue() == null ||
+                taskViewStateItemsMediatorLiveData.getValue().isEmpty()) {
+            isNoTaskTextViewVisible.setValue(true);
+        } else {
+            isNoTaskTextViewVisible.setValue(false);
+        }
     }
 
     public void sortTasks(SortMethod sortMethod) {

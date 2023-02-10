@@ -19,7 +19,4 @@ public class ProjectRepository {
         return dao.getProjects();
     }
 
-/*    public  LiveData<List<ProjectWithTasks>> getProjectWithTasks() {
-        return dao.getProjectWithTasks();
-    }*/
 }

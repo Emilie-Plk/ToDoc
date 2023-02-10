@@ -18,13 +18,10 @@ public class TaskRepository {
         this.dao = dao;
     }
 
-    public LiveData<List<TaskEntity>> getAllTasks() {
-       return dao.getTasks();
-    }
 
     public void addNewTask(TaskEntity task) {
         AppDatabase.databaseWriteExecutor.execute(() ->
-            dao.insertTask(task));
+                dao.insertTask(task));
     }
 
     public void deleteTask(long taskId) {

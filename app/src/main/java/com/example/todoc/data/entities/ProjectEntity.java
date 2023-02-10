@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "projects")
 public class ProjectEntity {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private final long id;
 
     @ColumnInfo(name = "projectName")
@@ -37,7 +37,6 @@ public class ProjectEntity {
     public int getProjectColor() {
         return projectColor;
     }
-
-    }
+}
 
 

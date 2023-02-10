@@ -15,6 +15,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
+        android:importantForAccessibility="no"
         android:src="@drawable/bkg_oval"
         tools:tint="@color/cardview_dark_background" />
 
@@ -29,8 +30,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/ic_delete"
         android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/delete_task_descr"
+        android:src="@drawable/ic_delete"
         app:tint="#DE000000" />
 
     <LinearLayout
@@ -48,8 +50,8 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:lines="1"
-            android:textStyle="bold"
             android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="Task name" />
 
         <TextView
@@ -58,8 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
-            android:textSize="16sp"
             android:lines="1"
+            android:textSize="16sp"
             tools:text="Project name" />
     </LinearLayout>
 </RelativeLayout>

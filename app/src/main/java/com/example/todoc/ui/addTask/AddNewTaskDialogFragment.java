@@ -29,8 +29,6 @@ public class AddNewTaskDialogFragment extends DialogFragment {
         return new AddNewTaskDialogFragment();
     }
 
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAddNewTaskDialogBinding.inflate(LayoutInflater.from(getContext()));
@@ -49,7 +47,8 @@ public class AddNewTaskDialogFragment extends DialogFragment {
         getChosenProject();
         addNewTask();
 
-        binding.txtTaskName.addTextChangedListener(new TextWatcher() {@Override
+        binding.txtTaskName.addTextChangedListener(new TextWatcher() {
+            @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
@@ -67,7 +66,7 @@ public class AddNewTaskDialogFragment extends DialogFragment {
         binding.returnBtnDialog.setOnClickListener(v -> dismiss());
 
         // observer for my chosen project being selected in the ACTV
-        viewModel.getChosenProjectMutableLiveData().observe(this, mChosenProject -> chosenProject = mChosenProject );
+        viewModel.getChosenProjectMutableLiveData().observe(this, mChosenProject -> chosenProject = mChosenProject);
     }
 
     private void setProjectACTVAdapter() {

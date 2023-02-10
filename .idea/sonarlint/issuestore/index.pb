@@ -15,5 +15,7 @@ Capp/src/androidTest/java/com/example/todoc/RecyclerViewMatcher.java,8\0\80e870
 Lapp/src/androidTest/java/com/example/todoc/MainActivityInstrumentedTest.java,a\0\a03befce0cbee3c400185e649e315227580545ad
 p
 @app/src/main/java/com/example/todoc/adapter/TaskListAdapter.java,d\6\d6d8e3dc78ea5dca1471b48dc4f8866aec2d3fe1
-w
-Gapp/src/main/java/com/example/todoc/ui/addTask/ProjectArrayAdapter.java,1\9\192c65075f96cf7c707022d6559a1997bf24d290
+l
+<app/src/main/java/com/example/todoc/ui/ViewModelFactory.java,e\8\e88ad60561ee3c0b8c94e9aff324f728b419ae0b
+m
+=app/src/main/java/com/example/todoc/ui/TaskViewStateItem.java,8\6\8629117d25d7dd950cd598f370e10efa7cfbe8d4

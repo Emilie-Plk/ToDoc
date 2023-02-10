@@ -56,9 +56,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
             databaseWriteExecutor.execute(() -> {
                 ProjectDao dao = INSTANCE.getProjectDao();
-                dao.insertProject(new ProjectEntity(1L, "Projet Tartampion", 0xFFEADAD1));
-                dao.insertProject(new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA));
-                dao.insertProject(new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2));
+                dao.insertProject(new ProjectEntity(0, "Projet Tartampion", 0xFFEADAD1));
+                dao.insertProject(new ProjectEntity(0, "Projet Lucidia", 0xFFB4CDBA));
+                dao.insertProject(new ProjectEntity(0, "Projet Circus", 0xFFA3CED2));
             });
         }
     };

@@ -180,8 +180,6 @@ public class MainActivityInstrumentedTest {
     }
 
 
-
-
     private void addOneTask(String taskDescription) {
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.project_actv)).perform(click());

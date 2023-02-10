@@ -12,12 +12,8 @@ import java.util.List;
 
 @Dao
 public interface TaskDao {
-
     @Insert
     void insertTask(TaskEntity taskEntity);
-
-    @Query("SELECT * FROM tasks")
-    LiveData<List<TaskEntity>> getTasks();
 
     @Query("DELETE FROM tasks WHERE id = :taskId")
     void deleteTask(long taskId);
@@ -27,5 +23,4 @@ public interface TaskDao {
             + "INNER JOIN projects "
             + "ON tasks.projectId = projects.id ")
     LiveData<List<TaskViewStateItem>> getTaskViewStateItems();
-
 }

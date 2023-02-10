@@ -18,10 +18,11 @@
     <string name="empty_task_name">Le nom de la tâche doit être renseigné</string>
 
 
-
     <string name="project_dropdown_hint">Choisir un projet</string>
     <string name="add_new_meeting_btn">ajouter</string>
     <string name="back_btn">retour</string>
+    <string name="delete_task_descr">Supprimer une tâche</string>
+    <string name="add_new_task_title_dialog">Ajouter une nouvelle tâche</string>
 
     <string-array name="project_name_list">
         <item>Projet Tartampion</item>
