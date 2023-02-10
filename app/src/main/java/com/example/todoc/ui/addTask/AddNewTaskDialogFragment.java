@@ -67,7 +67,7 @@ public class AddNewTaskDialogFragment extends DialogFragment {
         binding.returnBtnDialog.setOnClickListener(v -> dismiss());
 
         // observer for my chosen project being selected in the ACTV
-        viewModel.getChosenProjectMutableLiveData().observe(this, mChosenProject -> mChosenProject = chosenProject );
+        viewModel.getChosenProjectMutableLiveData().observe(this, mChosenProject -> chosenProject = mChosenProject );
     }
 
     private void setProjectACTVAdapter() {

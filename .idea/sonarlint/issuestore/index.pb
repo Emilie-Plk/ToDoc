@@ -39,3 +39,11 @@ q
 Aapp/src/main/java/com/example/todoc/ui/MainActivityViewModel.java,e\b\ebfcac3b68f347e387c5b1a8d8c51622d7d0ef71
 h
 8app/src/main/java/com/example/todoc/ui/MainActivity.java,8\0\802850a988ffd7abd2a99f001db295ccc8c123c1
+w
+Gapp/src/main/java/com/example/todoc/data/entities/ProjectWithTasks.java,6\8\68624553bb3b7a0a021fc3adefa79b38b826b136
+…
+Uapp/src/main/java/com/example/todoc/ui/addTask/AddNewTaskDialogFragmentViewModel.java,5\8\58ab86e7c7bb84d66cc4b8fe6d9fa073b178fb57
+p
+@app/src/main/java/com/example/todoc/adapter/TaskListAdapter.java,d\6\d6d8e3dc78ea5dca1471b48dc4f8866aec2d3fe1
+w
+Gapp/src/main/java/com/example/todoc/ui/addTask/ProjectArrayAdapter.java,1\9\192c65075f96cf7c707022d6559a1997bf24d290
