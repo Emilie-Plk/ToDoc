@@ -26,10 +26,12 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isProjectFieldComplete = new MutableLiveData<>(false);
 
-
     private final MutableLiveData<Boolean> isTaskFieldComplete = new MutableLiveData<>(false);
 
     private final MediatorLiveData<Boolean> isEveryFieldComplete = new MediatorLiveData<>();
+
+
+    private final MutableLiveData<String> chosenProjectMutableLiveData = new MutableLiveData<>();
 
     public AddNewTaskDialogFragmentViewModel(@NonNull TaskRepository taskRepository, @NonNull ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
@@ -56,6 +58,9 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
         return isEveryFieldComplete;
     }
 
+    public MutableLiveData<String> getChosenProjectMutableLiveData() {
+        return chosenProjectMutableLiveData;
+    }
     public void onAddingNewTask(String taskDescription, long projectId) {
         TaskEntity task = new TaskEntity(projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
         closeDialogFragment.call();
@@ -67,6 +72,7 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
     }
 
     public void updateForChosenProjectSelection(String chosenProject) {
+        chosenProjectMutableLiveData.setValue(chosenProject);
         isProjectFieldComplete.setValue(!chosenProject.isEmpty());
     }
 

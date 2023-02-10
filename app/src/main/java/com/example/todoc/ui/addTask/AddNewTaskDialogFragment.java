@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,6 +19,7 @@ public class AddNewTaskDialogFragment extends DialogFragment {
 
     private FragmentAddNewTaskDialogBinding binding;
 
+    @Nullable
     private String chosenProject;
 
     private AddNewTaskDialogFragmentViewModel viewModel;
@@ -29,18 +29,14 @@ public class AddNewTaskDialogFragment extends DialogFragment {
         return new AddNewTaskDialogFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this,
-                ViewModelFactory.getInstance(getContext())).get(AddNewTaskDialogFragmentViewModel.class);
-    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAddNewTaskDialogBinding.inflate(LayoutInflater.from(getContext()));
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setView(binding.getRoot()).create();
+        viewModel = new ViewModelProvider(this,
+                ViewModelFactory.getInstance(getContext())).get(AddNewTaskDialogFragmentViewModel.class);
+
         setProjectACTVAdapter();
 
         return binding.getRoot();
@@ -69,6 +65,9 @@ public class AddNewTaskDialogFragment extends DialogFragment {
 
         // When clicking on return btn
         binding.returnBtnDialog.setOnClickListener(v -> dismiss());
+
+        // observer for my chosen project being selected in the ACTV
+        viewModel.getChosenProjectMutableLiveData().observe(this, mChosenProject -> mChosenProject = chosenProject );
     }
 
     private void setProjectACTVAdapter() {

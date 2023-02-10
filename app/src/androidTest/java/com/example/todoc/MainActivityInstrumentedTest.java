@@ -124,10 +124,10 @@ public class MainActivityInstrumentedTest {
         onAdding3Tasks_recyclerViewShouldContain3Tasks();
 
         onView(withId(R.id.action_filter)).check(matches(isDisplayed())).perform(click());
-        onView(withText(R.string.sort_alphabetical)).perform(click());
+        onView(withText(R.string.sort_alphabetical_invert)).perform(click());
 
         onView(withRecyclerView(R.id.list_tasks)
-                .atPositionOnView(2, R.id.lbl_task_name))
+                .atPositionOnView(0, R.id.lbl_task_name))
                 .check(matches(withText(TASK_DESCRIPTION_Z)));
 
         onView(withRecyclerView(R.id.list_tasks)
@@ -135,9 +135,51 @@ public class MainActivityInstrumentedTest {
                 .check(matches(withText(TASK_DESCRIPTION)));
 
         onView(withRecyclerView(R.id.list_tasks)
-                .atPositionOnView(0, R.id.lbl_task_name))
+                .atPositionOnView(2, R.id.lbl_task_name))
                 .check(matches(withText(TASK_DESCRIPTION_A)));
     }
+
+    @Test
+    public void onSortingTasksRecentFirst_shouldSortTasksRecentFirst() {
+        onAdding3Tasks_recyclerViewShouldContain3Tasks();
+
+        onView(withId(R.id.action_filter)).check(matches(isDisplayed())).perform(click());
+        onView(withText(R.string.sort_recent_first)).perform(click());
+
+        onView(withRecyclerView(R.id.list_tasks)
+                .atPositionOnView(0, R.id.lbl_task_name))
+                .check(matches(withText(TASK_DESCRIPTION_A)));
+
+        onView(withRecyclerView(R.id.list_tasks)
+                .atPositionOnView(1, R.id.lbl_task_name))
+                .check(matches(withText(TASK_DESCRIPTION_Z)));
+
+        onView(withRecyclerView(R.id.list_tasks)
+                .atPositionOnView(2, R.id.lbl_task_name))
+                .check(matches(withText(TASK_DESCRIPTION)));
+    }
+
+    @Test
+    public void onSortingTasksOlderFirst_shouldSortTasksOlderFirst() {
+        onAdding3Tasks_recyclerViewShouldContain3Tasks();
+
+        onView(withId(R.id.action_filter)).check(matches(isDisplayed())).perform(click());
+        onView(withText(R.string.sort_oldest_first)).perform(click());
+
+        onView(withRecyclerView(R.id.list_tasks)
+                .atPositionOnView(0, R.id.lbl_task_name))
+                .check(matches(withText(TASK_DESCRIPTION)));
+
+        onView(withRecyclerView(R.id.list_tasks)
+                .atPositionOnView(1, R.id.lbl_task_name))
+                .check(matches(withText(TASK_DESCRIPTION_Z)));
+
+        onView(withRecyclerView(R.id.list_tasks)
+                .atPositionOnView(2, R.id.lbl_task_name))
+                .check(matches(withText(TASK_DESCRIPTION_A)));
+    }
+
+
 
 
     private void addOneTask(String taskDescription) {
