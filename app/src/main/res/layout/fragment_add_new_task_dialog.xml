@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:minWidth="300dp"
@@ -11,9 +10,9 @@
         android:id="@+id/add_new_task_tv_dialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawablePadding="12dp"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="12dp"
         android:gravity="center_horizontal"
         android:text="@string/add_new_task_title_dialog"
         android:textSize="18sp"
@@ -38,8 +37,8 @@
             android:id="@+id/project_actv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
             android:hint="@string/project_dropdown_hint"
+            android:inputType="none"
             android:labelFor="@+id/rooms_actv"
             android:textColorHint="@color/gray" />
 
@@ -50,7 +49,6 @@
         style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -58,11 +56,11 @@
         android:hint="@string/task_name_hint"
         android:importantForAutofill="no"
         android:inputType="textCapSentences"
+        android:padding="16dp"
         app:layout_constraintBottom_toTopOf="@+id/add_btn_dialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/project_dropdown_layout"
-        tools:ignore="UnusedAttribute" />
+        app:layout_constraintTop_toBottomOf="@id/project_dropdown_layout" />
 
 
     <Button
