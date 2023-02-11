@@ -17,6 +17,4 @@ public interface ProjectDao {
     @Query("SELECT * FROM projects")
     LiveData<List<ProjectEntity>> getProjects();
 
-  /*  @Query("SELECT * FROM projects")
-    LiveData<List<ProjectWithTasks>> getProjectWithTasks();*/
 }

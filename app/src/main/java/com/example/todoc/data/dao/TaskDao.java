@@ -5,8 +5,11 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.ui.TaskViewStateItem;
+
+import org.jetbrains.annotations.TestOnly;
 
 import java.util.List;
 
@@ -17,6 +20,10 @@ public interface TaskDao {
 
     @Query("DELETE FROM tasks WHERE id = :taskId")
     void deleteTask(long taskId);
+
+    @TestOnly
+    @Query("SELECT * FROM tasks")
+    LiveData<List<TaskEntity>> getTasksForTest();
 
     @Query("SELECT tasks.id AS taskId, tasks.taskDescription, projects.projectName, projects.projectColor, tasks.taskTimeStamp "
             + "FROM tasks "

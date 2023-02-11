@@ -4,9 +4,10 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "projects")
+@Entity(tableName = "projects", indices = {@Index(value = "projectName", unique = true)})
 public class ProjectEntity {
     @PrimaryKey(autoGenerate = true)
     private final long id;

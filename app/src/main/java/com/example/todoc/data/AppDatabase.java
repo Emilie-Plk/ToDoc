@@ -1,6 +1,8 @@
 package com.example.todoc.data;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -56,9 +58,13 @@ public abstract class AppDatabase extends RoomDatabase {
 
             databaseWriteExecutor.execute(() -> {
                 ProjectDao dao = INSTANCE.getProjectDao();
-                dao.insertProject(new ProjectEntity(0, "Projet Tartampion", 0xFFEADAD1));
-                dao.insertProject(new ProjectEntity(0, "Projet Lucidia", 0xFFB4CDBA));
-                dao.insertProject(new ProjectEntity(0, "Projet Circus", 0xFFA3CED2));
+                try {
+                    dao.insertProject(new ProjectEntity(0, "Projet Tartampion", 0xFFEADAD1));
+                    dao.insertProject(new ProjectEntity(0, "Projet Lucidia", 0xFFB4CDBA));
+                    dao.insertProject(new ProjectEntity(0, "Projet Circus", 0xFFA3CED2));
+                } catch (SQLiteConstraintException e) {
+                    Log.e("AppDatabase", "Error inserting project", e);
+                }
             });
         }
     };
