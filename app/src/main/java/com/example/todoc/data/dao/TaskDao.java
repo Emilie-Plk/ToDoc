@@ -5,7 +5,6 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.ui.TaskViewStateItem;
 

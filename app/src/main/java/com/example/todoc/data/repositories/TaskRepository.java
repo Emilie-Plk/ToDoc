@@ -7,6 +7,8 @@ import com.example.todoc.data.dao.TaskDao;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.ui.TaskViewStateItem;
 
+import org.jetbrains.annotations.TestOnly;
+
 import java.util.List;
 
 public class TaskRepository {
@@ -25,7 +27,13 @@ public class TaskRepository {
     }
 
     public void deleteTask(long taskId) {
-        AppDatabase.databaseWriteExecutor.execute(() -> dao.deleteTask(taskId));
+        AppDatabase.databaseWriteExecutor.execute(() ->
+                dao.deleteTask(taskId));
+    }
+
+    @TestOnly
+    public LiveData<List<TaskEntity>> getTasksForTest() {
+        return dao.getTasksForTest();
     }
 
     public LiveData<List<TaskViewStateItem>> getTaskViewState() {
