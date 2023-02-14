@@ -27,8 +27,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MainActivityViewModelTest {
@@ -60,51 +58,54 @@ public class MainActivityViewModelTest {
 
     @Test
     public void nominalCase() {
+        // WHEN
         List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
 
+        // THEN
         assertEquals(4, result.size());
-
         verifyNoMoreInteractions(repository);
     }
 
     @Test
-    public void get() {
-
-    }
-
-    @Test
     public void edgeCase_noTask() {
+        // GIVEN
         List<TaskViewStateItem> emptyTaskList = new ArrayList<>();
 
+        // WHEN
         taskViewStateItems.setValue(emptyTaskList);
 
+        // THEN
         List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
-
         assertEquals(0, result.size());
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     public void onDeleteOneTask_shouldRemoveOneTask() {
+        // GIVEN
         List<TaskViewStateItem> resultBeforeDeleting = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
         assertEquals(4, resultBeforeDeleting.size());
 
+        // WHEN
         viewModel.onDeleteTask(1L);
 
+        // THEN
         List<TaskViewStateItem> resultAfterDeleting = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
-        assertEquals(3, resultAfterDeleting.size());
+        assertEquals(3, resultAfterDeleting.size()); // TODO: still find 4
         verifyNoMoreInteractions(repository);
     }
 
     @Test
-    public void filterAtoZ()  {
-     viewModel.sortTasks(ALPHABETICAL);
+    public void filterAtoZ() {
+        // WHEN
+        viewModel.sortTasks(ALPHABETICAL);
+
+        // THEN
         List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
         assertEquals(4, result.size());
-
     }
 
-
+    //region helper method
     @NonNull
     private List<TaskViewStateItem> getTestTaskViewStateItems() {
         List<TaskViewStateItem> dummyTasks = new ArrayList<>();
@@ -147,4 +148,5 @@ public class MainActivityViewModelTest {
 
         return dummyTasks;
     }
+    //endregion
 }

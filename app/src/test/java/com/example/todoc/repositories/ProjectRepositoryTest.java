@@ -2,8 +2,6 @@ package com.example.todoc.repositories;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -27,7 +25,7 @@ public class ProjectRepositoryTest {
 
     @Before
     public void setUp() {
-     repository = new ProjectRepository(projectDao);
+        repository = new ProjectRepository(projectDao);
     }
 
     @Test
@@ -41,6 +39,5 @@ public class ProjectRepositoryTest {
         Mockito.verify(projectDao).getProjects();
         Mockito.verifyNoMoreInteractions(projectDao);
     }
-
 
 }

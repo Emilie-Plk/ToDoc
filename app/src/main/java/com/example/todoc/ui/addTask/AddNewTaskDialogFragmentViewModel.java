@@ -28,10 +28,9 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isTaskFieldComplete = new MutableLiveData<>(false);
 
-    private final MediatorLiveData<Boolean> isEveryFieldComplete = new MediatorLiveData<>();
-
-
     private final MutableLiveData<String> chosenProjectMutableLiveData = new MutableLiveData<>();
+
+    private final MediatorLiveData<Boolean> isEveryFieldComplete = new MediatorLiveData<>();
 
     public AddNewTaskDialogFragmentViewModel(@NonNull TaskRepository taskRepository, @NonNull ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
