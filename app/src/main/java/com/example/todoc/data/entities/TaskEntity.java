@@ -29,7 +29,8 @@ public class TaskEntity {
     private final long projectId;
 
     public TaskEntity(
-            long id, long projectId,
+            long id,
+            long projectId,
             @NonNull String taskDescription,
             @NonNull Timestamp taskTimeStamp
     ) {

@@ -39,7 +39,7 @@ public class MainActivityViewModel extends ViewModel {
             }
             taskViewStateItemsMediatorLiveData.setValue(taskViewStateItems);
 
-            checkIfViewStateIsEmptyOrNot();
+            updateNoTaskTextViewVisibility();
         });
     }
 
@@ -56,13 +56,11 @@ public class MainActivityViewModel extends ViewModel {
         taskRepository.deleteTask(taskId);
     }
 
-    private void checkIfViewStateIsEmptyOrNot() {
-        if (taskViewStateItemsMediatorLiveData.getValue() == null ||
-                taskViewStateItemsMediatorLiveData.getValue().isEmpty()) {
-            isNoTaskTextViewVisible.setValue(true);
-        } else {
-            isNoTaskTextViewVisible.setValue(false);
-        }
+    private void updateNoTaskTextViewVisibility() {
+        isNoTaskTextViewVisible.setValue(
+                taskViewStateItemsMediatorLiveData.getValue() == null ||
+                        taskViewStateItemsMediatorLiveData.getValue().isEmpty()
+        );
     }
 
     public void sortTasks(SortMethod sortMethod) {

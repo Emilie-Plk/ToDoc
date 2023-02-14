@@ -1,28 +1,19 @@
-package com.example.todoc;
+package com.example.todoc.repositories;
 
 
-import static com.example.todoc.TestUtil.getValueForTesting;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import android.content.Context;
-
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Room;
 
-import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.ProjectDao;
 import com.example.todoc.data.entities.ProjectEntity;
-import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.repositories.ProjectRepository;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.List;

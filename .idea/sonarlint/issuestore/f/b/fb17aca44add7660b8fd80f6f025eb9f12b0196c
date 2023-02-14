@@ -1,0 +1,12 @@
+
+j
+java:S1104 "TMake INSTANCE a static final constant or non-public and provide accessors if needed.(зоѕя
+D
+java:S1444 ".Make this "public static INSTANCE" field final(зоѕя
+o	java:S115""ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(х®ёх
+i
+java:S3008 "SRename this field "INSTANCE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(зоѕя
+m
+java:S3077 "WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(зоѕя
+[
+java:S1124""EReorder the modifiers to comply with the Java Language Specification.(х®ёх
