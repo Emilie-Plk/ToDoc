@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 
 import com.example.todoc.data.dao.ProjectDao;
 import com.example.todoc.data.entities.ProjectEntity;
+import com.example.todoc.data.entities.ProjectWithTasks;
+import com.example.todoc.data.entities.TaskEntity;
 
 import java.util.List;
 

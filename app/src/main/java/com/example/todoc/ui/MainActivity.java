@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         binding.listTasks.setAdapter(adapter);
         binding.listTasks.setLayoutManager(new LinearLayoutManager(this));
 
+
         viewModel.getMeetingViewStateItemsMediatorLiveData().observe(this, adapter::submitList);
         viewModel.getIsNoTaskTextViewVisible().observe(this, isVisible ->
                 binding.lblNoTask.setVisibility(Boolean.TRUE.equals(isVisible) ? View.VISIBLE : View.GONE));

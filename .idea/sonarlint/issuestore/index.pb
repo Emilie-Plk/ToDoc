@@ -19,8 +19,6 @@ p
 @app/src/main/java/com/example/todoc/adapter/TaskListAdapter.java,d\6\d6d8e3dc78ea5dca1471b48dc4f8866aec2d3fe1
 t
 Dapp/src/androidTest/java/com/example/todoc/daotests/TaskDaoTest.java,9\8\9825fbb4053fffcbc467077e0be353764b751af0
-|
-Lapp/src/main/java/com/example/todoc/data/repositories/ProjectRepository.java,4\7\47c2b21aedf54608092b6c521011c5e57a5639cd
 i
 9app/src/main/java/com/example/todoc/data/AppDatabase.java,f\b\fb17aca44add7660b8fd80f6f025eb9f12b0196c
 t
