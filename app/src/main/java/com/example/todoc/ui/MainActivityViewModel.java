@@ -42,14 +42,11 @@ public class MainActivityViewModel extends ViewModel {
         taskViewStateItemsMediatorLiveData.addSource(projectWithTasks, tasks ->
                 combine(tasks, sortMethodMutableLiveData.getValue()));
 
-
         taskViewStateItemsMediatorLiveData.addSource(sortMethodMutableLiveData, sortMethod ->
                 combine(projectWithTasks.getValue(), sortMethod));
 
-
         updateNoTaskTextViewVisibility();
     }
-
 
     private void combine(@Nullable List<ProjectWithTasks> tasks, @Nullable SortMethod sortMethod) {
         if (tasks == null) {
@@ -71,27 +68,26 @@ public class MainActivityViewModel extends ViewModel {
             }
         }
 
-
-        assert sortMethod != null;
-        switch (sortMethod) {
-            case ALPHABETICAL:
-                sortTasksAlphabetically(sortedMeetings);
-                break;
-            case ALPHABETICAL_INVERTED:
-                sortTasksAlphabeticallyInverted(sortedMeetings);
-                break;
-            case OLD_FIRST:
-            case NONE:
-                sortTasksChronologically(sortedMeetings);
-                break;
-            case RECENT_FIRST:
-                sortTasksChronologicallyReverted(sortedMeetings);
-                break;
+        if (sortMethod != null) {
+            switch (sortMethod) {
+                case ALPHABETICAL:
+                    sortTasksAlphabetically(sortedMeetings);
+                    break;
+                case ALPHABETICAL_INVERTED:
+                    sortTasksAlphabeticallyInverted(sortedMeetings);
+                    break;
+                case OLD_FIRST:
+                case NONE:
+                    sortTasksChronologically(sortedMeetings);
+                    break;
+                case RECENT_FIRST:
+                    sortTasksChronologicallyReverted(sortedMeetings);
+                    break;
+            }
         }
 
         taskViewStateItemsMediatorLiveData.setValue(sortedMeetings);
         updateNoTaskTextViewVisibility();
-
     }
 
     public MutableLiveData<Boolean> getIsNoTaskTextViewVisible() {
@@ -113,7 +109,7 @@ public class MainActivityViewModel extends ViewModel {
         );
     }
 
-    public void sortTasks(SortMethod sortMethod) {
+    public void onSortingTasksSelected(SortMethod sortMethod) {
         switch (sortMethod) {
             case ALPHABETICAL:
                 sortMethodMutableLiveData.setValue(ALPHABETICAL);

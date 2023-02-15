@@ -100,7 +100,7 @@ LiveData<List<TaskViewStateItem>> result = viewModel.getMeetingViewStateItemsMed
     @Test
     public void filterAtoZ() {
         // WHEN
-        viewModel.sortTasks(ALPHABETICAL);
+        viewModel.onSortingTasksSelected(ALPHABETICAL);
 
         // THEN
         List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());

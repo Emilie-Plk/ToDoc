@@ -5,10 +5,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoc.R;
 import com.example.todoc.adapter.TaskListAdapter;
@@ -31,7 +34,23 @@ public class MainActivity extends AppCompatActivity {
 
         initRecyclerView();
 
-        binding.fabAddTask.setOnClickListener(v -> AddNewTaskDialogFragment.newInstance().show(getSupportFragmentManager(), null));
+        updateEmptyTaskListTextView();
+
+        binding.fabAddTask.setOnClickListener(v ->
+                AddNewTaskDialogFragment.newInstance()
+                        .show(getSupportFragmentManager(), null));
+    }
+
+    private void updateEmptyTaskListTextView() {
+        viewModel.getIsNoTaskTextViewVisible().observe(this, isVisible ->
+                binding.listTasks.setItemAnimator(new DefaultItemAnimator() {
+                    @Override
+                    public void onAnimationFinished(@NonNull RecyclerView.ViewHolder viewHolder) {
+                        super.onAnimationFinished(viewHolder);
+                        binding.lblNoTask.setVisibility(Boolean.TRUE.equals(isVisible) ? View.VISIBLE : View.GONE);
+                    }
+                })
+        );
     }
 
     private void initRecyclerView() {
@@ -43,10 +62,7 @@ public class MainActivity extends AppCompatActivity {
         binding.listTasks.setAdapter(adapter);
         binding.listTasks.setLayoutManager(new LinearLayoutManager(this));
 
-
         viewModel.getMeetingViewStateItemsMediatorLiveData().observe(this, adapter::submitList);
-        viewModel.getIsNoTaskTextViewVisible().observe(this, isVisible ->
-                binding.lblNoTask.setVisibility(Boolean.TRUE.equals(isVisible) ? View.VISIBLE : View.GONE));
     }
 
     private void setViewModel() {
@@ -64,22 +80,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case (R.id.filter_alphabetical):
-                viewModel.sortTasks(SortMethod.ALPHABETICAL);
+                viewModel.onSortingTasksSelected(SortMethod.ALPHABETICAL);
                 break;
             case (R.id.filter_alphabetical_inverted):
-                viewModel.sortTasks(SortMethod.ALPHABETICAL_INVERTED);
+                viewModel.onSortingTasksSelected(SortMethod.ALPHABETICAL_INVERTED);
                 break;
             case (R.id.filter_oldest_first):
-                viewModel.sortTasks(SortMethod.OLD_FIRST);
+                viewModel.onSortingTasksSelected(SortMethod.OLD_FIRST);
                 break;
             case (R.id.filter_recent_first):
-                viewModel.sortTasks(SortMethod.RECENT_FIRST);
+                viewModel.onSortingTasksSelected(SortMethod.RECENT_FIRST);
                 break;
             default:
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 }
