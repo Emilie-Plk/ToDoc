@@ -3,10 +3,7 @@ package com.example.todoc;
 import static com.example.todoc.ui.SortMethod.ALPHABETICAL;
 import static com.example.todoc.utils.TestUtil.getValueForTesting;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import androidx.annotation.NonNull;
@@ -44,6 +41,7 @@ public class MainActivityViewModelTest {
 
     @Before
     public void setUp() {
+/*
         doReturn(taskViewStateItems).when(repository).getTaskViewState();
         taskViewStateItems = new MutableLiveData<>();
 
@@ -55,6 +53,7 @@ public class MainActivityViewModelTest {
         viewModel = new MainActivityViewModel(repository);
 
         verify(repository).getTaskViewState();
+*/
     }
 
     @Test

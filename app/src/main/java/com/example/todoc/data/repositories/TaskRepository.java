@@ -6,9 +6,6 @@ import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.TaskDao;
 import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
-import com.example.todoc.ui.TaskViewStateItem;
-
-import org.jetbrains.annotations.TestOnly;
 
 import java.util.List;
 
@@ -34,14 +31,5 @@ public class TaskRepository {
 
     public LiveData<List<ProjectWithTasks>> getProjectWithTasks() {
         return dao.getProjectWithTasks();
-    }
-
-    @TestOnly
-    public LiveData<List<TaskEntity>> getTasksForTest() {
-        return dao.getTasksForTest();
-    }
-
-    public LiveData<List<TaskViewStateItem>> getTaskViewState() {
-        return dao.getTaskViewStateItems();
     }
 }

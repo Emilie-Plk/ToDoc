@@ -2,9 +2,6 @@ package com.example.todoc.utils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 public class TestUtil {
 

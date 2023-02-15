@@ -6,20 +6,25 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
+import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.TaskDao;
+import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.repositories.TaskRepository;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.List;
 
 public class TaskRepositoryTest {
 
+    @Mock
     private final TaskDao taskDao = Mockito.mock(TaskDao.class);
 
     private TaskRepository repository;
@@ -33,28 +38,29 @@ public class TaskRepositoryTest {
     }
 
     @Test
-    public void verify_getAllTasks() {
+    public void verify_getProjectWithTasks() {
         // GIVEN
-        LiveData<List<TaskEntity>> taskEntitiesLiveData = Mockito.spy(new MutableLiveData<>());
-        Mockito.doReturn(taskEntitiesLiveData).when(taskDao).getTasksForTest();
+        LiveData<List<ProjectWithTasks>> projectWithTasksList = Mockito.spy(new MutableLiveData<>());
+        Mockito.doReturn(projectWithTasksList).when(taskDao).getProjectWithTasks();
 
         // WHEN
-        LiveData<List<TaskEntity>> result = repository.getTasksForTest();
+        LiveData<List<ProjectWithTasks>> result = repository.getProjectWithTasks();
 
         // THEN
-        assertEquals(taskEntitiesLiveData, result);
-        Mockito.verify(taskDao).getTasksForTest();
+        assertEquals(projectWithTasksList, result);
+        Mockito.verify(taskDao).getProjectWithTasks();
         verifyNoMoreInteractions(taskDao);
     }
 
     @Test
-    public void verify_addTask() {
+    public void verify_addTask() { // TODO: works fine isolate but not grouped!
         // GIVEN
         TaskEntity task = Mockito.mock(TaskEntity.class);
 
         // WHEN
         repository.addNewTask(task);
 
+        // THEN
         Mockito.verify(taskDao).insertTask(task);
         verifyNoMoreInteractions(taskDao);
     }
@@ -69,16 +75,6 @@ public class TaskRepositoryTest {
 
         // THEN
         Mockito.verify(taskDao).deleteTask(taskID);
-        verifyNoMoreInteractions(taskDao);
-    }
-
-    @Test
-    public void verify_getTaskViewStateItem() {
-        // WHEN
-        repository.getTaskViewState();
-
-        // THEN
-        Mockito.verify(taskDao).getTaskViewStateItems();
         verifyNoMoreInteractions(taskDao);
     }
 }

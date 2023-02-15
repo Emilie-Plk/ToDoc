@@ -12,8 +12,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.TaskDao;
 import com.example.todoc.data.entities.ProjectEntity;
+import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
-import com.example.todoc.ui.TaskViewStateItem;
 
 import org.junit.After;
 import org.junit.Before;
@@ -31,7 +31,6 @@ public class TaskDaoTest {
     private AppDatabase database;
 
     private static final TaskEntity TASK = new TaskEntity(0, 1L, "Test Task", new Timestamp(System.currentTimeMillis()));
-
     private static final ProjectEntity PROJECT_1 = new ProjectEntity(0, "Project Test 1", 0xFFEADAD1);
     private static final ProjectEntity PROJECT_2 = new ProjectEntity(0, "Project Test 2", 0xFFEADAD1);
     private static final ProjectEntity PROJECT_3 = new ProjectEntity(0, "Project Test 3", 0xFFEADAD1);
@@ -57,43 +56,41 @@ public class TaskDaoTest {
     }
 
     @Test
-    public void insert_one_project() {
+    public void insert_one_task() {
         // WHEN
         taskDao.insertTask(TASK);
 
         // THEN
-        List<TaskEntity> result = TestUtil.getValueForTesting(taskDao.getTasksForTest());
-        assertEquals(1, result.size());
+        List<ProjectWithTasks> result = TestUtil.getValueForTesting(taskDao.getProjectWithTasks());
+        assertEquals(1, result.get(0).getTasks().size());
     }
 
     @Test
-    public void delete_one_project() {
-        // WHEN
+    public void delete_one_task() {
+        // GIVEN
         taskDao.insertTask(TASK);
+        List<ProjectWithTasks> resultBeforeDeletion = TestUtil.getValueForTesting(taskDao.getProjectWithTasks());
+        assertEquals(1, resultBeforeDeletion.get(0).getTasks().size());
 
-        // THEN
-        List<TaskEntity> resultBeforeDeletion = TestUtil.getValueForTesting(taskDao.getTasksForTest());
-        assertEquals(1, resultBeforeDeletion.size());
-
+        // WHEN
         taskDao.deleteTask(1);
 
-        List<TaskEntity> resultAfterDeletion = TestUtil.getValueForTesting(taskDao.getTasksForTest());
-
-        assertEquals(0, resultAfterDeletion.size());
+        // THEN
+        List<ProjectWithTasks> resultAfterDeletion = TestUtil.getValueForTesting(taskDao.getProjectWithTasks());
+        assertEquals(0, resultAfterDeletion.get(0).getTasks().size());
     }
 
     @Test
-    public void insert_one_task_should_return_one_TaskViewStateItem() {
+    public void insert_one_task_should_return_one_ProjectWithTasks_item() {
         // WHEN
         taskDao.insertTask(TASK);
 
         // THEN
-        List<TaskViewStateItem> result = TestUtil.getValueForTesting(taskDao.getTaskViewStateItems());
-        assertEquals(1, result.get(0).getTaskId());
-        assertEquals(TASK.getTaskDescription(), result.get(0).getTaskDescription());
-        assertEquals(TASK.getTaskTimeStamp(), result.get(0).getTaskTimeStamp());
-        assertEquals(PROJECT_1.getProjectName(), result.get(0).getProjectName());
-        assertEquals(PROJECT_1.getProjectColor(), result.get(0).getProjectColor());
-
+        List<ProjectWithTasks> result = TestUtil.getValueForTesting(taskDao.getProjectWithTasks());
+        assertEquals(1, result.get(0).getTasks().size());
+        assertEquals(TASK.getTaskDescription(), result.get(0).getTasks().get(0).getTaskDescription());
+        assertEquals(TASK.getTaskTimeStamp(), result.get(0).getTasks().get(0).getTaskTimeStamp());
+        assertEquals(PROJECT_1.getProjectName(), result.get(0).getProject().getProjectName());
+        assertEquals(PROJECT_1.getProjectColor(), result.get(0).getProject().getProjectColor());
     }
 }
