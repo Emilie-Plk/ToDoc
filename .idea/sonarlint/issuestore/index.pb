@@ -15,8 +15,6 @@ y
 Iapp/src/main/java/com/example/todoc/data/entities/TimeStampConverter.java,e\e\ee855c18665329a77b72e5de64bb37f29e69faaa
 q
 Aapp/src/androidTest/java/com/example/todoc/daotests/TestUtil.java,d\4\d4f824727666b857b98bac8be3d298e97414f105
-l
-<app/src/main/java/com/example/todoc/data/dao/ProjectDao.java,e\3\e3612245bbf01050a53269c9ab3ad8ff62eaade1
 p
 @app/src/main/java/com/example/todoc/adapter/TaskListAdapter.java,d\6\d6d8e3dc78ea5dca1471b48dc4f8866aec2d3fe1
 t

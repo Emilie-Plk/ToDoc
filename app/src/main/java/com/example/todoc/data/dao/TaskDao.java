@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.ui.TaskViewStateItem;
 
@@ -23,6 +24,9 @@ public interface TaskDao {
     @TestOnly
     @Query("SELECT * FROM tasks")
     LiveData<List<TaskEntity>> getTasksForTest();
+
+    @Query("SELECT * FROM projects")
+    LiveData<List<ProjectWithTasks>> getProjectWithTasks();
 
     @Query("SELECT tasks.id AS taskId, tasks.taskDescription, projects.projectName, projects.projectColor, tasks.taskTimeStamp "
             + "FROM tasks "

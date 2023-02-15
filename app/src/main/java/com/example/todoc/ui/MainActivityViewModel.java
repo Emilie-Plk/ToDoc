@@ -11,6 +11,9 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.todoc.data.entities.ProjectEntity;
+import com.example.todoc.data.entities.ProjectWithTasks;
+import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.repositories.TaskRepository;
 
 import java.util.ArrayList;
@@ -21,21 +24,25 @@ public class MainActivityViewModel extends ViewModel {
     @NonNull
     private final TaskRepository taskRepository;
     private final MediatorLiveData<List<TaskViewStateItem>> taskViewStateItemsMediatorLiveData = new MediatorLiveData<>();
+
     private final MutableLiveData<Boolean> isNoTaskTextViewVisible = new MutableLiveData<>();
 
 
     public MainActivityViewModel(@NonNull TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
 
-        taskViewStateItemsMediatorLiveData.addSource(taskRepository.getTaskViewState(), tasks -> {
+        taskViewStateItemsMediatorLiveData.addSource(taskRepository.getProjectWithTasks(), projectsWithTasks -> {
             List<TaskViewStateItem> taskViewStateItems = new ArrayList<>();
-            for (TaskViewStateItem task : tasks) {
-                taskViewStateItems.add(new TaskViewStateItem(
-                        task.getTaskId(),
-                        task.getTaskDescription(),
-                        task.getProjectName(),
-                        task.getProjectColor(),
-                        task.getTaskTimeStamp()));
+            for (ProjectWithTasks projectWithTasks : projectsWithTasks) {
+                ProjectEntity project = projectWithTasks.project;
+                for (TaskEntity task : projectWithTasks.tasks) {
+                    taskViewStateItems.add(new TaskViewStateItem(
+                            task.getId(),
+                            task.getTaskDescription(),
+                            project.getProjectName(),
+                            project.getProjectColor(),
+                            task.getTaskTimeStamp()));
+                }
             }
             taskViewStateItemsMediatorLiveData.setValue(taskViewStateItems);
 
@@ -73,14 +80,11 @@ public class MainActivityViewModel extends ViewModel {
             case ALPHABETICAL_INVERTED:
                 sortTasksAlphabeticallyInverted(taskViewStateItems);
                 break;
-            case OLD_FIRST:
-                sortTasksChronologically(taskViewStateItems);
-                break;
             case RECENT_FIRST:
                 sortTasksChronologicallyReverted(taskViewStateItems);
                 break;
-            case NONE:
-                break;
+            default:
+                sortTasksChronologically(taskViewStateItems);
         }
     }
 

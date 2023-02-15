@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.TaskDao;
+import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.ui.TaskViewStateItem;
 
@@ -29,6 +30,10 @@ public class TaskRepository {
     public void deleteTask(long taskId) {
         AppDatabase.databaseWriteExecutor.execute(() ->
                 dao.deleteTask(taskId));
+    }
+
+    public LiveData<List<ProjectWithTasks>> getProjectWithTasks() {
+        return dao.getProjectWithTasks();
     }
 
     @TestOnly
