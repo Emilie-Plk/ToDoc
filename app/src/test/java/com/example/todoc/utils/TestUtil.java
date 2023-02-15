@@ -8,33 +8,16 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class TestUtil {
 
-    @NonNull
-    public static <T> T getValueForTesting(@NonNull final LiveData<T> liveData) {
-        final Object lock = new Object();
-        final AtomicReference<T> captured = new AtomicReference<>();
+        @NonNull
+        public static <T> T getValueForTesting(@NonNull final LiveData<T> liveData) {
+            liveData.observeForever(t -> {
+            });
 
-        final Observer<T> observer = t -> {
-            captured.set(t);
-            synchronized (lock) {
-                lock.notifyAll();
+            T captured = liveData.getValue();
+
+            if (captured == null) {
+                throw new AssertionError("LiveData value is null !");
             }
-        };
-
-        synchronized (lock) {
-            liveData.observeForever(observer);
-            try {
-                lock.wait(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            return captured;
         }
-
-        T value = captured.get();
-        liveData.removeObserver(observer);
-
-        if (value == null) {
-            throw new AssertionError("LiveData value is null !");
-        }
-        return value;
     }
-}

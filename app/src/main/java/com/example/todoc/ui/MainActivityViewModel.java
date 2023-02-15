@@ -106,7 +106,7 @@ public class MainActivityViewModel extends ViewModel {
                         .stream()
                         .sorted(comparing(o -> o.getTaskDescription().toLowerCase(), reverseOrder()))
                         .collect(toList()));
-    }
+    } // Comparator pour refactor
 
     private void sortTasksAlphabetically(@NonNull List<TaskViewStateItem> taskViewStateItems) {
         taskViewStateItemsMediatorLiveData.setValue(

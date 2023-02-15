@@ -58,7 +58,6 @@ public class AddNewTaskDialogFragmentViewModelTest {
         viewModel = new AddNewTaskDialogFragmentViewModel(taskRepository, projectRepository);
     }
 
-
     @Test
     public void getAllProjects_returns3Projects() {
         List<ProjectEntity> projectEntityList = getValueForTesting(viewModel.getAllProjects());

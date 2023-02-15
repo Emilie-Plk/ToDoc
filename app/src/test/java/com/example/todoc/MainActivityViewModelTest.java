@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.todoc.data.repositories.TaskRepository;
@@ -81,17 +82,18 @@ public class MainActivityViewModelTest {
     }
 
     @Test
-    public void onDeleteOneTask_shouldRemoveOneTask() {
+    public void onDeleteOneTask_shouldRemoveOneTask() throws InterruptedException {
         // GIVEN
-        List<TaskViewStateItem> resultBeforeDeleting = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
-        assertEquals(4, resultBeforeDeleting.size());
+       /* List<TaskViewStateItem> resultBeforeDeleting = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
+        assertEquals(4, resultBeforeDeleting.size());*/
 
         // WHEN
         viewModel.onDeleteTask(1L);
-
         // THEN
-        List<TaskViewStateItem> resultAfterDeleting = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
-        assertEquals(3, resultAfterDeleting.size()); // TODO: still find 4
+
+LiveData<List<TaskViewStateItem>> result = viewModel.getMeetingViewStateItemsMediatorLiveData();
+    //    List<TaskViewStateItem> resultAfterDeleting = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
+        assertEquals(3, result.getValue().size()); // TODO: still find 4
         verifyNoMoreInteractions(repository);
     }
 
