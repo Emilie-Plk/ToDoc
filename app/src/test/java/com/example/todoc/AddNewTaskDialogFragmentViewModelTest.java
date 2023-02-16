@@ -2,16 +2,21 @@ package com.example.todoc;
 
 import static com.example.todoc.utils.TestUtil.getValueForTesting;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.todoc.data.entities.ProjectEntity;
+import com.example.todoc.data.entities.ProjectWithTasks;
+import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.repositories.ProjectRepository;
 import com.example.todoc.data.repositories.TaskRepository;
-import com.example.todoc.ui.TaskViewStateItem;
 import com.example.todoc.ui.addTask.AddNewTaskDialogFragmentViewModel;
 
 import org.junit.Before;
@@ -21,7 +26,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,9 +43,9 @@ public class AddNewTaskDialogFragmentViewModelTest {
 
     private AddNewTaskDialogFragmentViewModel viewModel;
 
-    private MutableLiveData<List<ProjectEntity>> projectList;
+    private final MutableLiveData<List<ProjectEntity>> projectList = new MutableLiveData<>();
 
-    private MutableLiveData<List<TaskViewStateItem>> taskViewStateItems;
+    private final MutableLiveData<List<ProjectWithTasks>> projectWithTasksListMutableLiveData = new MutableLiveData<>();
 
     @Rule
     public InstantTaskExecutorRule rule = new InstantTaskExecutorRule();
@@ -45,17 +53,13 @@ public class AddNewTaskDialogFragmentViewModelTest {
 
     @Before
     public void setUp() {
-        projectList = new MutableLiveData<>();
         List<ProjectEntity> projectEntityList = getProjectsTest();
         projectList.setValue(projectEntityList);
-
         doReturn(projectList).when(projectRepository).getAllProjects();
 
-        taskViewStateItems = new MutableLiveData<>();
-
-/*
-        doReturn(taskViewStateItems).when(taskRepository).getTaskViewState();
-*/
+        List<ProjectWithTasks> projectWithTasks = getProjectWithTasks();
+        projectWithTasksListMutableLiveData.setValue(projectWithTasks);
+        doReturn(projectWithTasksListMutableLiveData).when(taskRepository).getProjectWithTasks();
 
         viewModel = new AddNewTaskDialogFragmentViewModel(taskRepository, projectRepository);
     }
@@ -68,16 +72,54 @@ public class AddNewTaskDialogFragmentViewModelTest {
     }
 
     @Test
-    public void onAddingNewTask_shouldAddTask() { // TODO: doesn't work either...
-        viewModel.onAddingNewTask("Mop the floor", 1L);
+    public void onAddingNewTask_shouldAddTask() { // TODO: doesn't work...
+        String taskDescription = "Test task description";
+        long projectId = 1L;
+        TaskEntity expectedTaskEntity = new TaskEntity(0, projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
 
-/*
-        List<TaskViewStateItem> taskViewStateItemList = getValueForTesting(taskRepository.getTaskViewState());
-*/
+        viewModel.onAddingNewTask(taskDescription, projectId);
 
-/*
-        assertEquals(1, taskViewStateItemList.size());
-*/
+        verify(taskRepository).addNewTask(expectedTaskEntity);
+        verifyNoMoreInteractions(taskRepository);
+    }
+
+    @Test
+    public void onAddingNewTask_callsCloseDialogFragment() {
+        String taskDescription = "Test task description";
+        String chosenProject = "Projet Lucidia";
+
+        viewModel.updateForTaskDescriptionCompletion(taskDescription);
+        viewModel.updateForChosenProjectSelection(chosenProject);
+
+        Boolean result = getValueForTesting(viewModel.getIsEveryFieldComplete());
+
+        assertTrue(result);
+    }
+
+
+    @Test
+    public void onAddingNewTask_callsCloseDialogFragmentd() {
+        String taskDescription = "Test task description";
+        String chosenProject = "Projet Lucidia";
+
+        Boolean isTaskAndProjectUnselected = getValueForTesting(viewModel.getIsEveryFieldComplete());
+        assertFalse(isTaskAndProjectUnselected);
+
+        viewModel.updateForTaskDescriptionCompletion(taskDescription);
+        Boolean isProjectUnselected = getValueForTesting(viewModel.getIsEveryFieldComplete());
+        assertFalse(isProjectUnselected);
+
+        viewModel.updateForChosenProjectSelection(chosenProject);
+        Boolean result = getValueForTesting(viewModel.getIsEveryFieldComplete());
+        assertTrue(result);
+    }
+
+    @Test
+    public void updateForChosenProjectSelection_updatesIsProjectFieldComplete() {
+        String chosenProject = "Test project";
+        viewModel.updateForChosenProjectSelection(chosenProject);
+        Boolean isProjectFieldComplete = getValueForTesting(viewModel.getIsEveryFieldComplete());
+        assertFalse(isProjectFieldComplete);
     }
 
     //region Project entities for test
@@ -87,6 +129,24 @@ public class AddNewTaskDialogFragmentViewModelTest {
         projectList.add(new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA));
         projectList.add(new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2));
         return projectList;
+    }
+
+    private List<ProjectWithTasks> getProjectWithTasks() {
+        ProjectEntity project1 = new ProjectEntity(1L, "Projet Tartampion", 0xFFEADAD1);
+        ProjectEntity project2 = new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA);
+        ProjectEntity project3 = new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2);
+
+        TaskEntity task1 = new TaskEntity(1L, 1L, "Task A", new Timestamp(System.currentTimeMillis()));
+        TaskEntity task2 = new TaskEntity(2L, 1L, "Task B", new Timestamp(System.currentTimeMillis()));
+        TaskEntity task3 = new TaskEntity(3L, 2L, "Task C", new Timestamp(System.currentTimeMillis()));
+        TaskEntity task4 = new TaskEntity(4L, 3L, "Task D", new Timestamp(System.currentTimeMillis()));
+
+        List<ProjectWithTasks> dummyProjectWithTasks = new ArrayList<>();
+        dummyProjectWithTasks.add(new ProjectWithTasks(project1, Arrays.asList(task1, task2)));
+        dummyProjectWithTasks.add(new ProjectWithTasks(project2, Collections.singletonList(task3)));
+        dummyProjectWithTasks.add(new ProjectWithTasks(project3, Collections.singletonList(task4)));
+
+        return dummyProjectWithTasks;
     }
     //endregion
 }

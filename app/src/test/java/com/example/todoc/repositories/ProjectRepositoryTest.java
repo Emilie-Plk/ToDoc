@@ -2,6 +2,7 @@ package com.example.todoc.repositories;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -18,10 +19,9 @@ import java.util.List;
 
 public class ProjectRepositoryTest {
 
-    private final ProjectDao projectDao = Mockito.mock(ProjectDao.class);
+    private final ProjectDao projectDao = mock(ProjectDao.class);
 
     private ProjectRepository repository;
-
 
     @Before
     public void setUp() {

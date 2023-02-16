@@ -11,8 +11,6 @@ import com.example.todoc.data.repositories.ProjectRepository;
 import com.example.todoc.data.repositories.TaskRepository;
 import com.example.todoc.ui.addTask.AddNewTaskDialogFragmentViewModel;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
@@ -34,7 +32,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     }
 
     public ViewModelFactory(Context context) {
-        Executor executor = Executors.newFixedThreadPool(4);
         AppDatabase db = AppDatabase.getDatabase(context);
         this.taskRepository = new TaskRepository(db.getTaskDao());
         this.projectRepository = new ProjectRepository(db.getProjectDao());

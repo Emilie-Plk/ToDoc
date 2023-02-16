@@ -1,8 +1,0 @@
-
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(‹Õ— úÿÿÿÿ
-—
-java:S11864"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(«û³±
-œ
-java:S11868"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ê¥¾àûÿÿÿÿ
-h
-java:S1612U"MReplace this lambda with method reference 'binding.addBtnDialog::setEnabled'.(”Þ‚ºøÿÿÿÿ

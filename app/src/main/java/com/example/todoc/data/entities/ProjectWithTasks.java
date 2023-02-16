@@ -1,5 +1,6 @@
 package com.example.todoc.data.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
@@ -40,6 +41,7 @@ public class ProjectWithTasks {
         return Objects.hash(project, tasks);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ProjectWithTasks{" +

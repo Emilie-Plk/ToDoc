@@ -1,14 +1,15 @@
 package com.example.todoc.repositories;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+import static java.lang.Thread.sleep;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Room;
 
-import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.dao.TaskDao;
 import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
@@ -20,6 +21,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class TaskRepositoryTest {
@@ -38,6 +40,19 @@ public class TaskRepositoryTest {
     }
 
     @Test
+    public void verify_addTask() { // TODO: works fine isolate but not grouped!
+        // GIVEN
+        TaskEntity task = new TaskEntity(1,1, "Test", new Timestamp(System.currentTimeMillis()));
+        // WHEN
+        repository.addNewTask(task);
+        // When I add some delay (ie. wait(2000), it works, but it's ugly
+        //sleep(2000);
+        // THEN
+        Mockito.verify(taskDao, times(1)).insertTask(task);
+        verifyNoMoreInteractions(taskDao);
+    }
+
+    @Test
     public void verify_getProjectWithTasks() {
         // GIVEN
         LiveData<List<ProjectWithTasks>> projectWithTasksList = Mockito.spy(new MutableLiveData<>());
@@ -53,19 +68,6 @@ public class TaskRepositoryTest {
     }
 
     @Test
-    public void verify_addTask() { // TODO: works fine isolate but not grouped!
-        // GIVEN
-        TaskEntity task = Mockito.mock(TaskEntity.class);
-
-        // WHEN
-        repository.addNewTask(task);
-
-        // THEN
-        Mockito.verify(taskDao).insertTask(task);
-        verifyNoMoreInteractions(taskDao);
-    }
-
-    @Test
     public void verify_deleteTask() {
         // GIVEN
         long taskID = 0L;
@@ -74,7 +76,7 @@ public class TaskRepositoryTest {
         repository.deleteTask(taskID);
 
         // THEN
-        Mockito.verify(taskDao).deleteTask(taskID);
+        Mockito.verify(taskDao, times(1)).deleteTask(taskID);
         verifyNoMoreInteractions(taskDao);
     }
 }

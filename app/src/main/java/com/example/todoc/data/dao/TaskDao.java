@@ -8,9 +8,6 @@ import androidx.room.Transaction;
 
 import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
-import com.example.todoc.ui.TaskViewStateItem;
-
-import org.jetbrains.annotations.TestOnly;
 
 import java.util.List;
 

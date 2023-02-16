@@ -29,7 +29,6 @@ public class MainActivityViewModel extends ViewModel {
     @NonNull
     private final TaskRepository taskRepository;
     private final MediatorLiveData<List<TaskViewStateItem>> taskViewStateItemsMediatorLiveData = new MediatorLiveData<>();
-
     private final MutableLiveData<SortMethod> sortMethodMutableLiveData = new MutableLiveData<>(NONE);
     private final MutableLiveData<Boolean> isNoTaskTextViewVisible = new MutableLiveData<>();
 

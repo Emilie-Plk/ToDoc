@@ -7,6 +7,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity(tableName = "tasks",
         foreignKeys = @ForeignKey(
@@ -56,5 +57,29 @@ public class TaskEntity {
 
     public long getProjectId() {
         return projectId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TaskEntity task = (TaskEntity) o;
+        return id == task.id && projectId == task.projectId && taskDescription.equals(task.taskDescription) && taskTimeStamp.equals(task.taskTimeStamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, taskDescription, taskTimeStamp, projectId);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "TaskEntity{" +
+                "id=" + id +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", taskTimeStamp=" + taskTimeStamp +
+                ", projectId=" + projectId +
+                '}';
     }
 }
