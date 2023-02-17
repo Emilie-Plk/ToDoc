@@ -19,7 +19,7 @@
 
 
     <string name="project_dropdown_hint">Choisir un projet</string>
-    <string name="add_new_meeting_btn">ajouter</string>
+    <string name="add_new_task_btn">ajouter</string>
     <string name="back_btn">retour</string>
     <string name="delete_task_descr">Supprimer une tâche</string>
     <string name="add_new_task_title_dialog">Ajouter une nouvelle tâche</string>

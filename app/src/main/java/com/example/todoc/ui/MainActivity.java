@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         binding.listTasks.setAdapter(adapter);
         binding.listTasks.setLayoutManager(new LinearLayoutManager(this));
 
-        viewModel.getMeetingViewStateItemsMediatorLiveData().observe(this, adapter::submitList);
+        viewModel.getTaskViewStateItemsMediatorLiveData().observe(this, adapter::submitList);
     }
 
     private void setViewModel() {

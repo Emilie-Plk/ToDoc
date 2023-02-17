@@ -20,7 +20,13 @@ public class TaskViewStateItem {
     @NonNull
     private final Timestamp taskTimeStamp;
 
-    public TaskViewStateItem(long taskId, @NonNull String taskDescription, @NonNull String projectName, int projectColor, @NonNull Timestamp taskTimeStamp) {
+    public TaskViewStateItem(
+            long taskId,
+            @NonNull String taskDescription,
+            @NonNull String projectName,
+            int projectColor, @NonNull
+            Timestamp taskTimeStamp
+    ) {
         this.taskId = taskId;
         this.taskDescription = taskDescription;
         this.projectName = projectName;

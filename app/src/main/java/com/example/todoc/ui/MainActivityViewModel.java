@@ -52,12 +52,12 @@ public class MainActivityViewModel extends ViewModel {
             return;
         }
 
-        List<TaskViewStateItem> sortedMeetings = new ArrayList<>();
+        List<TaskViewStateItem> sortedTasks = new ArrayList<>();
 
         for (ProjectWithTasks projectWithTasks : tasks) {
             ProjectEntity project = projectWithTasks.getProject();
             for (TaskEntity taskEntity : projectWithTasks.getTasks()) {
-                sortedMeetings.add(
+                sortedTasks.add(
                         new TaskViewStateItem(
                                 taskEntity.getId(),
                                 taskEntity.getTaskDescription(),
@@ -70,22 +70,22 @@ public class MainActivityViewModel extends ViewModel {
         if (sortMethod != null) {
             switch (sortMethod) {
                 case ALPHABETICAL:
-                    sortTasksAlphabetically(sortedMeetings);
+                    sortTasksAlphabetically(sortedTasks);
                     break;
                 case ALPHABETICAL_INVERTED:
-                    sortTasksAlphabeticallyInverted(sortedMeetings);
+                    sortTasksAlphabeticallyInverted(sortedTasks);
                     break;
                 case OLD_FIRST:
                 case NONE:
-                    sortTasksChronologically(sortedMeetings);
+                    sortTasksChronologically(sortedTasks);
                     break;
                 case RECENT_FIRST:
-                    sortTasksChronologicallyReverted(sortedMeetings);
+                    sortTasksChronologicallyReverted(sortedTasks);
                     break;
             }
         }
 
-        taskViewStateItemsMediatorLiveData.setValue(sortedMeetings);
+        taskViewStateItemsMediatorLiveData.setValue(sortedTasks);
         updateNoTaskTextViewVisibility();
     }
 
@@ -93,7 +93,7 @@ public class MainActivityViewModel extends ViewModel {
         return isNoTaskTextViewVisible;
     }
 
-    public LiveData<List<TaskViewStateItem>> getMeetingViewStateItemsMediatorLiveData() {
+    public LiveData<List<TaskViewStateItem>> getTaskViewStateItemsMediatorLiveData() {
         return taskViewStateItemsMediatorLiveData;
     }
 

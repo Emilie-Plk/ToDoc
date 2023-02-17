@@ -94,10 +94,10 @@ public class AddNewTaskDialogFragment extends DialogFragment {
 
     private void addNewTask() {
         binding.addBtnDialog.setOnClickListener(v -> {
-                ProjectArrayAdapter projectAdapter = (ProjectArrayAdapter) binding.projectActv.getAdapter();
-                String taskDescription = binding.txtTaskName.getText().toString();
-                long projectId = projectAdapter.getProjectId(chosenProject);
-                viewModel.onAddingNewTask(taskDescription, projectId);
+            ProjectArrayAdapter projectAdapter = (ProjectArrayAdapter) binding.projectActv.getAdapter();
+            String taskDescription = binding.txtTaskName.getText().toString();
+            long projectId = projectAdapter.getProjectId(chosenProject);
+            viewModel.onAddingNewTask(taskDescription, projectId);
         });
     }
 }

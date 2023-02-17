@@ -45,7 +45,8 @@ public class AddNewTaskDialogFragmentViewModelTest {
 
     private final MutableLiveData<List<ProjectEntity>> projectList = new MutableLiveData<>();
 
-    private final MutableLiveData<List<ProjectWithTasks>> projectWithTasksListMutableLiveData = new MutableLiveData<>();
+    private final static String TASK_DESCRIPTION = "Test task description";
+    private final static String CHOSEN_PROJECT = "Projet Lucidia";
 
     @Rule
     public InstantTaskExecutorRule rule = new InstantTaskExecutorRule();
@@ -57,9 +58,6 @@ public class AddNewTaskDialogFragmentViewModelTest {
         projectList.setValue(projectEntityList);
         doReturn(projectList).when(projectRepository).getAllProjects();
 
-        List<ProjectWithTasks> projectWithTasks = getProjectWithTasks();
-        projectWithTasksListMutableLiveData.setValue(projectWithTasks);
-        doReturn(projectWithTasksListMutableLiveData).when(taskRepository).getProjectWithTasks();
 
         viewModel = new AddNewTaskDialogFragmentViewModel(taskRepository, projectRepository);
     }
@@ -72,7 +70,7 @@ public class AddNewTaskDialogFragmentViewModelTest {
     }
 
     @Test
-    public void onAddingNewTask_shouldAddTask() { // TODO: doesn't work...
+    public void onAddingNewTask_repositoryShouldAddNewTask() {
         String taskDescription = "Test task description";
         long projectId = 1L;
         TaskEntity expectedTaskEntity = new TaskEntity(0, projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
@@ -84,12 +82,11 @@ public class AddNewTaskDialogFragmentViewModelTest {
     }
 
     @Test
-    public void onAddingNewTask_callsCloseDialogFragment() {
-        String taskDescription = "Test task description";
-        String chosenProject = "Projet Lucidia";
+    public void onAddingNewTask_callsIsEveryFieldComplete() {
 
-        viewModel.updateForTaskDescriptionCompletion(taskDescription);
-        viewModel.updateForChosenProjectSelection(chosenProject);
+
+        viewModel.updateForTaskDescriptionCompletion(TASK_DESCRIPTION);
+        viewModel.updateForChosenProjectSelection(CHOSEN_PROJECT);
 
         Boolean result = getValueForTesting(viewModel.getIsEveryFieldComplete());
 
@@ -98,28 +95,32 @@ public class AddNewTaskDialogFragmentViewModelTest {
 
 
     @Test
-    public void onAddingNewTask_callsCloseDialogFragmentd() {
-        String taskDescription = "Test task description";
-        String chosenProject = "Projet Lucidia";
+    public void onAddingNewTask_onlyIfTaskAndProjectChosen_callsIsEveryFieldComplete() {
 
         Boolean isTaskAndProjectUnselected = getValueForTesting(viewModel.getIsEveryFieldComplete());
         assertFalse(isTaskAndProjectUnselected);
 
-        viewModel.updateForTaskDescriptionCompletion(taskDescription);
+        viewModel.updateForTaskDescriptionCompletion(TASK_DESCRIPTION);
         Boolean isProjectUnselected = getValueForTesting(viewModel.getIsEveryFieldComplete());
         assertFalse(isProjectUnselected);
 
-        viewModel.updateForChosenProjectSelection(chosenProject);
+        viewModel.updateForChosenProjectSelection(CHOSEN_PROJECT);
         Boolean result = getValueForTesting(viewModel.getIsEveryFieldComplete());
         assertTrue(result);
     }
 
     @Test
     public void updateForChosenProjectSelection_updatesIsProjectFieldComplete() {
-        String chosenProject = "Test project";
-        viewModel.updateForChosenProjectSelection(chosenProject);
+        viewModel.updateForChosenProjectSelection(CHOSEN_PROJECT);
         Boolean isProjectFieldComplete = getValueForTesting(viewModel.getIsEveryFieldComplete());
         assertFalse(isProjectFieldComplete);
+    }
+
+    @Test
+    public void updateForTaskDescriptionCompletion_updatesIsProjectFieldComplete() {
+        viewModel.updateForTaskDescriptionCompletion(TASK_DESCRIPTION);
+        Boolean isTaskFieldCompleted = getValueForTesting(viewModel.getIsEveryFieldComplete());
+        assertFalse(isTaskFieldCompleted);
     }
 
     //region Project entities for test

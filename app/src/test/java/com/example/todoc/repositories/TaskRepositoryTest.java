@@ -1,10 +1,9 @@
 package com.example.todoc.repositories;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-
-import static java.lang.Thread.sleep;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
@@ -27,7 +26,7 @@ import java.util.List;
 public class TaskRepositoryTest {
 
     @Mock
-    private final TaskDao taskDao = Mockito.mock(TaskDao.class);
+    private final TaskDao taskDao = mock(TaskDao.class);
 
     private TaskRepository repository;
 
@@ -40,15 +39,16 @@ public class TaskRepositoryTest {
     }
 
     @Test
-    public void verify_addTask() { // TODO: works fine isolate but not grouped!
+    public void verify_addTask() { // TODO: works fine separately but not grouped!
         // GIVEN
-        TaskEntity task = new TaskEntity(1,1, "Test", new Timestamp(System.currentTimeMillis()));
+        TaskEntity task = mock(TaskEntity.class);
+
         // WHEN
         repository.addNewTask(task);
-        // When I add some delay (ie. wait(2000), it works, but it's ugly
-        //sleep(2000);
+        // When I add some delay (ie. sleep(2000), it works, but it's ugly
+
         // THEN
-        Mockito.verify(taskDao, times(1)).insertTask(task);
+        verify(taskDao).insertTask(task);
         verifyNoMoreInteractions(taskDao);
     }
 
@@ -63,7 +63,7 @@ public class TaskRepositoryTest {
 
         // THEN
         assertEquals(projectWithTasksList, result);
-        Mockito.verify(taskDao).getProjectWithTasks();
+        verify(taskDao).getProjectWithTasks();
         verifyNoMoreInteractions(taskDao);
     }
 
@@ -76,7 +76,7 @@ public class TaskRepositoryTest {
         repository.deleteTask(taskID);
 
         // THEN
-        Mockito.verify(taskDao, times(1)).deleteTask(taskID);
+        verify(taskDao).deleteTask(taskID);
         verifyNoMoreInteractions(taskDao);
     }
 }
