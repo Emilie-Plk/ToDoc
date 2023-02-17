@@ -31,9 +31,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static volatile AppDatabase INSTANCE;
 
-    private final static int threads = Runtime.getRuntime().availableProcessors();
+    private static final int THREADS = Runtime.getRuntime().availableProcessors();
     public static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(threads);
+            Executors.newFixedThreadPool(THREADS);
 
 
     public static AppDatabase getDatabase(@NonNull final Context context) {  // SINGLETON (getDatabase() returns it)

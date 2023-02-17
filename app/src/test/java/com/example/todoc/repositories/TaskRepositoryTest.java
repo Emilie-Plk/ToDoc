@@ -1,6 +1,5 @@
 package com.example.todoc.repositories;
 
-import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -48,10 +47,10 @@ public class TaskRepositoryTest {
         repository.addNewTask(task);
 
         // THEN
-        await().until(() -> {
+      /*  await().until(() -> {*/
            verify(taskDao).insertTask(task);
-            return true;
-        });
+        /*    return true;
+        });*/
 
         verifyNoMoreInteractions(taskDao);
     }
