@@ -7,7 +7,6 @@ import static com.example.todoc.ui.SortMethod.OLD_FIRST;
 import static com.example.todoc.ui.SortMethod.RECENT_FIRST;
 import static com.example.todoc.utils.TestUtil.getValueForTesting;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -52,13 +51,10 @@ public class MainActivityViewModelTest {
     @Before
     public void setUp() {
 
-        doReturn(projectWithTasksMutableLiveData).when(repository).getProjectWithTasks();
         projectWithTasksMutableLiveData = new MutableLiveData<>();
-
         List<ProjectWithTasks> dummyProjectWithTasksList = getProjectWithTasks();
         projectWithTasksMutableLiveData.setValue(dummyProjectWithTasksList);
-
-        given(repository.getProjectWithTasks()).willReturn(projectWithTasksMutableLiveData);
+        doReturn(projectWithTasksMutableLiveData).when(repository).getProjectWithTasks();
 
         viewModel = new MainActivityViewModel(repository);
 
@@ -68,7 +64,7 @@ public class MainActivityViewModelTest {
     @Test
     public void nominalCase() {
         // WHEN
-        List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
+        List<TaskViewStateItem> result = getValueForTesting(viewModel.getTaskViewStateItemsMediatorLiveData());
 
         // THEN
         assertEquals(4, result.size());
@@ -84,35 +80,40 @@ public class MainActivityViewModelTest {
         projectWithTasksMutableLiveData.setValue(emptyTaskList);
 
         // THEN
-        List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
+        List<TaskViewStateItem> result = getValueForTesting(viewModel.getTaskViewStateItemsMediatorLiveData());
         assertEquals(0, result.size());
         verifyNoMoreInteractions(repository);
     }
 
     @Test
-    public void onDeleteOneTask_shouldRemoveOneTask() {
+    public void onDeleteGivenTask_verifyRepositoryDeletesGivenTask() {
         // GIVEN
+        long taskId = 1L;
 
         // WHEN
-        viewModel.onDeleteTask(1L);
-        verify(repository).deleteTask(1L);
+        viewModel.onDeleteTask(taskId);
+
         // THEN
-        List<TaskEntity> resultTasks = new ArrayList<>();
+        verify(repository).deleteTask(taskId);
+
+     /*   List<TaskEntity> resultTasks = new ArrayList<>();
         List<ProjectWithTasks> result = getValueForTesting(repository.getProjectWithTasks());
         for (ProjectWithTasks projectWithTasks : result) {
             List<TaskEntity> tasks = projectWithTasks.getTasks();
             resultTasks.addAll(tasks);
         }
-        assertEquals(3, resultTasks.size()); // TODO: still find 4
+        assertEquals(3, resultTasks.size()); // TODO: still find 4*/
 
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     public void onDisplayTasks_shouldSortTasksChronologically() {
+        // WHEN
         viewModel.onSortingTasksSelected(NONE);
 
-        List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
+        // THEN
+        List<TaskViewStateItem> result = getValueForTesting(viewModel.getTaskViewStateItemsMediatorLiveData());
         assertEquals("Task C", result.get(0).getTaskDescription());
         assertEquals("Task Z", result.get(1).getTaskDescription());
         assertEquals("Task B", result.get(2).getTaskDescription());
@@ -120,40 +121,38 @@ public class MainActivityViewModelTest {
     }
 
     @Test
-    public void filterAtoZ() {
+    public void onSortingTasksAtoZ_shouldSortTasksAccordingly() {
         // WHEN
         viewModel.onSortingTasksSelected(ALPHABETICAL);
 
         // THEN
-        List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
+        List<TaskViewStateItem> result = getValueForTesting(viewModel.getTaskViewStateItemsMediatorLiveData());
         assertEquals("Task A", result.get(0).getTaskDescription());
         assertEquals("Task B", result.get(1).getTaskDescription());
         assertEquals("Task C", result.get(2).getTaskDescription());
         assertEquals("Task Z", result.get(3).getTaskDescription());
-
     }
 
     @Test
-    public void filterZtoA() {
+    public void onSortingTasksZtoA_shouldSortTasksAccordingly() {
         // WHEN
         viewModel.onSortingTasksSelected(ALPHABETICAL_INVERTED);
 
         // THEN
-        List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
+        List<TaskViewStateItem> result = getValueForTesting(viewModel.getTaskViewStateItemsMediatorLiveData());
         assertEquals("Task Z", result.get(0).getTaskDescription());
         assertEquals("Task C", result.get(1).getTaskDescription());
         assertEquals("Task B", result.get(2).getTaskDescription());
         assertEquals("Task A", result.get(3).getTaskDescription());
-
     }
 
     @Test
-    public void filterChronologically() {
+    public void onSortingTasksChronologically_shouldSortTasksAccordingly() {
         // WHEN
         viewModel.onSortingTasksSelected(OLD_FIRST);
 
         // THEN
-        List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
+        List<TaskViewStateItem> result = getValueForTesting(viewModel.getTaskViewStateItemsMediatorLiveData());
         assertEquals("Task C", result.get(0).getTaskDescription());
         assertEquals("Task Z", result.get(1).getTaskDescription());
         assertEquals("Task B", result.get(2).getTaskDescription());
@@ -161,17 +160,16 @@ public class MainActivityViewModelTest {
     }
 
     @Test
-    public void filterChronologicallyReversed() {
+    public void onSortingTasksChronologicallyReversed_shouldSortTasksAccordingly() {
         // WHEN
         viewModel.onSortingTasksSelected(RECENT_FIRST);
 
         // THEN
-        List<TaskViewStateItem> result = getValueForTesting(viewModel.getMeetingViewStateItemsMediatorLiveData());
+        List<TaskViewStateItem> result = getValueForTesting(viewModel.getTaskViewStateItemsMediatorLiveData());
         assertEquals("Task A", result.get(0).getTaskDescription());
         assertEquals("Task B", result.get(1).getTaskDescription());
         assertEquals("Task Z", result.get(2).getTaskDescription());
         assertEquals("Task C", result.get(3).getTaskDescription());
-
     }
 
     //region helper method

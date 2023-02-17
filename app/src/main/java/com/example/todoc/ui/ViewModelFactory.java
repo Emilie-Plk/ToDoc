@@ -12,7 +12,6 @@ import com.example.todoc.data.repositories.TaskRepository;
 import com.example.todoc.ui.addTask.AddNewTaskDialogFragmentViewModel;
 
 
-
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private final TaskRepository taskRepository;
 
