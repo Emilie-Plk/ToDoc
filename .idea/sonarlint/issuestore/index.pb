@@ -24,15 +24,11 @@ Lapp/src/androidTest/java/com/example/todoc/MainActivityInstrumentedTest.java,a
 l
 <app/src/main/java/com/example/todoc/data/dao/ProjectDao.java,e\3\e3612245bbf01050a53269c9ab3ad8ff62eaade1
 t
-Dapp/src/androidTest/java/com/example/todoc/daotests/TaskDaoTest.java,9\8\9825fbb4053fffcbc467077e0be353764b751af0
-t
 Dapp/src/main/java/com/example/todoc/data/entities/ProjectEntity.java,7\8\78c8614ff62b1d6cbd76a60b5cf4f6f9d9aa8760
 q
 Aapp/src/main/java/com/example/todoc/data/entities/TaskEntity.java,5\c\5c96029f2fd008d50d8fe2ac2d5da8f32bde6e3b
 w
 Gapp/src/main/java/com/example/todoc/data/entities/ProjectWithTasks.java,6\8\68624553bb3b7a0a021fc3adefa79b38b826b136
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 i
 9app/src/main/java/com/example/todoc/data/AppDatabase.java,f\b\fb17aca44add7660b8fd80f6f025eb9f12b0196c
 |

@@ -1,7 +1,10 @@
 package com.example.todoc.repositories;
 
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -18,9 +21,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public class TaskRepositoryTest {
@@ -39,24 +40,28 @@ public class TaskRepositoryTest {
     }
 
     @Test
-    public void verify_addTask() { // TODO: works fine separately but not grouped!
+    public void verify_addTask() {
         // GIVEN
         TaskEntity task = mock(TaskEntity.class);
 
         // WHEN
         repository.addNewTask(task);
-        // When I add some delay (ie. sleep(2000), it works, but it's ugly
 
         // THEN
-        verify(taskDao).insertTask(task);
+        await().until(() -> {
+           verify(taskDao).insertTask(task);
+            return true;
+        });
+
         verifyNoMoreInteractions(taskDao);
     }
+
 
     @Test
     public void verify_getProjectWithTasks() {
         // GIVEN
-        LiveData<List<ProjectWithTasks>> projectWithTasksList = Mockito.spy(new MutableLiveData<>());
-        Mockito.doReturn(projectWithTasksList).when(taskDao).getProjectWithTasks();
+        LiveData<List<ProjectWithTasks>> projectWithTasksList = spy(new MutableLiveData<>());
+        doReturn(projectWithTasksList).when(taskDao).getProjectWithTasks();
 
         // WHEN
         LiveData<List<ProjectWithTasks>> result = repository.getProjectWithTasks();
