@@ -33,7 +33,7 @@ public class AddNewTaskDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAddNewTaskDialogBinding.inflate(LayoutInflater.from(getContext()));
         viewModel = new ViewModelProvider(this,
-                ViewModelFactory.getInstance(getContext())).get(AddNewTaskDialogFragmentViewModel.class);
+                ViewModelFactory.getInstance()).get(AddNewTaskDialogFragmentViewModel.class);
 
         setProjectACTVAdapter();
 

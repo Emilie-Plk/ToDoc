@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setViewModel() {
         viewModel = new ViewModelProvider(this,
-                ViewModelFactory.getInstance(getApplication())).get(MainActivityViewModel.class);
+                ViewModelFactory.getInstance()).get(MainActivityViewModel.class);
     }
 
     @Override
