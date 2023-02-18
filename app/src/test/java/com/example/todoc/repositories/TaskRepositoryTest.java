@@ -15,27 +15,26 @@ import com.example.todoc.data.dao.TaskDao;
 import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.repositories.TaskRepository;
+import com.example.todoc.utils.TestExecutor;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.util.List;
 
 public class TaskRepositoryTest {
 
-    @Mock
+    @Rule
+    public InstantTaskExecutorRule rule = new InstantTaskExecutorRule();
+
     private final TaskDao taskDao = mock(TaskDao.class);
 
     private TaskRepository repository;
 
-    @Rule
-    public InstantTaskExecutorRule rule = new InstantTaskExecutorRule();
-
     @Before
     public void setUp() {
-        repository = new TaskRepository(taskDao);
+        repository = new TaskRepository(taskDao, new TestExecutor());
     }
 
     @Test
@@ -47,14 +46,9 @@ public class TaskRepositoryTest {
         repository.addNewTask(task);
 
         // THEN
-      /*  await().until(() -> {*/
-           verify(taskDao).insertTask(task);
-        /*    return true;
-        });*/
-
+        verify(taskDao).insertTask(task);
         verifyNoMoreInteractions(taskDao);
     }
-
 
     @Test
     public void verify_getProjectWithTasks() {

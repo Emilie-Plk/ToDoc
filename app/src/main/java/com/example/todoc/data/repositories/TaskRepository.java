@@ -8,25 +8,24 @@ import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 public class TaskRepository {
 
     private final TaskDao dao;
+    private final Executor executor;
 
-
-    public TaskRepository(TaskDao dao) {
+    public TaskRepository(TaskDao dao, Executor executor) {
         this.dao = dao;
+        this.executor = executor;
     }
 
-
     public void addNewTask(TaskEntity task) {
-        AppDatabase.databaseWriteExecutor.execute(() ->
-                dao.insertTask(task));
+        executor.execute(() -> dao.insertTask(task));
     }
 
     public void deleteTask(long taskId) {
-        AppDatabase.databaseWriteExecutor.execute(() ->
-                dao.deleteTask(taskId));
+        executor.execute(() -> dao.deleteTask(taskId));
     }
 
     public LiveData<List<ProjectWithTasks>> getProjectWithTasks() {

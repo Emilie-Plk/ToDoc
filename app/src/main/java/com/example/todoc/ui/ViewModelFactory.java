@@ -1,41 +1,45 @@
 package com.example.todoc.ui;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.todoc.MainApplication;
 import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.repositories.ProjectRepository;
 import com.example.todoc.data.repositories.TaskRepository;
 import com.example.todoc.ui.addTask.AddNewTaskDialogFragmentViewModel;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private final TaskRepository taskRepository;
 
     private final ProjectRepository projectRepository;
 
+    private static final int THREADS = Runtime.getRuntime().availableProcessors();
+
+    private static final Executor EXECUTOR = Executors.newFixedThreadPool(THREADS);
+
     private static volatile ViewModelFactory factory;
 
-    public static ViewModelFactory getInstance(Context context) {
+    public static ViewModelFactory getInstance() {
         if (factory == null) {
             synchronized (ViewModelFactory.class) {
                 if (factory == null) {
-                    factory = new ViewModelFactory(context);
+                    factory = new ViewModelFactory();
                 }
             }
         }
         return factory;
     }
 
-    public ViewModelFactory(Context context) {
-        AppDatabase db = AppDatabase.getDatabase(context);
-        this.taskRepository = new TaskRepository(db.getTaskDao());
+    public ViewModelFactory() {
+        AppDatabase db = AppDatabase.getDatabase(MainApplication.getApplication(), EXECUTOR);
+        this.taskRepository = new TaskRepository(db.getTaskDao(), EXECUTOR);
         this.projectRepository = new ProjectRepository(db.getProjectDao());
     }
-
 
     @SuppressWarnings("unchecked")
     @NonNull

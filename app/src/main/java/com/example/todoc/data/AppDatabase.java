@@ -1,8 +1,6 @@
 package com.example.todoc.data;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteConstraintException;
-import android.util.Log;
+import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -17,8 +15,7 @@ import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.entities.TimeStampConverter;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Executor;
 
 
 @Database(entities = {TaskEntity.class, ProjectEntity.class}, version = 1, exportSchema = false)
@@ -31,41 +28,43 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static volatile AppDatabase INSTANCE;
 
-    private static final int THREADS = Runtime.getRuntime().availableProcessors();
-    public static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(THREADS);
-
-
-    public static AppDatabase getDatabase(@NonNull final Context context) {  // SINGLETON (getDatabase() returns it)
+    public static AppDatabase getDatabase(
+        @NonNull final Application application,
+        @NonNull final Executor executor
+    ) {  // SINGLETON (getDatabase() returns it)
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    AppDatabase.class,
-                                    "app_database")
-                            .addCallback(sRoomDatabaseCallback)
-                            .build();
+                    INSTANCE = Room.databaseBuilder(
+                            application,
+                            AppDatabase.class,
+                            "app_database"
+                        )
+                        .addCallback(new RoomDatabaseCallback(executor))
+                        .build();
                 }
             }
         }
         return INSTANCE;
     }
 
-    private static final RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+    private static class RoomDatabaseCallback extends RoomDatabase.Callback {
+        private final Executor executor;
+
+        public RoomDatabaseCallback(Executor executor) {
+            this.executor = executor;
+        }
+
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
-            databaseWriteExecutor.execute(() -> {
+            executor.execute(() -> {
                 ProjectDao dao = INSTANCE.getProjectDao();
-                try {
-                    dao.insertProject(new ProjectEntity(0, "Projet Tartampion", 0xFFEADAD1));
-                    dao.insertProject(new ProjectEntity(0, "Projet Lucidia", 0xFFB4CDBA));
-                    dao.insertProject(new ProjectEntity(0, "Projet Circus", 0xFFA3CED2));
-                } catch (SQLiteConstraintException e) {
-                    Log.e("AppDatabase", "Error inserting project", e);
-                }
+                dao.insertProject(new ProjectEntity(0, "Projet Tartampion", 0xFFEADAD1));
+                dao.insertProject(new ProjectEntity(0, "Projet Lucidia", 0xFFB4CDBA));
+                dao.insertProject(new ProjectEntity(0, "Projet Circus", 0xFFA3CED2));
             });
         }
-    };
+    }
 }
