@@ -63,8 +63,9 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
 
     public void onAddingNewTask(String taskDescription, long projectId) {
         TaskEntity task = new TaskEntity(0, projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
-        closeDialogFragment.call();
         taskRepository.addNewTask(task);
+
+        closeDialogFragment.call(); // pb threading (loading)
     }
 
     public void updateForTaskDescriptionCompletion(String taskDescription) {

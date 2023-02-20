@@ -95,15 +95,6 @@ public class MainActivityViewModelTest {
 
         // THEN
         verify(repository).deleteTask(taskId);
-
-     /*   List<TaskEntity> resultTasks = new ArrayList<>();
-        List<ProjectWithTasks> result = getValueForTesting(repository.getProjectWithTasks());
-        for (ProjectWithTasks projectWithTasks : result) {
-            List<TaskEntity> tasks = projectWithTasks.getTasks();
-            resultTasks.addAll(tasks);
-        }
-        assertEquals(3, resultTasks.size()); // TODO: still find 4*/
-
         verifyNoMoreInteractions(repository);
     }
 

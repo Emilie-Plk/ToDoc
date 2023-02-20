@@ -1,6 +1,7 @@
 package com.example.todoc.daotests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
@@ -74,21 +75,15 @@ public class ProjectDaoTest {
 
     @Test
     @SuppressWarnings("UnnecessaryLocalVariable")
-    public void insert_two_projects_with_same_name_should_return_one_project() {
+    public void insert_two_projects_with_same_name_should_return_SQLiteConstraintException() {
         // GIVEN
         ProjectEntity projectDuplicate = PROJECT;
 
         // WHEN
-        try {
             projectDao.insertProject(PROJECT);
-            projectDao.insertProject(projectDuplicate);
-        } catch (SQLiteConstraintException e) {
-            // the exception is expected in this test case
-            Log.e("ProjectDaoTest", "Error inserting project", e);
-        }
 
         // THEN
-        List<ProjectEntity> result = TestUtil.getValueForTesting(projectDao.getProjects());
-        assertEquals(1, result.size());
+        assertThrows(SQLiteConstraintException.class, () ->
+                projectDao.insertProject(projectDuplicate));
     }
 }

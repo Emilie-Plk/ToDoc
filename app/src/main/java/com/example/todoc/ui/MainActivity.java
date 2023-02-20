@@ -5,13 +5,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoc.R;
 import com.example.todoc.adapter.TaskListAdapter;
@@ -42,14 +39,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateEmptyTaskListTextView() {
-        viewModel.getIsNoTaskTextViewVisible().observe(this, isVisible ->
-                binding.listTasks.setItemAnimator(new DefaultItemAnimator() {
-                    @Override
-                    public void onAnimationFinished(@NonNull RecyclerView.ViewHolder viewHolder) {
-                        super.onAnimationFinished(viewHolder);
-                        binding.lblNoTask.setVisibility(Boolean.TRUE.equals(isVisible) ? View.VISIBLE : View.GONE);
-                    }
-                })
+        viewModel.getIsNoTaskTextViewVisible().observe(this, isVisible -> {
+                    binding.lblNoTask.setVisibility(Boolean.TRUE.equals(isVisible) ? View.VISIBLE : View.GONE);
+                    binding.listTasks.setVisibility(Boolean.TRUE.equals(isVisible) ? View.GONE : View.VISIBLE);
+                }
         );
     }
 

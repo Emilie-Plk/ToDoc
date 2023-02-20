@@ -46,11 +46,11 @@ public class AddNewTaskDialogFragmentViewModelTest {
     private final MutableLiveData<List<ProjectEntity>> projectList = new MutableLiveData<>();
 
     private final static String TASK_DESCRIPTION = "Test task description";
+
     private final static String CHOSEN_PROJECT = "Projet Lucidia";
 
     @Rule
     public InstantTaskExecutorRule rule = new InstantTaskExecutorRule();
-
 
     @Before
     public void setUp() {
@@ -58,45 +58,50 @@ public class AddNewTaskDialogFragmentViewModelTest {
         projectList.setValue(projectEntityList);
         doReturn(projectList).when(projectRepository).getAllProjects();
 
-
         viewModel = new AddNewTaskDialogFragmentViewModel(taskRepository, projectRepository);
     }
 
     @Test
     public void getAllProjects_returns3Projects() {
+        // WHEN
         List<ProjectEntity> projectEntityList = getValueForTesting(viewModel.getAllProjects());
 
+        // THEN
         assertEquals(getProjectsTest().size(), projectEntityList.size());
     }
 
     @Test
     public void onAddingNewTask_repositoryShouldAddNewTask() {
+        // GIVEN
         String taskDescription = "Test task description";
         long projectId = 1L;
         TaskEntity expectedTaskEntity = new TaskEntity(0, projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
 
+        // WHEN
         viewModel.onAddingNewTask(taskDescription, projectId);
 
+        // THEN
         verify(taskRepository).addNewTask(expectedTaskEntity);
         verifyNoMoreInteractions(taskRepository);
     }
 
     @Test
     public void onAddingNewTask_callsIsEveryFieldComplete() {
-
-
+        // GIVEN
         viewModel.updateForTaskDescriptionCompletion(TASK_DESCRIPTION);
         viewModel.updateForChosenProjectSelection(CHOSEN_PROJECT);
 
+        // WHEN
         Boolean result = getValueForTesting(viewModel.getIsEveryFieldComplete());
 
+        // THEN
         assertTrue(result);
     }
 
 
     @Test
     public void onAddingNewTask_onlyIfTaskAndProjectChosen_callsIsEveryFieldComplete() {
-
+        // WHEN
         Boolean isTaskAndProjectUnselected = getValueForTesting(viewModel.getIsEveryFieldComplete());
         assertFalse(isTaskAndProjectUnselected);
 
@@ -111,15 +116,25 @@ public class AddNewTaskDialogFragmentViewModelTest {
 
     @Test
     public void updateForChosenProjectSelection_updatesIsProjectFieldComplete() {
+        // GIVEN
         viewModel.updateForChosenProjectSelection(CHOSEN_PROJECT);
+
+        // WHEN
         Boolean isProjectFieldComplete = getValueForTesting(viewModel.getIsEveryFieldComplete());
+
+        // THEN
         assertFalse(isProjectFieldComplete);
     }
 
     @Test
     public void updateForTaskDescriptionCompletion_updatesIsProjectFieldComplete() {
+        // GIVEN
         viewModel.updateForTaskDescriptionCompletion(TASK_DESCRIPTION);
+
+        // WHEN
         Boolean isTaskFieldCompleted = getValueForTesting(viewModel.getIsEveryFieldComplete());
+
+        // THEN
         assertFalse(isTaskFieldCompleted);
     }
 
@@ -132,22 +147,5 @@ public class AddNewTaskDialogFragmentViewModelTest {
         return projectList;
     }
 
-    private List<ProjectWithTasks> getProjectWithTasks() {
-        ProjectEntity project1 = new ProjectEntity(1L, "Projet Tartampion", 0xFFEADAD1);
-        ProjectEntity project2 = new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA);
-        ProjectEntity project3 = new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2);
-
-        TaskEntity task1 = new TaskEntity(1L, 1L, "Task A", new Timestamp(System.currentTimeMillis()));
-        TaskEntity task2 = new TaskEntity(2L, 1L, "Task B", new Timestamp(System.currentTimeMillis()));
-        TaskEntity task3 = new TaskEntity(3L, 2L, "Task C", new Timestamp(System.currentTimeMillis()));
-        TaskEntity task4 = new TaskEntity(4L, 3L, "Task D", new Timestamp(System.currentTimeMillis()));
-
-        List<ProjectWithTasks> dummyProjectWithTasks = new ArrayList<>();
-        dummyProjectWithTasks.add(new ProjectWithTasks(project1, Arrays.asList(task1, task2)));
-        dummyProjectWithTasks.add(new ProjectWithTasks(project2, Collections.singletonList(task3)));
-        dummyProjectWithTasks.add(new ProjectWithTasks(project3, Collections.singletonList(task4)));
-
-        return dummyProjectWithTasks;
-    }
     //endregion
 }

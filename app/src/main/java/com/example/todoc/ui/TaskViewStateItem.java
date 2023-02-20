@@ -24,8 +24,8 @@ public class TaskViewStateItem {
             long taskId,
             @NonNull String taskDescription,
             @NonNull String projectName,
-            int projectColor, @NonNull
-            Timestamp taskTimeStamp
+            int projectColor,
+            @NonNull Timestamp taskTimeStamp
     ) {
         this.taskId = taskId;
         this.taskDescription = taskDescription;

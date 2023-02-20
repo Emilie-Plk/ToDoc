@@ -38,8 +38,10 @@ public class TaskListAdapter extends ListAdapter<TaskViewStateItem, TaskListAdap
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView deleteTask, imgProject;
-        private final TextView taskDescription, projectName;
+        private final ImageView deleteTask;
+        private final ImageView imgProject;
+        private final TextView taskDescription;
+        private final TextView projectName;
 
         public TaskViewHolder(@NonNull ItemTaskBinding binding) {
             super(binding.getRoot());

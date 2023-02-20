@@ -36,19 +36,13 @@ public class MainActivityInstrumentedTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
-
-    @Test
-    public void isRecyclerViewVisible_onAppLaunch() {
-        onView(withId(R.id.list_tasks)).check(matches(isDisplayed()));
-    }
-
     @Test
     public void taskRecyclerView_shouldBeEmptyOnTestLaunch() {
         onView(withId(R.id.list_tasks)).check(matches(hasChildCount(0)));
     }
 
     @Test
-    public void taskRecyclerView_shouldDisplayNoTaskTextView() {
+    public void emptyTaskRecyclerView_shouldDisplayNoTaskTextView() {
         onView(withId(R.id.list_tasks)).check(matches(hasChildCount(0)));
         onView(withId(R.id.lbl_no_task)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
@@ -80,14 +74,16 @@ public class MainActivityInstrumentedTest {
     }
 
     @Test
-    public void onDeleteTask_taskShouldBeRemovedFromRecyclerView() {
+    public void onDeleteTask_recyclerViewVisibilityShouldBeGoneAndNoTaskViewShouldBeVisible() {
         onAddingNewTask_shouldAddOneTaskToRecyclerView();
 
         onView(withRecyclerView(R.id.list_tasks)
                 .atPositionOnView(0, R.id.img_delete))
                 .perform(click());
 
-        onView(withId(R.id.list_tasks)).check(matches(hasChildCount(0)));
+        onView(withId(R.id.list_tasks)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(withId(R.id.lbl_no_task)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
