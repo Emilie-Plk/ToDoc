@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.todoc.databinding.FragmentAddNewTaskDialogBinding;
-import com.example.todoc.ui.ViewModelFactory;
+import com.example.todoc.DI.ViewModelFactory;
 
 public class AddNewTaskDialogFragment extends DialogFragment {
 
@@ -66,7 +66,8 @@ public class AddNewTaskDialogFragment extends DialogFragment {
         binding.returnBtnDialog.setOnClickListener(v -> dismiss());
 
         // observer for my chosen project being selected in the ACTV
-        viewModel.getChosenProjectMutableLiveData().observe(this, mChosenProject -> chosenProject = mChosenProject);
+        viewModel.getChosenProjectMutableLiveData().observe(this,
+                mChosenProject -> chosenProject = mChosenProject);
     }
 
     private void setProjectACTVAdapter() {

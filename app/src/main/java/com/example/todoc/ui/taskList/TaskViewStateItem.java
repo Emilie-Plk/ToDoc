@@ -1,4 +1,4 @@
-package com.example.todoc.ui;
+package com.example.todoc.ui.taskList;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;

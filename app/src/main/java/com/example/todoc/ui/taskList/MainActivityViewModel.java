@@ -1,10 +1,10 @@
-package com.example.todoc.ui;
+package com.example.todoc.ui.taskList;
 
-import static com.example.todoc.ui.SortMethod.ALPHABETICAL;
-import static com.example.todoc.ui.SortMethod.ALPHABETICAL_INVERTED;
-import static com.example.todoc.ui.SortMethod.NONE;
-import static com.example.todoc.ui.SortMethod.OLD_FIRST;
-import static com.example.todoc.ui.SortMethod.RECENT_FIRST;
+import static com.example.todoc.ui.taskList.SortMethod.ALPHABETICAL;
+import static com.example.todoc.ui.taskList.SortMethod.ALPHABETICAL_INVERTED;
+import static com.example.todoc.ui.taskList.SortMethod.NONE;
+import static com.example.todoc.ui.taskList.SortMethod.OLD_FIRST;
+import static com.example.todoc.ui.taskList.SortMethod.RECENT_FIRST;
 import static java.util.Collections.reverseOrder;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingLong;
@@ -73,14 +73,14 @@ public class MainActivityViewModel extends ViewModel {
                     sortTasksAlphabetically(sortedTasks);
                     break;
                 case ALPHABETICAL_INVERTED:
-                    sortTasksAlphabeticallyInverted(sortedTasks);
+                    sortTasksAlphabeticallyReversed(sortedTasks);
                     break;
                 case OLD_FIRST:
                 case NONE:
                     sortTasksChronologically(sortedTasks);
                     break;
                 case RECENT_FIRST:
-                    sortTasksChronologicallyReverted(sortedTasks);
+                    sortTasksChronologicallyReversed(sortedTasks);
                     break;
             }
         }
@@ -127,7 +127,7 @@ public class MainActivityViewModel extends ViewModel {
         }
     }
 
-    private void sortTasksChronologicallyReverted(@NonNull List<TaskViewStateItem> taskViewStateItems) {
+    private void sortTasksChronologicallyReversed(@NonNull List<TaskViewStateItem> taskViewStateItems) {
         taskViewStateItems.sort(comparingLong((TaskViewStateItem o) -> o.getTaskTimeStamp().getTime()).reversed());
         taskViewStateItemsMediatorLiveData.setValue(taskViewStateItems);
     }
@@ -137,7 +137,7 @@ public class MainActivityViewModel extends ViewModel {
         taskViewStateItemsMediatorLiveData.setValue(taskViewStateItems);
     }
 
-    private void sortTasksAlphabeticallyInverted(@NonNull List<TaskViewStateItem> taskViewStateItems) {
+    private void sortTasksAlphabeticallyReversed(@NonNull List<TaskViewStateItem> taskViewStateItems) {
         taskViewStateItems.sort(comparing(o -> o.getTaskDescription().toLowerCase(), reverseOrder()));
         taskViewStateItemsMediatorLiveData.setValue(taskViewStateItems);
     } // Comparator pour refactor

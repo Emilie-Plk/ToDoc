@@ -1,10 +1,10 @@
 package com.example.todoc;
 
-import static com.example.todoc.ui.SortMethod.ALPHABETICAL;
-import static com.example.todoc.ui.SortMethod.ALPHABETICAL_INVERTED;
-import static com.example.todoc.ui.SortMethod.NONE;
-import static com.example.todoc.ui.SortMethod.OLD_FIRST;
-import static com.example.todoc.ui.SortMethod.RECENT_FIRST;
+import static com.example.todoc.ui.taskList.SortMethod.ALPHABETICAL;
+import static com.example.todoc.ui.taskList.SortMethod.ALPHABETICAL_INVERTED;
+import static com.example.todoc.ui.taskList.SortMethod.NONE;
+import static com.example.todoc.ui.taskList.SortMethod.OLD_FIRST;
+import static com.example.todoc.ui.taskList.SortMethod.RECENT_FIRST;
 import static com.example.todoc.utils.TestUtil.getValueForTesting;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -19,8 +19,8 @@ import com.example.todoc.data.entities.ProjectEntity;
 import com.example.todoc.data.entities.ProjectWithTasks;
 import com.example.todoc.data.entities.TaskEntity;
 import com.example.todoc.data.repositories.TaskRepository;
-import com.example.todoc.ui.MainActivityViewModel;
-import com.example.todoc.ui.TaskViewStateItem;
+import com.example.todoc.ui.taskList.MainActivityViewModel;
+import com.example.todoc.ui.taskList.TaskViewStateItem;
 
 import org.junit.Before;
 import org.junit.Rule;

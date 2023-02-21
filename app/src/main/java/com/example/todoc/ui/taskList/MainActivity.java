@@ -1,4 +1,4 @@
-package com.example.todoc.ui;
+package com.example.todoc.ui.taskList;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.todoc.DI.ViewModelFactory;
 import com.example.todoc.R;
 import com.example.todoc.adapter.TaskListAdapter;
 import com.example.todoc.databinding.ActivityMainBinding;

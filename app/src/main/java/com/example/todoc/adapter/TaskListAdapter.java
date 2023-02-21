@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todoc.OnTaskDeleteClickListener;
+import com.example.todoc.ui.taskList.OnTaskDeleteClickListener;
 import com.example.todoc.databinding.ItemTaskBinding;
-import com.example.todoc.ui.TaskViewStateItem;
+import com.example.todoc.ui.taskList.TaskViewStateItem;
 
 public class TaskListAdapter extends ListAdapter<TaskViewStateItem, TaskListAdapter.TaskViewHolder> {
 
