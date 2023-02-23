@@ -50,7 +50,6 @@ public class MainActivityViewModelTest {
 
     @Before
     public void setUp() {
-
         projectWithTasksMutableLiveData = new MutableLiveData<>();
         List<ProjectWithTasks> dummyProjectWithTasksList = getProjectWithTasks();
         projectWithTasksMutableLiveData.setValue(dummyProjectWithTasksList);

@@ -36,6 +36,7 @@ public class MainActivityInstrumentedTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
+
     @Test
     public void taskRecyclerView_shouldBeEmptyOnTestLaunch() {
         onView(withId(R.id.list_tasks)).check(matches(hasChildCount(0)));

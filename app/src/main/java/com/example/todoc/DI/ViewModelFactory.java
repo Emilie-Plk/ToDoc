@@ -8,8 +8,8 @@ import com.example.todoc.MainApplication;
 import com.example.todoc.data.AppDatabase;
 import com.example.todoc.data.repositories.ProjectRepository;
 import com.example.todoc.data.repositories.TaskRepository;
-import com.example.todoc.ui.taskList.MainActivityViewModel;
 import com.example.todoc.ui.addTask.AddNewTaskDialogFragmentViewModel;
+import com.example.todoc.ui.taskList.MainActivityViewModel;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

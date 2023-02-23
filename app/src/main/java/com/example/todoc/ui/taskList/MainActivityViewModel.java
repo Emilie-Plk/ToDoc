@@ -47,6 +47,14 @@ public class MainActivityViewModel extends ViewModel {
         updateNoTaskTextViewVisibility();
     }
 
+    /**
+     * Used to sort and combine two parameters together
+     * to produce a new list of TaskViewStateItem
+     * depending on the sort method
+     *
+     * @param tasks      List of ProjectWithTasks
+     * @param sortMethod SortMethod
+     */
     private void combine(@Nullable List<ProjectWithTasks> tasks, @Nullable SortMethod sortMethod) {
         if (tasks == null) {
             return;
@@ -58,6 +66,7 @@ public class MainActivityViewModel extends ViewModel {
             ProjectEntity project = projectWithTasks.getProject();
             for (TaskEntity taskEntity : projectWithTasks.getTasks()) {
                 sortedTasks.add(
+                        // pre-format data that should be displayed to the View with TaskViewStateItem
                         new TaskViewStateItem(
                                 taskEntity.getId(),
                                 taskEntity.getTaskDescription(),
@@ -101,6 +110,10 @@ public class MainActivityViewModel extends ViewModel {
         taskRepository.deleteTask(taskId);
     }
 
+    /**
+     * Set value for isNoTaskTextViewVisible depending on
+     * taskViewStateItemsMediatorLiveData's value
+     */
     private void updateNoTaskTextViewVisibility() {
         isNoTaskTextViewVisible.setValue(
                 taskViewStateItemsMediatorLiveData.getValue() == null ||
@@ -108,6 +121,9 @@ public class MainActivityViewModel extends ViewModel {
         );
     }
 
+    /**
+     * Set sortMethodMutableLiveData with sortMethod given in parameter
+     */
     public void onSortingTasksSelected(SortMethod sortMethod) {
         switch (sortMethod) {
             case ALPHABETICAL:
@@ -140,7 +156,7 @@ public class MainActivityViewModel extends ViewModel {
     private void sortTasksAlphabeticallyReversed(@NonNull List<TaskViewStateItem> taskViewStateItems) {
         taskViewStateItems.sort(comparing(o -> o.getTaskDescription().toLowerCase(), reverseOrder()));
         taskViewStateItemsMediatorLiveData.setValue(taskViewStateItems);
-    } // Comparator pour refactor
+    }
 
     private void sortTasksAlphabetically(@NonNull List<TaskViewStateItem> taskViewStateItems) {
         taskViewStateItems.sort(comparing(o -> o.getTaskDescription().toLowerCase()));

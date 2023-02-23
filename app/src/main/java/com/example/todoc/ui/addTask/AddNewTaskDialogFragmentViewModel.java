@@ -40,8 +40,13 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
         isEveryFieldComplete.addSource(isTaskFieldComplete, isCompleted -> combine());
     }
 
+    /**
+     * Used to set/update value of isEveryFieldComplete MediatorLiveData (Boolean)
+     * with values of isEveryFieldComplete and isProjectFieldComplete (Boolean)
+     */
     private void combine() {
-        assert isTaskFieldComplete.getValue() != null && isProjectFieldComplete.getValue() != null;
+        assert isTaskFieldComplete.getValue() != null &&
+                isProjectFieldComplete.getValue() != null;
         isEveryFieldComplete.setValue(isTaskFieldComplete.getValue() && isProjectFieldComplete.getValue());
     }
 
@@ -61,11 +66,18 @@ public class AddNewTaskDialogFragmentViewModel extends ViewModel {
         return chosenProjectMutableLiveData;
     }
 
+    /**
+     * Creates a new TaskEntity to add it to the database ;
+     * calls closeDialogFragment afterwards
+     *
+     * @param taskDescription String
+     * @param projectId       long
+     */
     public void onAddingNewTask(String taskDescription, long projectId) {
         TaskEntity task = new TaskEntity(0, projectId, taskDescription, new Timestamp(System.currentTimeMillis()));
         taskRepository.addNewTask(task);
 
-        closeDialogFragment.call(); // pb threading (loading)
+        closeDialogFragment.call();
     }
 
     public void updateForTaskDescriptionCompletion(String taskDescription) {

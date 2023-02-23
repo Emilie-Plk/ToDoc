@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.todoc.DI.ViewModelFactory;
 import com.example.todoc.R;
-import com.example.todoc.adapter.TaskListAdapter;
 import com.example.todoc.databinding.ActivityMainBinding;
 import com.example.todoc.ui.addTask.AddNewTaskDialogFragment;
+import com.example.todoc.ui.taskList.adapter.TaskListAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

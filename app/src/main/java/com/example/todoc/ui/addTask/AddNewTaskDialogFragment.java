@@ -12,8 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.todoc.databinding.FragmentAddNewTaskDialogBinding;
 import com.example.todoc.DI.ViewModelFactory;
+import com.example.todoc.databinding.FragmentAddNewTaskDialogBinding;
 
 public class AddNewTaskDialogFragment extends DialogFragment {
 

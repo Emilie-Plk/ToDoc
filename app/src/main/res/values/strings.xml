@@ -11,6 +11,8 @@
     <string name="add_task">Ajouter une tâche</string>
     <string name="add">Ajouter</string>
 
+    <string name="delete_acessibility">Supprime la tâche %1$s du %2$s</string>
+
     <string name="no_task">Tu n’as aucune tâche à traiter</string>
 
     <string name="task_name_hint">Nom de la tâche</string>
@@ -24,9 +26,4 @@
     <string name="delete_task_descr">Supprimer une tâche</string>
     <string name="add_new_task_title_dialog">Ajouter une nouvelle tâche</string>
 
-    <string-array name="project_name_list">
-        <item>Projet Tartampion</item>
-        <item>Projet Lucidia</item>
-        <item>Projet Circus</item>
-    </string-array>
 </resources>

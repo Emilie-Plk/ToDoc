@@ -5,7 +5,6 @@ import static org.junit.Assert.assertThrows;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
-import android.util.Log;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
@@ -80,7 +79,7 @@ public class ProjectDaoTest {
         ProjectEntity projectDuplicate = PROJECT;
 
         // WHEN
-            projectDao.insertProject(PROJECT);
+        projectDao.insertProject(PROJECT);
 
         // THEN
         assertThrows(SQLiteConstraintException.class, () ->
