@@ -35,10 +35,6 @@ k
 ;app/src/test/java/com/example/todoc/utils/TestExecutor.java,a\8\a88de5f4a776f1e5a79f0c7cbb0cde54d597718e
 x
 Happ/src/test/java/com/example/todoc/repositories/TaskRepositoryTest.java,b\a\baba53ed729ceaea2154fc6187cbcfe42a7acde7
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 r
 Bapp/src/test/java/com/example/todoc/MainActivityViewModelTest.java,a\3\a37e952364b8ba93815fe9ca39200422d5e50dbd
 l
