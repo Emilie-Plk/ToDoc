@@ -19,8 +19,6 @@ o
 ?app/src/main/java/com/example/todoc/ui/taskList/SortMethod.java,d\c\dcb98745e884698308df6cbac6a3cb2f73aecb5b
 t
 Dapp/src/main/java/com/example/todoc/data/entities/ProjectEntity.java,7\8\78c8614ff62b1d6cbd76a60b5cf4f6f9d9aa8760
-~
-Napp/src/test/java/com/example/todoc/AddNewTaskDialogFragmentViewModelTest.java,9\c\9c889e15b225f561b37fc04928dee238f481232c
 t
 Dapp/src/androidTest/java/com/example/todoc/daotests/TaskDaoTest.java,9\8\9825fbb4053fffcbc467077e0be353764b751af0
 g
@@ -43,3 +41,5 @@ l
 Uapp/src/main/java/com/example/todoc/ui/addTask/AddNewTaskDialogFragmentViewModel.java,5\8\58ab86e7c7bb84d66cc4b8fe6d9fa073b178fb57
 |
 Lapp/src/main/java/com/example/todoc/ui/addTask/AddNewTaskDialogFragment.java,4\9\49930f3cd6756d99987249e1fc101178ce7d5b6f
+~
+Napp/src/test/java/com/example/todoc/AddNewTaskDialogFragmentViewModelTest.java,9\c\9c889e15b225f561b37fc04928dee238f481232c
